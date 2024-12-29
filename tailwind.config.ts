@@ -2,6 +2,8 @@ import type { Config } from 'tailwindcss'
 import TailwindCssAnimate from 'tailwindcss-animate'
 
 export default {
+  // https://github.com/shadcn-ui/ui/issues/313
+  safelist: ['dark'],
   darkMode: ['class'],
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
