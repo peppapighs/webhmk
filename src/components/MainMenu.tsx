@@ -1,173 +1,238 @@
 'use client'
 
-import { useDevice } from '@/hooks/useDevice'
+import { useCallback, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+
 import { Button } from './ui/button'
-import { useEffect, useRef, useState } from 'react'
+import { KEYBOARDS } from '@/constants/keyboards'
+import { getKeycodeMetadata } from '@/constants/keycodes'
+import { useDevice } from '@/hooks/useDevice'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from './ui/form'
+import { Input } from './ui/input'
 
-interface IDisplaySwitch {
-  idx: number
-  w: number
-  h: number
-  ml: number
-  mt: number
-}
+const GAUSS64 = KEYBOARDS[0]
 
-const GAUSS64: IDisplaySwitch[][] = [
-  [
-    { idx: 0, w: 1.5, h: 1, ml: 0, mt: 0 },
-    { idx: 1, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 2, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 3, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 4, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 5, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 6, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 7, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 8, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 9, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 10, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 11, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 12, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 13, w: 1.5, h: 1, ml: 0, mt: 0 },
-  ],
-  [
-    { idx: 14, w: 1.5, h: 1, ml: 0, mt: 0 },
-    { idx: 15, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 16, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 17, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 18, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 19, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 20, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 21, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 22, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 23, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 24, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 25, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 26, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 27, w: 1.5, h: 1, ml: 0, mt: 0 },
-  ],
-  [
-    { idx: 28, w: 1.5, h: 1, ml: 0, mt: 0 },
-    { idx: 29, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 30, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 31, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 32, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 33, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 34, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 35, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 36, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 37, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 38, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 39, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 40, w: 1.5, h: 1, ml: 0, mt: 0 },
-    { idx: 41, w: 1, h: 1, ml: 0, mt: 0 },
-  ],
-  [
-    { idx: 42, w: 1.5, h: 1, ml: 0, mt: 0 },
-    { idx: 43, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 44, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 45, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 46, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 47, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 48, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 49, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 50, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 51, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 52, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 53, w: 1.5, h: 1, ml: 0, mt: 0 },
-    { idx: 54, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 55, w: 1, h: 1, ml: 0, mt: 0 },
-  ],
-  [
-    { idx: 56, w: 1.5, h: 1, ml: 0, mt: 0 },
-    { idx: 57, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 58, w: 1.5, h: 1, ml: 0, mt: 0 },
-    { idx: 59, w: 7, h: 1, ml: 0, mt: 0 },
-    { idx: 60, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 61, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 62, w: 1, h: 1, ml: 0, mt: 0 },
-    { idx: 63, w: 1, h: 1, ml: 0, mt: 0 },
-  ],
-]
+const sendSchema = z.object({
+  request: z.coerce.number().min(0).max(7),
+  value: z.coerce.number().min(0).max(1),
+  length: z.coerce.number().min(0),
+  data: z.string().refine((data) => {
+    if (data === undefined) {
+      return true
+    }
+    if (data.length % 2 !== 0) {
+      return false
+    }
+    for (let i = 0; i < data.length / 2; i++) {
+      if (Number.isNaN(parseInt(data.slice(i * 2, i * 2 + 2), 16))) {
+        return false
+      }
+    }
+    return true
+  }),
+})
 
 export default function MainMenu() {
-  const { device, connect, disconnect, receive } = useDevice()
-  const timer = useRef<NodeJS.Timeout>(null)
-  const [data, setData] = useState<number[][]>([])
+  const { device, connect, disconnect, send, receive } = useDevice()
+  const [keymap, setKeymap] = useState<number[][][]>([])
+
+  const form = useForm<z.infer<typeof sendSchema>>({
+    resolver: zodResolver(sendSchema),
+    defaultValues: {
+      request: 0,
+      value: 0,
+      length: 0,
+    },
+  })
+
+  const fetchKeymap = useCallback(async () => {
+    const buffer = await receive(
+      7,
+      0,
+      2 * GAUSS64.numProfiles * GAUSS64.numLayers * GAUSS64.numKeys,
+    )
+
+    const keymap = []
+    for (let p = 0; p < GAUSS64.numProfiles; p++) {
+      const profile = []
+      for (let l = 0; l < GAUSS64.numLayers; l++) {
+        const layer = []
+        for (let i = 0; i < GAUSS64.numKeys; i++) {
+          layer.push(
+            buffer.getUint16(
+              2 *
+                (p * GAUSS64.numLayers * GAUSS64.numKeys +
+                  l * GAUSS64.numKeys +
+                  i),
+              true,
+            ),
+          )
+        }
+        profile.push(layer)
+      }
+      keymap.push(profile)
+    }
+
+    setKeymap(keymap)
+  }, [receive])
+
+  const onSubmit = useCallback(
+    async (values: z.infer<typeof sendSchema>) => {
+      if (device.status === 'disconnected') {
+        return
+      }
+
+      if (values.data.length === 0) {
+        const result = await receive(
+          values.request,
+          values.value,
+          values.length,
+        )
+
+        const hexData = []
+        for (let i = 0; i < result.byteLength; i++) {
+          hexData.push(result.getUint8(i).toString(16).padStart(2, '0'))
+        }
+
+        console.log(hexData)
+      } else {
+        const buffer = new Uint8Array(values.data.length / 2)
+        for (let i = 0; i < values.data.length / 2; i++) {
+          buffer[i] = parseInt(values.data.slice(i * 2, i * 2 + 2), 16)
+        }
+
+        await send(values.request, values.value, buffer)
+      }
+
+      await fetchKeymap()
+    },
+    [device.status, send, receive, fetchKeymap],
+  )
 
   useEffect(() => {
-    const cleanup = () => {
-      if (timer.current) {
-        clearInterval(timer.current)
-        timer.current = null
-      }
-      setData([])
+    if (device.status === 'connected') {
+      fetchKeymap()
     }
-
-    const loop = async () => {
-      if (device.status === 'connected') {
-        try {
-          const array = await receive(6, 0, 192)
-
-          const transformed = []
-          for (let i = 0; i < 64; i++) {
-            transformed.push([
-              array.getUint16(i * 2, true),
-              array.getUint8(64 * 2 + i),
-            ])
-          }
-
-          setData(transformed)
-          timer.current = setTimeout(loop, 1000 / 30)
-        } catch (error) {
-          cleanup()
-          throw error
-        }
-      } else {
-        cleanup()
-      }
-    }
-
-    if (device.status === 'disconnected') {
-      cleanup()
-    } else {
-      loop()
-    }
-
-    return cleanup
-  }, [device.status, receive])
+  }, [device.status, fetchKeymap])
 
   return (
-    <div className="flex flex-col items-center justify-center space-x-8">
+    <div className="flex flex-col items-center justify-center">
       {device.status === 'disconnected' ? (
         <Button onClick={() => connect([])}>Connect</Button>
       ) : (
         <>
           <Button onClick={disconnect}>Disconnect</Button>
-          {data.length === 64 && (
-            <div className="mt-4">
-              {GAUSS64.map((row, i) => (
-                <div key={i} className="flex">
-                  {row.map((elt, j) => (
+          {keymap.length > 0 && (
+            <div className="mt-6 flex flex-col">
+              {GAUSS64.layout.map((row, i) => (
+                <div key={i} className="flex items-center">
+                  {row.map((key, j) => (
                     <div
                       key={j}
                       className="p-1"
                       style={{
-                        width: `${elt.w * 4}rem`,
-                        height: `${elt.h * 4}rem`,
-                        marginLeft: `${elt.ml * 4}rem`,
-                        marginTop: `${elt.mt * 4}rem`,
+                        width: `${key.w * 5}rem`,
+                        height: `${key.h * 5}rem`,
+                        marginLeft: `${key.ml * 5}rem`,
+                        marginTop: `${key.mt * 5}rem`,
                       }}
                     >
-                      <div className="flex h-full w-full flex-col items-center justify-center rounded border text-center">
-                        <p>{data[elt.idx][0]}</p>
-                        <p>{`${((data[elt.idx][1] * 5) / 100) >> 0}.${(data[elt.idx][1] * 5) % 100}`}</p>
-                      </div>
+                      <Button
+                        variant="secondary"
+                        className="h-full w-full break-all text-center"
+                      >
+                        {getKeycodeMetadata(keymap[0][0][key.i]).name}
+                      </Button>
                     </div>
                   ))}
                 </div>
               ))}
             </div>
           )}
+          <div className="mt-6">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
+                <FormField
+                  control={form.control}
+                  name="request"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Request</FormLabel>
+                      <FormControl>
+                        <Input placeholder="0" {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        The control request number
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="value"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Value</FormLabel>
+                      <FormControl>
+                        <Input placeholder="0" {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        The control request value
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="length"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Length</FormLabel>
+                      <FormControl>
+                        <Input placeholder="0" {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        The control request length
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="data"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Data</FormLabel>
+                      <FormControl>
+                        <Input placeholder="00" {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        The control request data
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit">Send</Button>
+              </form>
+            </Form>
+          </div>
         </>
       )}
     </div>
