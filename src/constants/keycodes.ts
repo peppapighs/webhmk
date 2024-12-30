@@ -1,3 +1,5 @@
+import { displayUInt16 } from '@/lib/display'
+
 interface IKeycodeMetadata {
   name: string
   description?: string
@@ -216,6 +218,52 @@ export enum Keycode {
   KC_RIGHT_SHIFT = 0x00e5,
   KC_RIGHT_ALT = 0x00e6,
   KC_RIGHT_GUI = 0x00e7,
+
+  // Modifier-mask keycodes
+  SP_MODS = 0x0100,
+  SP_MODS_MAX = 0x1fff,
+
+  // Modifier-tap keycodes
+  SP_MOD_TAP = 0x2000,
+  SP_MOD_TAP_MAX = 0x3fff,
+
+  // Layer-tap keycodes
+  SP_LAYER_TAP = 0x4000,
+  SP_LAYER_TAP_MAX = 0x4fff,
+
+  // Layer-mod keycodes
+  SP_LAYER_MOD = 0x5000,
+  SP_LAYER_MOD_MAX = 0x51ff,
+
+  // Layer activation keycodes
+  SP_LAYER_TO = 0x5200,
+  SP_LAYER_TO_MAX = 0x520f,
+
+  // Layer-momentary keycodes
+  SP_LAYER_MO = 0x5210,
+  SP_LAYER_MO_MAX = 0x521f,
+
+  // Layer-default keycodes
+  SP_LAYER_DEF = 0x5220,
+  SP_LAYER_DEF_MAX = 0x522f,
+
+  // Layer-toggle keycodes
+  SP_LAYER_TOGGLE = 0x5230,
+  SP_LAYER_TOGGLE_MAX = 0x523f,
+
+  // Profile activation keycodes
+  SP_PROFILE_TO = 0x5240,
+  SP_PROFILE_TO_MAX = 0x524f,
+
+  // Dynamic keystroke keycodes
+  SP_DKS = 0x5300,
+  SP_DKS_MAX = 0x53ff,
+
+  // Magic keycodes
+  SP_MAGIC_BOOTLOADER = 0x7000,
+  SP_MAGIC_REBOOT = 0x7001,
+  SP_MAGIC_FACTORY_RESET = 0x7002,
+  SP_MAGIC_RECALIBRATE = 0x7003,
 }
 
 const KEYCODES_TO_METADATA: { [key: number]: IKeycodeMetadata } = {
@@ -982,44 +1030,37 @@ const KEYCODES_TO_METADATA: { [key: number]: IKeycodeMetadata } = {
     codeName: 'KC_MY_COMPUTER',
   },
   [Keycode.KC_WWW_SEARCH]: {
-    name: 'W.Search',
-    description: 'Web Search',
+    name: 'Web Search',
     code: Keycode.KC_WWW_SEARCH,
     codeName: 'KC_WWW_SEARCH',
   },
   [Keycode.KC_WWW_HOME]: {
-    name: 'W.Home',
-    description: 'Web Home',
+    name: 'Web Home',
     code: Keycode.KC_WWW_HOME,
     codeName: 'KC_WWW_HOME',
   },
   [Keycode.KC_WWW_BACK]: {
-    name: 'W.Back',
-    description: 'Web Back',
+    name: 'Web Back',
     code: Keycode.KC_WWW_BACK,
     codeName: 'KC_WWW_BACK',
   },
   [Keycode.KC_WWW_FORWARD]: {
-    name: 'W.Forward',
-    description: 'Web Forward',
+    name: 'Web Forward',
     code: Keycode.KC_WWW_FORWARD,
     codeName: 'KC_WWW_FORWARD',
   },
   [Keycode.KC_WWW_STOP]: {
-    name: 'W.Stop',
-    description: 'Web Stop',
+    name: 'Web Stop',
     code: Keycode.KC_WWW_STOP,
     codeName: 'KC_WWW_STOP',
   },
   [Keycode.KC_WWW_REFRESH]: {
-    name: 'W.Refresh',
-    description: 'Web Refresh',
+    name: 'Web Refresh',
     code: Keycode.KC_WWW_REFRESH,
     codeName: 'KC_WWW_REFRESH',
   },
   [Keycode.KC_WWW_FAVORITES]: {
-    name: 'W.Fav',
-    description: 'Web Favorites',
+    name: 'Web Bookmark',
     code: Keycode.KC_WWW_FAVORITES,
     codeName: 'KC_WWW_FAVORITES',
   },
@@ -1101,13 +1142,112 @@ const KEYCODES_TO_METADATA: { [key: number]: IKeycodeMetadata } = {
     code: Keycode.KC_RIGHT_ALT,
     codeName: 'KC_RIGHT_ALT',
   },
+  [Keycode.SP_MAGIC_BOOTLOADER]: {
+    name: 'Boot',
+    description: 'Enter Bootloader',
+    code: Keycode.SP_MAGIC_BOOTLOADER,
+    codeName: 'SP_MAGIC_BOOTLOADER',
+  },
+  [Keycode.SP_MAGIC_REBOOT]: {
+    name: 'Reset',
+    description: 'Software Reset',
+    code: Keycode.SP_MAGIC_REBOOT,
+    codeName: 'SP_MAGIC_REBOOT',
+  },
+  [Keycode.SP_MAGIC_FACTORY_RESET]: {
+    name: 'Factory',
+    description: 'Factory Reset',
+    code: Keycode.SP_MAGIC_FACTORY_RESET,
+    codeName: 'SP_MAGIC_FACTORY_RESET',
+  },
+  [Keycode.SP_MAGIC_RECALIBRATE]: {
+    name: 'Recal',
+    description: 'Recalibrate Switches',
+    code: Keycode.SP_MAGIC_RECALIBRATE,
+    codeName: 'SP_MAGIC_RECALIBRATE',
+  },
 }
 
 export const getKeycodeMetadata = (keycode: Keycode): IKeycodeMetadata => {
   if (KEYCODES_TO_METADATA[keycode]) {
     return KEYCODES_TO_METADATA[keycode]
+  } else if (Keycode.SP_MODS <= keycode && keycode <= Keycode.SP_MODS_MAX) {
+    return {
+      name: 'MODS',
+      code: keycode,
+      codeName: 'SP_MODS',
+    }
+  } else if (
+    Keycode.SP_MOD_TAP <= keycode &&
+    keycode <= Keycode.SP_MOD_TAP_MAX
+  ) {
+    return {
+      name: 'MT',
+      code: keycode,
+      codeName: 'SP_MOD_TAP',
+    }
+  } else if (
+    Keycode.SP_LAYER_TAP <= keycode &&
+    keycode <= Keycode.SP_LAYER_TAP_MAX
+  ) {
+    return {
+      name: 'LT',
+      code: keycode,
+      codeName: 'SP_LAYER_TAP',
+    }
+  } else if (
+    Keycode.SP_LAYER_MOD <= keycode &&
+    keycode <= Keycode.SP_LAYER_MOD_MAX
+  ) {
+    return {
+      name: 'LM',
+      code: keycode,
+      codeName: 'SP_LAYER_MOD',
+    }
+  } else if (
+    Keycode.SP_LAYER_TO <= keycode &&
+    keycode <= Keycode.SP_LAYER_TO_MAX
+  ) {
+    return {
+      name: `TO(${keycode & 0x000f})`,
+      code: keycode,
+      codeName: 'SP_LAYER_TO',
+    }
+  } else if (
+    Keycode.SP_LAYER_MO <= keycode &&
+    keycode <= Keycode.SP_LAYER_MO_MAX
+  ) {
+    return {
+      name: `MO(${keycode & 0x000f})`,
+      code: keycode,
+      codeName: 'SP_LAYER_MO',
+    }
+  } else if (
+    Keycode.SP_LAYER_TOGGLE <= keycode &&
+    keycode <= Keycode.SP_LAYER_TOGGLE_MAX
+  ) {
+    return {
+      name: `TG(${keycode & 0x000f})`,
+      code: keycode,
+      codeName: 'SP_LAYER_TOGGLE',
+    }
+  } else if (
+    Keycode.SP_PROFILE_TO <= keycode &&
+    keycode <= Keycode.SP_PROFILE_TO_MAX
+  ) {
+    return {
+      name: `PTO(${keycode & 0x000f})`,
+      code: keycode,
+      codeName: 'SP_PROFILE_TO',
+    }
+  } else if (Keycode.SP_DKS <= keycode && keycode <= Keycode.SP_DKS_MAX) {
+    return {
+      name: `DKS${keycode & 0x00ff}`,
+      code: keycode,
+      codeName: 'SP_DKS',
+    }
   } else {
-    const hexKeycode = `0x${keycode.toString(16).padStart(4, '0').toUpperCase()}`
+    const hexKeycode = displayUInt16(keycode)
     return {
       name: hexKeycode,
       description: `Unknown keycode ${hexKeycode}`,

@@ -1,23 +1,6 @@
-interface ILayoutSwitch {
-  i: number
-  w: number
-  h: number
-  ml: number
-  mt: number
-}
+import { IKeyboardMetadata } from '@/types/keyboard'
 
-interface IKeyboard {
-  name: string
-  vendorId: number
-  appProductId: number
-  bootloaderProductId?: number
-  numProfiles: number
-  numLayers: number
-  numKeys: number
-  layout: ILayoutSwitch[][]
-}
-
-export const KEYBOARDS: IKeyboard[] = [
+export const KEYBOARDS: IKeyboardMetadata[] = [
   {
     name: 'GAUSS64',
     vendorId: 0xab50,
@@ -25,6 +8,7 @@ export const KEYBOARDS: IKeyboard[] = [
     numProfiles: 4,
     numLayers: 4,
     numKeys: 64,
+    numDksConfig: 16,
     layout: [
       [
         { i: 0, w: 1.5, h: 1, ml: 0, mt: 0 },
