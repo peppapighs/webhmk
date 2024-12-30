@@ -9,7 +9,7 @@ import {
   SwitchId,
   TapHoldConfig,
 } from '@/types/keyboard'
-import { Keycode } from '@/constants/keycodes'
+import { Keycode, LT, PTO } from '@/constants/keycodes'
 
 const GAUSS64 = KEYBOARDS[0]
 
@@ -84,7 +84,7 @@ export const useDemoKeyboard = create<IKeyboard>((set, get) => ({
       Keycode.KC_SLASH,
       Keycode.KC_RIGHT_SHIFT,
       Keycode.KC_UP,
-      Keycode.SP_LAYER_MO | 1,
+      LT(1, Keycode.KC_AUDIO_VOL_DOWN),
       Keycode.KC_LEFT_CTRL,
       Keycode.KC_LEFT_GUI,
       Keycode.KC_LEFT_ALT,
@@ -110,10 +110,10 @@ export const useDemoKeyboard = create<IKeyboard>((set, get) => ({
       Keycode.KC_F12,
       Keycode.KC_DELETE,
       Keycode.KC_TRANSPARENT,
-      Keycode.SP_PROFILE_TO | 0,
-      Keycode.SP_PROFILE_TO | 1,
-      Keycode.SP_PROFILE_TO | 2,
-      Keycode.SP_PROFILE_TO | 3,
+      PTO(1),
+      PTO(2),
+      PTO(3),
+      PTO(4),
       Keycode.KC_TRANSPARENT,
       Keycode.KC_TRANSPARENT,
       Keycode.KC_TRANSPARENT,

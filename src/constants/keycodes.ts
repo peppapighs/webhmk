@@ -221,10 +221,18 @@ export enum Keycode {
 
   // Modifier-mask keycodes
   SP_MODS = 0x0100,
+  SP_MODS_CTRL = SP_MODS,
+  SP_MODS_SHIFT = 0x0200,
+  SP_MODS_ALT = 0x0400,
+  SP_MODS_GUI = 0x0800,
   SP_MODS_MAX = 0x1fff,
 
   // Modifier-tap keycodes
   SP_MOD_TAP = 0x2000,
+  SP_MOD_TAP_CTRL = 0x2100,
+  SP_MOD_TAP_SHIFT = 0x2200,
+  SP_MOD_TAP_ALT = 0x2400,
+  SP_MOD_TAP_GUI = 0x2800,
   SP_MOD_TAP_MAX = 0x3fff,
 
   // Layer-tap keycodes
@@ -233,6 +241,10 @@ export enum Keycode {
 
   // Layer-mod keycodes
   SP_LAYER_MOD = 0x5000,
+  SP_LAYER_MOD_CTRL = 0x5010,
+  SP_LAYER_MOD_SHIFT = 0x5020,
+  SP_LAYER_MOD_ALT = 0x5040,
+  SP_LAYER_MOD_GUI = 0x5080,
   SP_LAYER_MOD_MAX = 0x51ff,
 
   // Layer activation keycodes
@@ -1168,6 +1180,83 @@ const KEYCODES_TO_METADATA: { [key: number]: IKeycodeMetadata } = {
   },
 }
 
+// Modifier-Mask Macros
+export const LCTL = (keycode: number) => keycode | Keycode.SP_MODS_CTRL
+export const LSFT = (keycode: number) => keycode | Keycode.SP_MODS_SHIFT
+export const LALT = (keycode: number) => keycode | Keycode.SP_MODS_ALT
+export const LGUI = (keycode: number) => keycode | Keycode.SP_MODS_GUI
+export const RCTL = (keycode: number) => LCTL(keycode) | 0x1000
+export const RSFT = (keycode: number) => LSFT(keycode) | 0x1000
+export const RALT = (keycode: number) => LALT(keycode) | 0x1000
+export const RGUI = (keycode: number) => LGUI(keycode) | 0x1000
+
+export const SP_MODS_GET_MODS = (keycode: number) =>
+  ((keycode & 0x0f00) >> 8) << ((keycode & 0x1000) >> 10)
+export const SP_MODS_GET_KEY = (keycode: number) => keycode & 0x00ff
+
+// Modifier-Tap Macros
+export const LCTL_T = (keycode: number) => keycode | Keycode.SP_MOD_TAP_CTRL
+export const LSFT_T = (keycode: number) => keycode | Keycode.SP_MOD_TAP_SHIFT
+export const LALT_T = (keycode: number) => keycode | Keycode.SP_MOD_TAP_ALT
+export const LGUI_T = (keycode: number) => keycode | Keycode.SP_MOD_TAP_GUI
+export const RCTL_T = (keycode: number) => LCTL_T(keycode) | 0x1000
+export const RSFT_T = (keycode: number) => LSFT_T(keycode) | 0x1000
+export const RALT_T = (keycode: number) => LALT_T(keycode) | 0x1000
+export const RGUI_T = (keycode: number) => LGUI_T(keycode) | 0x1000
+
+export const SP_MOD_TAP_GET_MODS = (keycode: number) =>
+  ((keycode & 0x0f00) >> 8) << ((keycode & 0x1000) >> 10)
+export const SP_MOD_TAP_GET_KEY = (keycode: number) => keycode & 0x00ff
+export const SP_MOD_TAP_TO_MODS = (keycode: number) => keycode & 0x1f00
+
+// Layer-Tap Macros
+export const LT = (layer: number, keycode: number) =>
+  keycode | Keycode.SP_LAYER_TAP | (layer << 8)
+
+export const SP_LAYER_TAP_GET_LAYER = (keycode: number) =>
+  (keycode & 0x0f00) >> 8
+export const SP_LAYER_TAP_GET_KEY = (keycode: number) => keycode & 0x00ff
+export const SP_LAYER_TAP_TO_MO = (keycode: number) =>
+  ((keycode & 0x0f00) >> 8) | Keycode.SP_LAYER_MO
+
+// Layer-Mod Macros
+export const LCTL_LM = (layer: number) => layer | Keycode.SP_LAYER_MOD_CTRL
+export const LSFT_LM = (layer: number) => layer | Keycode.SP_LAYER_MOD_SHIFT
+export const LALT_LM = (layer: number) => layer | Keycode.SP_LAYER_MOD_ALT
+export const LGUI_LM = (layer: number) => layer | Keycode.SP_LAYER_MOD_GUI
+export const RCTL_LM = (layer: number) => LCTL_LM(layer) | 0x0100
+export const RSFT_LM = (layer: number) => LSFT_LM(layer) | 0x0100
+export const RALT_LM = (layer: number) => LALT_LM(layer) | 0x0100
+export const RGUI_LM = (layer: number) => LGUI_LM(layer) | 0x0100
+
+export const SP_LAYER_MOD_GET_LAYER = (keycode: number) => keycode & 0x000f
+export const SP_LAYER_MOD_GET_MODS = (keycode: number) =>
+  ((keycode & 0x00f0) >> 4) << ((keycode & 0x0100) >> 6)
+
+// Layer Activation Macros
+export const TO = (layer: number) => layer | Keycode.SP_LAYER_TO
+export const SP_LAYER_TO_GET_LAYER = (keycode: number) => keycode & 0x000f
+
+// Layer-Momentary Macros
+export const MO = (layer: number) => layer | Keycode.SP_LAYER_MO
+export const SP_LAYER_MO_GET_LAYER = (keycode: number) => keycode & 0x000f
+
+// Layer-Default Macros
+export const DF = (layer: number) => layer | Keycode.SP_LAYER_DEF
+export const SP_LAYER_DEF_GET_LAYER = (keycode: number) => keycode & 0x000f
+
+// Layer-Toggle Macros
+export const TG = (layer: number) => layer | Keycode.SP_LAYER_TOGGLE
+export const SP_LAYER_TOGGLE_GET_LAYER = (keycode: number) => keycode & 0x000f
+
+// Profile Activation Macros
+export const PTO = (profile: number) => profile | Keycode.SP_PROFILE_TO
+export const SP_PROFILE_TO_GET_PROFILE = (keycode: number) => keycode & 0x000f
+
+// Dynamic Keystroke Macros
+export const DKS = (config: number) => config | Keycode.SP_DKS
+export const DKS_GET_CONFIG = (keycode: number) => keycode & 0x00ff
+
 export const getKeycodeMetadata = (keycode: Keycode): IKeycodeMetadata => {
   if (KEYCODES_TO_METADATA[keycode]) {
     return KEYCODES_TO_METADATA[keycode]
@@ -1191,7 +1280,7 @@ export const getKeycodeMetadata = (keycode: Keycode): IKeycodeMetadata => {
     keycode <= Keycode.SP_LAYER_TAP_MAX
   ) {
     return {
-      name: 'LT',
+      name: `LT(${SP_LAYER_TAP_GET_LAYER(keycode)})`,
       code: keycode,
       codeName: 'SP_LAYER_TAP',
     }
@@ -1200,7 +1289,7 @@ export const getKeycodeMetadata = (keycode: Keycode): IKeycodeMetadata => {
     keycode <= Keycode.SP_LAYER_MOD_MAX
   ) {
     return {
-      name: 'LM',
+      name: `LM(${SP_LAYER_MOD_GET_LAYER(keycode)})`,
       code: keycode,
       codeName: 'SP_LAYER_MOD',
     }
@@ -1209,7 +1298,7 @@ export const getKeycodeMetadata = (keycode: Keycode): IKeycodeMetadata => {
     keycode <= Keycode.SP_LAYER_TO_MAX
   ) {
     return {
-      name: `TO(${keycode & 0x000f})`,
+      name: `TO(${SP_LAYER_TO_GET_LAYER(keycode)})`,
       code: keycode,
       codeName: 'SP_LAYER_TO',
     }
@@ -1218,7 +1307,7 @@ export const getKeycodeMetadata = (keycode: Keycode): IKeycodeMetadata => {
     keycode <= Keycode.SP_LAYER_MO_MAX
   ) {
     return {
-      name: `MO(${keycode & 0x000f})`,
+      name: `MO(${SP_LAYER_MO_GET_LAYER(keycode)})`,
       code: keycode,
       codeName: 'SP_LAYER_MO',
     }
@@ -1227,7 +1316,7 @@ export const getKeycodeMetadata = (keycode: Keycode): IKeycodeMetadata => {
     keycode <= Keycode.SP_LAYER_TOGGLE_MAX
   ) {
     return {
-      name: `TG(${keycode & 0x000f})`,
+      name: `TG(${SP_LAYER_TOGGLE_GET_LAYER(keycode)})`,
       code: keycode,
       codeName: 'SP_LAYER_TOGGLE',
     }
@@ -1236,13 +1325,13 @@ export const getKeycodeMetadata = (keycode: Keycode): IKeycodeMetadata => {
     keycode <= Keycode.SP_PROFILE_TO_MAX
   ) {
     return {
-      name: `PTO(${keycode & 0x000f})`,
+      name: `PTO(${SP_PROFILE_TO_GET_PROFILE(keycode)})`,
       code: keycode,
       codeName: 'SP_PROFILE_TO',
     }
   } else if (Keycode.SP_DKS <= keycode && keycode <= Keycode.SP_DKS_MAX) {
     return {
-      name: `DKS${keycode & 0x00ff}`,
+      name: `DKS(${DKS_GET_CONFIG(keycode)})`,
       code: keycode,
       codeName: 'SP_DKS',
     }
