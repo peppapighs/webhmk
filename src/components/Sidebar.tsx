@@ -9,6 +9,7 @@ import {
 import { Button } from './ui/button'
 import { displayUInt16 } from '@/lib/display'
 import { useApp } from '@/hooks/useApp'
+import { Toggle } from './ui/toggle'
 
 interface ISidebarProps {
   keyboard: IKeyboard
@@ -56,13 +57,14 @@ export default function Sidebar({ keyboard }: ISidebarProps) {
         <CardFooter>
           <div className="flex w-full flex-col gap-4">
             {[...Array(keyboard.metadata.numProfiles)].map((_, i) => (
-              <Button
+              <Toggle
                 key={i}
-                variant={profile === i ? 'default' : 'outline'}
-                onClick={() => setProfile(i)}
+                variant="outline"
+                pressed={profile === i}
+                onPressedChange={(pressed) => pressed && setProfile(i)}
               >
                 Profile {i + 1}
-              </Button>
+              </Toggle>
             ))}
           </div>
         </CardFooter>

@@ -5,7 +5,7 @@ import { TabsList, TabsTrigger } from './ui/tabs'
 export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full bg-background">
-      <div className="mx-auto max-w-7xl min-[1280px]:border-x">
+      <div className="mx-auto max-w-[1800px] min-[1800px]:border-x">
         <div className="flex h-14 items-center justify-between gap-6 px-6 lg:px-8">
           <div className="flex flex-1 items-center gap-6">
             <Link href="/">
