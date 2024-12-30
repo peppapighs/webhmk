@@ -5,7 +5,7 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
-  title: 'webhmk',
+  title: 'WEBHMK',
   description: 'Web Configurator for libhmk Keyboards',
 }
 
