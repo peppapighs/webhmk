@@ -60,7 +60,7 @@ export default function Remap({ keyboard }: IRemapProps) {
                     pressed={layer === i}
                     onPressedChange={(pressed) => pressed && setLayer(i)}
                   >
-                    Layer {i + 1}
+                    Layer {i}
                   </Toggle>
                 ))}
               </div>

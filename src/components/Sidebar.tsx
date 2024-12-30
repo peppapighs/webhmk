@@ -63,7 +63,7 @@ export default function Sidebar({ keyboard }: ISidebarProps) {
                 pressed={profile === i}
                 onPressedChange={(pressed) => pressed && setProfile(i)}
               >
-                Profile {i + 1}
+                Profile {i}
               </Toggle>
             ))}
           </div>
