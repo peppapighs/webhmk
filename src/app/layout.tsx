@@ -1,6 +1,10 @@
 import type { Metadata } from "next"
+import { Roboto_Flex } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { cn } from "@/lib/utils"
+
+const robotoFlex = Roboto_Flex({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "WEBHMK",
@@ -15,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body className="antialiased">
+      <body className={cn(robotoFlex.className, "antialiased")}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
