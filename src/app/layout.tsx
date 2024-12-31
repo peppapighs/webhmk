@@ -26,7 +26,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative flex min-h-svh flex-col bg-background">
+          <div className="relative flex min-h-screen flex-col bg-background">
             {children}
           </div>
         </ThemeProvider>
