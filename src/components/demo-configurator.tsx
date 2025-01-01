@@ -9,7 +9,7 @@ export function DemoConfigurator() {
   const device = useDemoKeyboard()
   const { reset } = useConfiguratorState()
 
-  useLayoutEffect(() => reset(), [reset])
+  useLayoutEffect(reset, [reset])
 
   return <Configurator device={device} />
 }
