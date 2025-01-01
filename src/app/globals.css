@@ -66,3 +66,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .radio-item {
+    @apply rounded-lg border bg-background font-normal text-foreground transition-colors hover:bg-accent hover:text-accent-foreground data-[state=checked]:bg-accent data-[state=checked]:font-medium data-[state=checked]:text-accent-foreground;
+  }
+
+  .toggle-item {
+    @apply rounded-lg border bg-background font-normal text-foreground transition-colors hover:bg-accent hover:text-accent-foreground data-[state=on]:border-accent-foreground data-[state=on]:bg-accent data-[state=on]:font-medium data-[state=on]:text-accent-foreground;
+  }
+}

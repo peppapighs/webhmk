@@ -8,6 +8,7 @@ const initialState: ConfiguratorStateState = {
   profileNum: 0,
   remap: {
     layerNum: 0,
+    index: null,
   },
 }
 
@@ -33,11 +34,21 @@ export const useConfiguratorState = create<ConfiguratorState>((set) => ({
 
   remap: {
     ...initialState.remap,
+
     setLayerNum(layerNum) {
       set((state) => ({
         remap: {
           ...state.remap,
           layerNum,
+        },
+      }))
+    },
+
+    setIndex(index) {
+      set((state) => ({
+        remap: {
+          ...state.remap,
+          index,
         },
       }))
     },

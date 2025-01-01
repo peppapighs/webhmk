@@ -22,7 +22,7 @@ export function LayerSelector({ device: { metadata } }: ILayerSelectorProps) {
       <RadioGroup
         defaultValue="0"
         id="layer"
-        value={String(layerNum)}
+        value={`${layerNum}`}
         onValueChange={(value) => setLayerNum(Number(value))}
         className="grid grid-flow-col items-center gap-2"
       >
@@ -30,7 +30,7 @@ export function LayerSelector({ device: { metadata } }: ILayerSelectorProps) {
           <RadioGroupItem
             key={i}
             value={`${i}`}
-            className="h-8 w-8 rounded-lg border bg-background px-2 font-normal text-foreground hover:bg-accent hover:text-accent-foreground data-[state=checked]:bg-accent data-[state=checked]:font-medium data-[state=checked]:text-accent-foreground"
+            className="radio-item h-8 w-8 text-sm"
           >
             {i}
           </RadioGroupItem>
