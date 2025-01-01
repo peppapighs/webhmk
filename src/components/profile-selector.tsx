@@ -11,11 +11,12 @@ interface IProfileSelectorProps {
 export function ProfileSelector({
   device: { metadata },
 }: IProfileSelectorProps) {
-  const { setProfileNum } = useConfiguratorState()
+  const { profileNum, setProfileNum } = useConfiguratorState()
 
   return (
     <RadioGroup
       defaultValue="0"
+      value={String(profileNum)}
       onValueChange={(value) => setProfileNum(Number(value))}
       className="flex w-full flex-col gap-2 text-sm"
     >

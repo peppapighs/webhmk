@@ -25,7 +25,10 @@ export const useConfiguratorState = create<ConfiguratorState>((set) => ({
   },
 
   setProfileNum(profileNum) {
-    set({ profileNum })
+    set((state) => ({
+      profileNum,
+      remap: { ...state.remap, ...initialState.remap },
+    }))
   },
 
   remap: {

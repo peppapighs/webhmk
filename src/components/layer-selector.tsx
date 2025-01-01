@@ -11,7 +11,7 @@ interface ILayerSelectorProps {
 
 export function LayerSelector({ device: { metadata } }: ILayerSelectorProps) {
   const {
-    remap: { setLayerNum },
+    remap: { layerNum, setLayerNum },
   } = useConfiguratorState()
 
   return (
@@ -22,6 +22,7 @@ export function LayerSelector({ device: { metadata } }: ILayerSelectorProps) {
       <RadioGroup
         defaultValue="0"
         id="layer"
+        value={String(layerNum)}
         onValueChange={(value) => setLayerNum(Number(value))}
         className="grid grid-flow-col items-center gap-2"
       >
