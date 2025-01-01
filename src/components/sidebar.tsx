@@ -1,9 +1,15 @@
+import { KeyboardDevice } from "@/types/keyboard-device"
+import { DeviceInfo } from "./device-info"
 import { ProfileSelector } from "./profile-selector"
 import { Button } from "./ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import { ScrollArea } from "./ui/scroll-area"
 
-export function Sidebar() {
+interface ISidebarProps {
+  device: KeyboardDevice
+}
+
+export function Sidebar({ device }: ISidebarProps) {
   return (
     <ScrollArea className="h-full">
       <div className="flex flex-col gap-4 p-4">
@@ -12,17 +18,7 @@ export function Sidebar() {
             <CardTitle>Device</CardTitle>
           </CardHeader>
           <CardContent>
-            <ul className="text-sm text-muted-foreground">
-              <li className="truncate">
-                <span className="font-semibold">Name:</span> GAUSS64
-              </li>
-              <li className="truncate">
-                <span className="font-semibold">Vendor ID:</span> 0xAB50
-              </li>
-              <li className="truncate">
-                <span className="font-semibold">Product ID:</span> 0xAB01
-              </li>
-            </ul>
+            <DeviceInfo device={device} />
           </CardContent>
           <CardFooter>
             <Button variant="destructive" className="w-full">
@@ -35,7 +31,7 @@ export function Sidebar() {
             <CardTitle>Profile</CardTitle>
           </CardHeader>
           <CardFooter>
-            <ProfileSelector />
+            <ProfileSelector device={device} />
           </CardFooter>
         </Card>
       </div>

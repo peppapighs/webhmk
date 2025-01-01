@@ -1,5 +1,5 @@
-import { Configurator } from "@/components/configurator"
+import { DemoConfigurator } from "@/components/demo-configurator"
 
 export default function Demo() {
-  return <Configurator />
+  return <DemoConfigurator />
 }
