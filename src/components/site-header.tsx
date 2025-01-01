@@ -7,7 +7,7 @@ export function SiteHeader() {
   return (
     <header className="w-full bg-background">
       <div className="mx-auto flex h-14 max-w-[1800px] items-center gap-6 px-6 min-[1800px]:border-x">
-        <Link href="/">
+        <Link href="/" replace>
           <h1 className="text-xl font-extrabold tracking-tight">WEBHMK</h1>
         </Link>
         <div className="flex flex-1 items-center justify-center">
