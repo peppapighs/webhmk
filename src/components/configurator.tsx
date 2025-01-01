@@ -14,7 +14,7 @@ export function Configurator({ device }: IConfiguratorProps) {
     <Tabs defaultValue="remap" asChild>
       <div className="flex flex-1 flex-col divide-y">
         <SiteHeader />
-        <main className="mx-auto grid w-full max-w-[1800px] grid-cols-[220px_minmax(0,1fr)] divide-x min-[1800px]:border-x">
+        <main className="mx-auto grid w-full max-w-[1800px] grid-cols-[230px_minmax(0,1fr)] divide-x min-[1800px]:border-x">
           <aside className="h-[calc(100vh-3.5rem-1px)] w-full">
             <Sidebar device={device} />
           </aside>
