@@ -3,16 +3,40 @@
 import { useConfiguratorState } from "@/hooks/use-configurator-state"
 import { KeyboardDevice } from "@/types/keyboard-device"
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group"
+import { useQuery } from "@tanstack/react-query"
 import { KeyboardLayout } from "./keyboard-layout"
+import { Skeleton } from "./ui/skeleton"
 
 interface IRemapKeyboardProps {
   device: KeyboardDevice
 }
 
-export function RemapKeyboard({ device: { metadata } }: IRemapKeyboardProps) {
+export function RemapKeyboard({
+  device: { metadata, getKeymap },
+}: IRemapKeyboardProps) {
   const {
-    remap: { index, setIndex },
+    profileNum,
+    remap: { layerNum, index, setIndex },
   } = useConfiguratorState()
+
+  const { status, data } = useQuery({
+    queryKey: ["keymap"],
+    queryFn: getKeymap,
+  })
+
+  if (status !== "success") {
+    return (
+      <KeyboardLayout
+        metadata={metadata}
+        size={4}
+        elt={() => (
+          <div className="absolute inset-0 p-0.5">
+            <Skeleton className="size-full rounded-lg" />
+          </div>
+        )}
+      />
+    )
+  }
 
   return (
     <ToggleGroup
@@ -30,7 +54,7 @@ export function RemapKeyboard({ device: { metadata } }: IRemapKeyboardProps) {
               value={`${i}`}
               className="toggle-item flex size-full flex-col items-center justify-center overflow-hidden p-1 text-sm"
             >
-              {i}
+              {data[profileNum][layerNum][i]}
             </ToggleGroupItem>
           </div>
         )}
