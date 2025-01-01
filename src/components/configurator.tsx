@@ -1,5 +1,6 @@
 import { KeyboardDevice } from "@/types/keyboard-device"
 import { TabsContent } from "@radix-ui/react-tabs"
+import { Remap } from "./remap"
 import { Sidebar } from "./sidebar"
 import { SiteHeader } from "./site-header"
 import { Tabs } from "./ui/tabs"
@@ -18,10 +19,9 @@ export function Configurator({ device }: IConfiguratorProps) {
             <Sidebar device={device} />
           </aside>
           <div className="flex h-[calc(100vh-3.5rem-1px)] w-full flex-col">
-            <TabsContent
-              value="remap"
-              className="flex max-h-full flex-1 flex-col"
-            ></TabsContent>
+            <TabsContent value="remap" asChild>
+              <Remap device={device} />
+            </TabsContent>
           </div>
         </main>
       </div>
