@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Roboto_Flex } from "next/font/google"
 import "./globals.css"
+import { QueryClientProvider } from "@/components/query-client-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 
@@ -20,16 +21,18 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head />
       <body className={cn(robotoFlex.className, "antialiased")}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="relative flex min-h-screen flex-col bg-background">
-            {children}
-          </div>
-        </ThemeProvider>
+        <QueryClientProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="relative flex min-h-screen flex-col bg-background">
+              {children}
+            </div>
+          </ThemeProvider>
+        </QueryClientProvider>
       </body>
     </html>
   )
