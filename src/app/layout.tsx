@@ -1,11 +1,11 @@
 import type { Metadata } from "next"
-import { Roboto_Flex } from "next/font/google"
+import { Geist } from "next/font/google"
 import "./globals.css"
 import { QueryClientProvider } from "@/components/query-client-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 
-const robotoFlex = Roboto_Flex({ subsets: ["latin"] })
+const geist = Geist({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "WEBHMK",
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body className={cn(robotoFlex.className, "antialiased")}>
+      <body className={cn(geist.className, "antialiased")}>
         <QueryClientProvider>
           <ThemeProvider
             attribute="class"
