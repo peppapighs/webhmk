@@ -10,7 +10,9 @@ const DEMO_KEYBOARD = KEYBOARD_METADATA[0]
 
 const initialState: KeyboardDeviceState & DemoKeyboardDeviceState = {
   metadata: DEMO_KEYBOARD,
-  keymap: Array(DEMO_KEYBOARD.numProfiles).fill(DEMO_KEYBOARD.defaultKeymap),
+  keymap: Array.from({ length: DEMO_KEYBOARD.numProfiles }, () =>
+    structuredClone(DEMO_KEYBOARD.defaultKeymap),
+  ),
 }
 
 export const useDemoKeyboard = create<KeyboardDevice & DemoKeyboardDeviceState>(

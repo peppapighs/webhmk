@@ -1,5 +1,23 @@
 import { Keycode, KeycodeMetadata } from "@/types/keycodes"
 
+export const KEYCODE_CATEGORIES = [
+  "Special",
+  "Alphanumeric",
+  "Modifier",
+  "International",
+  "Function",
+  "Navigation",
+  "Numpad",
+  "Media",
+  "System",
+  "Application",
+  "Browser",
+  "Layer",
+  "Profile",
+  "Dynamic Keystroke",
+  "Unknown",
+] as const
+
 export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "",

@@ -40,6 +40,7 @@ export const useConfiguratorState = create<ConfiguratorState>((set) => ({
         remap: {
           ...state.remap,
           layerNum,
+          index: null,
         },
       }))
     },

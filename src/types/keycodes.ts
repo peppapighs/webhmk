@@ -1,3 +1,5 @@
+import { KEYCODE_CATEGORIES } from "@/constants/keycode-metadata"
+
 export enum Keycode {
   // Internal keycodes
   KC_NO = 0x0000,
@@ -407,5 +409,5 @@ export type KeycodeMetadata = {
   keycode: number
   keycodeNames: string[]
   uiCodes: string[]
-  category: string
+  category: (typeof KEYCODE_CATEGORIES)[number]
 }
