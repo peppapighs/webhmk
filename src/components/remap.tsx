@@ -1,6 +1,7 @@
 import { KeyboardDevice } from "@/types/keyboard-device"
 import { RemapHeader } from "./remap-header"
 import { RemapKeyboard } from "./remap-keyboard"
+import { RemapKeycodes } from "./remap-keycodes"
 import { ScrollArea, ScrollBar } from "./ui/scroll-area"
 
 interface IRemapProps {
@@ -20,7 +21,8 @@ export function Remap({ device }: IRemapProps) {
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
       <ScrollArea className="w-full flex-1">
-        <p className="h-[1000px]"></p>
+        <RemapKeycodes device={device} />
+        <ScrollBar orientation="horizontal" />
       </ScrollArea>
     </div>
   )
