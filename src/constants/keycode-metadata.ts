@@ -1,6 +1,6 @@
 import { Keycode, KeycodeMetadata } from "@/types/keycodes"
 
-export const HID_KEYCODE_METADATA: KeycodeMetadata[] = [
+export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "",
     description: "Nothing",
@@ -1046,3 +1046,12 @@ export const HID_KEYCODE_METADATA: KeycodeMetadata[] = [
     uiCodes: ["MetaRight", "OSRight"],
   },
 ]
+
+export const KEYCODE_METADATA_MAP: Record<number, KeycodeMetadata> =
+  KEYCODE_METADATA.reduce(
+    (acc, metadata) => {
+      acc[metadata.keycode] = metadata
+      return acc
+    },
+    {} as Record<number, KeycodeMetadata>,
+  )

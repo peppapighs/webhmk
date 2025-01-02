@@ -1,6 +1,7 @@
 "use client"
 
 import { useConfiguratorState } from "@/hooks/use-configurator-state"
+import { keycodeToMetadata } from "@/lib/keycodes"
 import { KeyboardDevice } from "@/types/keyboard-device"
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group"
 import { useQuery } from "@tanstack/react-query"
@@ -54,7 +55,7 @@ export function RemapKeyboard({
               value={`${i}`}
               className="toggle-item flex size-full flex-col items-center justify-center overflow-hidden p-1 text-sm"
             >
-              {data[profileNum][layerNum][i]}
+              {keycodeToMetadata(data[profileNum][layerNum][i]).name}
             </ToggleGroupItem>
           </div>
         )}

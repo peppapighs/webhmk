@@ -1,4 +1,6 @@
-import { Keycode } from "@/types/keycodes"
+import { KEYCODE_METADATA_MAP } from "@/constants/keycode-metadata"
+import { Keycode, KeycodeMetadata } from "@/types/keycodes"
+import { displayUint16 } from "./display-integer"
 
 export const IS_BASIC_KEYCODE = (keycode: number) =>
   keycode >= Keycode.KC_A && keycode <= Keycode.KC_EXSEL
@@ -114,3 +116,54 @@ export const SP_PROFILE_TO_GET_PROFILE = (keycode: number) => keycode & 0x000f
 // Dynamic Keystroke Macros
 export const DKS = (config: number) => config | Keycode.SP_DKS
 export const SP_DKS_GET_CONFIG = (keycode: number) => keycode & 0x00ff
+
+export const keycodeToMetadata = (keycode: number): KeycodeMetadata => {
+  if (keycode in KEYCODE_METADATA_MAP) {
+    return KEYCODE_METADATA_MAP[keycode]
+  } else if (IS_LAYER_TO_KEYCODE(keycode)) {
+    const layerNum = SP_LAYER_TO_GET_LAYER(keycode)
+    return {
+      name: `TO${layerNum}`,
+      description: `Activate layer ${layerNum} & deactivate all others`,
+      keycode,
+      keycodeNames: [`TO${layerNum}`],
+      uiCodes: [],
+    }
+  } else if (IS_LAYER_MO_KEYCODE(keycode)) {
+    const layerNum = SP_LAYER_MO_GET_LAYER(keycode)
+    return {
+      name: `MO${layerNum}`,
+      description: `Activate layer ${layerNum} until released`,
+      keycode,
+      keycodeNames: [`MO${layerNum}`],
+      uiCodes: [],
+    }
+  } else if (IS_LAYER_DEF_KEYCODE(keycode)) {
+    const layerNum = SP_LAYER_DEF_GET_LAYER(keycode)
+    return {
+      name: `DF${layerNum}`,
+      description: `Set default layer to ${layerNum}`,
+      keycode,
+      keycodeNames: [`DF${layerNum}`],
+      uiCodes: [],
+    }
+  } else if (IS_LAYER_TOGGLE_KEYCODE(keycode)) {
+    const layerNum = SP_LAYER_TOGGLE_GET_LAYER(keycode)
+    return {
+      name: `TG${layerNum}`,
+      description: `Toggle layer ${layerNum}`,
+      keycode,
+      keycodeNames: [`TG${layerNum}`],
+      uiCodes: [],
+    }
+  } else {
+    const hex = displayUint16(keycode)
+    return {
+      name: hex,
+      description: `Unknown keycode: ${hex}`,
+      keycode,
+      keycodeNames: [],
+      uiCodes: [],
+    }
+  }
+}
