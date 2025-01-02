@@ -19,7 +19,9 @@ export const useDemoKeyboard = create<KeyboardDevice & DemoKeyboardDeviceState>(
   (set, get) => ({
     ...initialState,
 
-    async reset() {},
+    async reset() {
+      set(initialState)
+    },
 
     async getKeymap() {
       return get().keymap

@@ -1,17 +1,13 @@
 "use client"
 
 import { useAppKeyboard } from "@/hooks/use-app-keyboard"
-import { useConfiguratorState } from "@/hooks/use-configurator-state"
-import { useEffect, useLayoutEffect } from "react"
+import { useEffect } from "react"
 import { Configurator } from "./configurator"
 import { ConfiguratorLayout } from "./configurator-layout"
 import { Button } from "./ui/button"
 
 export function AppConfigurator() {
   const device = useAppKeyboard()
-  const { reset } = useConfiguratorState()
-
-  useLayoutEffect(reset, [reset])
 
   useEffect(() => {
     const onDeviceDisconnect = async () => {

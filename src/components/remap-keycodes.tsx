@@ -62,7 +62,7 @@ export function RemapKeycodes({ device }: IRemapKeycodes) {
       return index
     },
     onSuccess: (index) => {
-      queryClient.invalidateQueries({ queryKey: ["keymap"] })
+      queryClient.invalidateQueries({ queryKey: ["configurator", "keymap"] })
       if (index !== null) {
         setIndex(index + 1 === device.metadata.numKeys ? null : index + 1)
       }

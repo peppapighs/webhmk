@@ -21,7 +21,7 @@ export function RemapKeyboard({
   } = useConfiguratorState()
 
   const { status, data } = useQuery({
-    queryKey: ["keymap"],
+    queryKey: ["configurator", "keymap"],
     queryFn: getKeymap,
   })
 
