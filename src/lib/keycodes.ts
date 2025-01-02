@@ -1,5 +1,43 @@
 import { Keycode } from "@/types/keycodes"
 
+export const IS_BASIC_KEYCODE = (keycode: number) =>
+  keycode >= Keycode.KC_A && keycode <= Keycode.KC_EXSEL
+export const IS_SYSTEM_KEYCODE = (keycode: number) =>
+  keycode >= Keycode.KC_SYSTEM_POWER && keycode <= Keycode.KC_SYSTEM_WAKE
+export const IS_CONSUMER_KEYCODE = (keycode: number) =>
+  keycode >= Keycode.KC_AUDIO_MUTE && keycode <= Keycode.KC_LAUNCHPAD
+export const IS_MODIFIER_KEYCODE = (keycode: number) =>
+  keycode >= Keycode.KC_LEFT_CTRL && keycode <= Keycode.KC_RIGHT_GUI
+export const IS_HID_KEYCODE = (keycode: number) =>
+  keycode >= Keycode.KC_NO && keycode <= Keycode.KC_RIGHT_GUI
+
+export const IS_MODS_KEYCODE = (keycode: number) =>
+  keycode >= Keycode.SP_MODS && keycode <= Keycode.SP_MODS_MAX
+export const IS_MOD_TAP_KEYCODE = (keycode: number) =>
+  keycode >= Keycode.SP_MOD_TAP && keycode <= Keycode.SP_MOD_TAP_MAX
+export const IS_LAYER_TAP_KEYCODE = (keycode: number) =>
+  keycode >= Keycode.SP_LAYER_TAP && keycode <= Keycode.SP_LAYER_TAP_MAX
+export const IS_LAYER_MOD_KEYCODE = (keycode: number) =>
+  keycode >= Keycode.SP_LAYER_MOD && keycode <= Keycode.SP_LAYER_MOD_MAX
+export const IS_LAYER_TO_KEYCODE = (keycode: number) =>
+  keycode >= Keycode.SP_LAYER_TO && keycode <= Keycode.SP_LAYER_TO_MAX
+export const IS_LAYER_MO_KEYCODE = (keycode: number) =>
+  keycode >= Keycode.SP_LAYER_MO && keycode <= Keycode.SP_LAYER_MO_MAX
+export const IS_LAYER_DEF_KEYCODE = (keycode: number) =>
+  keycode >= Keycode.SP_LAYER_DEF && keycode <= Keycode.SP_LAYER_DEF_MAX
+export const IS_LAYER_TOGGLE_KEYCODE = (keycode: number) =>
+  keycode >= Keycode.SP_LAYER_TOGGLE && keycode <= Keycode.SP_LAYER_TOGGLE_MAX
+
+export const IS_PROFILE_TO_KEYCODE = (keycode: number) =>
+  keycode >= Keycode.SP_PROFILE_TO && keycode <= Keycode.SP_PROFILE_TO_MAX
+
+export const IS_DKS_KEYCODE = (keycode: number) =>
+  keycode >= Keycode.SP_DKS && keycode <= Keycode.SP_DKS_MAX
+
+export const IS_MAGIC_KEYCODE = (keycode: number) =>
+  keycode >= Keycode.SP_MAGIC_BOOTLOADER &&
+  keycode <= Keycode.SP_MAGIC_RECALIBRATE
+
 // Modifier-Mask Macros
 export const LCTL = (keycode: number) => keycode | Keycode.SP_MODS_CTRL
 export const LSFT = (keycode: number) => keycode | Keycode.SP_MODS_SHIFT

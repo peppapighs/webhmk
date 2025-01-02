@@ -400,3 +400,11 @@ export enum Keycode {
   KC_RCMD = KC_RIGHT_GUI,
   KC_RWIN = KC_RIGHT_GUI,
 }
+
+export type KeycodeMetadata = {
+  name: string
+  description?: string
+  keycode: number
+  keycodeNames: string[]
+  uiCodes: string[]
+}
