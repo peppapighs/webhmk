@@ -2,7 +2,7 @@
 
 import { useAppKeyboard } from "@/hooks/use-app-keyboard"
 import { useConfiguratorState } from "@/hooks/use-configurator-state"
-import { useLayoutEffect } from "react"
+import { useEffect, useLayoutEffect } from "react"
 import { Configurator } from "./configurator"
 import { ConfiguratorLayout } from "./configurator-layout"
 import { Button } from "./ui/button"
@@ -12,6 +12,24 @@ export function AppConfigurator() {
   const { reset } = useConfiguratorState()
 
   useLayoutEffect(reset, [reset])
+
+  useEffect(() => {
+    const onDeviceDisconnect = async () => {
+      if (device.status === "connected") {
+        await device.reset()
+      }
+    }
+
+    const cleanup = () =>
+      navigator.usb.removeEventListener("disconnect", onDeviceDisconnect)
+
+    if (device.status === "connected") {
+      navigator.usb.addEventListener("disconnect", onDeviceDisconnect)
+      return cleanup
+    } else {
+      cleanup()
+    }
+  }, [device])
 
   return (
     <ConfiguratorLayout hideTabs={device.status === "disconnected"}>

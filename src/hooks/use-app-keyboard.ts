@@ -1,18 +1,23 @@
 import { KEYBOARD_METADATA } from "@/constants/keyboard-metadata"
-import { KeyboardDevice } from "@/types/keyboard-device"
+import { KeyboardDevice, KeyboardDeviceAction } from "@/types/keyboard-device"
 import { ClassRequest, ClassRequestIndex } from "@/types/protocols"
 import { create } from "zustand"
 
-type AppKeyboardDevice =
+type AppKeyboardDeviceState =
   | {
       status: "disconnected"
-      connect(): Promise<KeyboardDevice>
     }
   | ({
       status: "connected"
       usbDevice: USBDevice
       interfaceNum: number
     } & KeyboardDevice)
+
+type AppKeyboardDeviceAction = {
+  connect(): Promise<void>
+}
+
+type AppKeyboardDevice = AppKeyboardDeviceState & AppKeyboardDeviceAction
 
 const KEYBOARD_USB_DEVICE_FILTERS = KEYBOARD_METADATA.map((keyboard) => ({
   vendorId: keyboard.vendorId,
@@ -31,143 +36,175 @@ const findVendorSpecificInterface = (usbDevice: USBDevice): number => {
   throw new Error("No vendor specific interface found")
 }
 
-export const useAppKeyboard = create<AppKeyboardDevice>((set) => ({
-  status: "disconnected",
+const send = async (
+  device: AppKeyboardDevice,
+  request: ClassRequest,
+  value: ClassRequestIndex,
+  data?: BufferSource,
+) => {
+  if (device.status === "disconnected") {
+    throw new Error("Device is disconnected")
+  }
 
-  async connect() {
-    const usbDevice = await navigator.usb.requestDevice({
-      filters: KEYBOARD_USB_DEVICE_FILTERS,
-    })
+  const { usbDevice, interfaceNum } = device
+  return usbDevice.controlTransferOut(
+    {
+      requestType: "class",
+      recipient: "interface",
+      request,
+      value,
+      index: interfaceNum,
+    },
+    data,
+  )
+}
 
-    const metadata = KEYBOARD_METADATA.find(
-      (keyboard) =>
-        keyboard.vendorId === usbDevice.vendorId &&
-        keyboard.appProductId === usbDevice.productId,
-    )
+const receive = async (
+  device: AppKeyboardDevice,
+  request: ClassRequest,
+  value: ClassRequestIndex,
+  length: number,
+) => {
+  if (device.status === "disconnected") {
+    throw new Error("Device is disconnected")
+  }
 
-    if (!metadata) {
-      // Should be unreachable
-      throw new Error("Unsupported keyboard")
-    }
+  const { usbDevice, interfaceNum } = device
+  return usbDevice.controlTransferIn(
+    {
+      requestType: "class",
+      recipient: "interface",
+      request,
+      value,
+      index: interfaceNum,
+    },
+    length,
+  )
+}
 
-    if (!usbDevice.opened) {
-      await usbDevice.open()
-    }
+export const useAppKeyboard = create<AppKeyboardDevice & KeyboardDeviceAction>(
+  (set, get) => ({
+    status: "disconnected",
 
-    try {
-      if (usbDevice.configuration === null) {
-        await usbDevice.selectConfiguration(1)
+    async connect() {
+      if (get().status === "connected") {
+        return
       }
 
-      const interfaceNum = findVendorSpecificInterface(usbDevice)
-      await usbDevice.claimInterface(interfaceNum)
-      await usbDevice.selectAlternateInterface(interfaceNum, 0)
+      const usbDevice = await navigator.usb.requestDevice({
+        filters: KEYBOARD_USB_DEVICE_FILTERS,
+      })
 
-      const send = async (
-        request: ClassRequest,
-        value: ClassRequestIndex,
-        data?: BufferSource,
-      ) =>
-        usbDevice.controlTransferOut(
-          {
-            requestType: "class",
-            recipient: "interface",
-            request,
-            value,
-            index: interfaceNum,
-          },
-          data,
-        )
+      const metadata = KEYBOARD_METADATA.find(
+        (keyboard) =>
+          keyboard.vendorId === usbDevice.vendorId &&
+          keyboard.appProductId === usbDevice.productId,
+      )
 
-      const receive = async (
-        request: ClassRequest,
-        value: ClassRequestIndex,
-        length: number,
-      ) =>
-        usbDevice.controlTransferIn(
-          {
-            requestType: "class",
-            recipient: "interface",
-            request,
-            value,
-            index: interfaceNum,
-          },
-          length,
-        )
+      if (!metadata) {
+        // Should be unreachable
+        throw new Error("Unsupported keyboard")
+      }
 
-      const device: AppKeyboardDevice = {
-        status: "connected",
-        usbDevice,
-        interfaceNum,
-        metadata,
+      if (!usbDevice.opened) {
+        await usbDevice.open()
+      }
 
-        async reset() {
-          await usbDevice.close()
-          set({ status: "disconnected" })
-        },
+      try {
+        if (usbDevice.configuration === null) {
+          await usbDevice.selectConfiguration(1)
+        }
 
-        async getKeymap() {
-          const { status, data } = await receive(
-            ClassRequest.CLASS_REQUEST_KEYMAP,
-            ClassRequestIndex.CLASS_REQUEST_INDEX_GET,
-            2 * metadata.numProfiles * metadata.numLayers * metadata.numKeys,
-          )
+        const interfaceNum = findVendorSpecificInterface(usbDevice)
+        await usbDevice.claimInterface(interfaceNum)
+        await usbDevice.selectAlternateInterface(interfaceNum, 0)
 
-          if (status !== "ok" || data === undefined) {
-            throw new Error("Failed to get keymap")
-          }
+        set({ status: "connected", usbDevice, interfaceNum, metadata })
+      } catch (error) {
+        console.error(error)
+        await usbDevice.close()
+      }
+    },
 
-          return Array.from({ length: metadata.numProfiles }, (_, i) =>
-            Array.from({ length: metadata.numLayers }, (_, j) =>
-              Array.from({ length: metadata.numKeys }, (_, k) =>
-                data.getUint16(
-                  2 *
-                    (i * metadata.numLayers * metadata.numKeys +
-                      j * metadata.numKeys +
-                      k),
-                  true,
-                ),
-              ),
+    async reset() {
+      const device = get()
+      if (device.status === "disconnected") {
+        throw new Error("Device is disconnected")
+      }
+
+      const { usbDevice } = device
+      if (usbDevice.opened) {
+        await usbDevice.close()
+      }
+      set({ status: "disconnected" })
+    },
+
+    async getKeymap() {
+      const device = get()
+      if (device.status === "disconnected") {
+        throw new Error("Device is disconnected")
+      }
+
+      const { metadata } = device
+      const { status, data } = await receive(
+        device,
+        ClassRequest.CLASS_REQUEST_KEYMAP,
+        ClassRequestIndex.CLASS_REQUEST_INDEX_GET,
+        2 * metadata.numProfiles * metadata.numLayers * metadata.numKeys,
+      )
+
+      if (status !== "ok" || data === undefined) {
+        throw new Error("Failed to get keymap")
+      }
+
+      return Array.from({ length: metadata.numProfiles }, (_, i) =>
+        Array.from({ length: metadata.numLayers }, (_, j) =>
+          Array.from({ length: metadata.numKeys }, (_, k) =>
+            data.getUint16(
+              2 *
+                (i * metadata.numLayers * metadata.numKeys +
+                  j * metadata.numKeys +
+                  k),
+              true,
             ),
-          )
-        },
+          ),
+        ),
+      )
+    },
 
-        async setKeymap(queries) {
-          const data = new Uint8Array(
-            queries
-              .map((query) => [
-                query.profile,
-                query.layer,
-                query.index & 0xff,
-                query.index >> 8,
-                query.keycode & 0xff,
-                query.keycode >> 8,
-              ])
-              .flat(),
-          )
-
-          if (data.length !== 6 * queries.length) {
-            throw new Error("Invalid keymap queries")
-          }
-
-          const { status } = await send(
-            ClassRequest.CLASS_REQUEST_KEYMAP,
-            ClassRequestIndex.CLASS_REQUEST_INDEX_SET,
-            data.buffer,
-          )
-
-          if (status !== "ok") {
-            throw new Error("Failed to set keymap")
-          }
-        },
+    async setKeymap(queries) {
+      const device = get()
+      if (device.status === "disconnected") {
+        throw new Error("Device is disconnected")
       }
 
-      set(device)
-      return device
-    } catch (error) {
-      console.error(error)
-      await usbDevice.close()
-      throw error
-    }
-  },
-}))
+      const data = new Uint8Array(
+        queries
+          .map((query) => [
+            query.profile,
+            query.layer,
+            query.index & 0xff,
+            query.index >> 8,
+            query.keycode & 0xff,
+            query.keycode >> 8,
+          ])
+          .flat(),
+      )
+
+      if (data.length !== 6 * queries.length) {
+        throw new Error("Invalid keymap queries")
+      }
+
+      const { status } = await send(
+        device,
+        ClassRequest.CLASS_REQUEST_KEYMAP,
+        ClassRequestIndex.CLASS_REQUEST_INDEX_SET,
+        data.buffer,
+      )
+
+      if (status !== "ok") {
+        throw new Error("Failed to set keymap")
+      }
+    },
+  }),
+)
