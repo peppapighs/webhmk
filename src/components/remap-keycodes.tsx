@@ -1,8 +1,16 @@
 import { keycodeToMetadata, renderableKeycodes } from "@/lib/keycodes"
+import { cn } from "@/lib/utils"
 import { KeyboardDevice } from "@/types/keyboard-device"
 import { KeycodeMetadata } from "@/types/keycodes"
-import { Button } from "./ui/button"
+import { Badge } from "./ui/badge"
+import { buttonVariants } from "./ui/button"
 import { Label } from "./ui/label"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip"
 
 interface IRemapKeycodes {
   device: KeyboardDevice
@@ -37,14 +45,34 @@ export function RemapKeycodes({ device }: IRemapKeycodes) {
           </div>
           <div className="mt-2 grid min-w-max grid-cols-12">
             {keycodes.map((keycode, index) => (
-              <div key={index} className="h-16 w-16 p-0.5">
-                <Button
-                  className="size-full overflow-hidden whitespace-normal p-1 text-center"
-                  variant="outline"
-                >
-                  {keycode.name}
-                </Button>
-              </div>
+              <TooltipProvider key={index}>
+                <Tooltip>
+                  <div className="h-16 w-16 p-0.5">
+                    <TooltipTrigger
+                      className={cn(
+                        buttonVariants({ variant: "outline" }),
+                        "size-full overflow-hidden whitespace-normal p-1 text-center",
+                      )}
+                    >
+                      {keycode.name}
+                    </TooltipTrigger>
+                  </div>
+                  <TooltipContent className="flex max-w-56 flex-col gap-2">
+                    {keycode.description && (
+                      <p className="text-sm font-medium">
+                        {keycode.description}
+                      </p>
+                    )}
+                    <div className="grid auto-rows-auto gap-2">
+                      {keycode.keycodeNames.map((name, index) => (
+                        <div key={index}>
+                          <Badge variant="secondary">{name}</Badge>
+                        </div>
+                      ))}
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             ))}
           </div>
         </div>

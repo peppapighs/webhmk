@@ -126,61 +126,67 @@ export const keycodeToMetadata = (keycode: number): KeycodeMetadata => {
     return KEYCODE_METADATA_MAP[keycode]
   } else if (IS_LAYER_TO_KEYCODE(keycode)) {
     const layerNum = SP_LAYER_TO_GET_LAYER(keycode)
+    const keycodeName = `TO(${layerNum})`
     return {
-      name: `TO(${layerNum})`,
+      name: keycodeName,
       description: `Activate layer ${layerNum} & deactivate all others`,
       keycode,
-      keycodeNames: [`TO${layerNum}`],
+      keycodeNames: [keycodeName],
       uiCodes: [],
       category: "Layer",
     }
   } else if (IS_LAYER_MO_KEYCODE(keycode)) {
     const layerNum = SP_LAYER_MO_GET_LAYER(keycode)
+    const keycodeName = `MO(${layerNum})`
     return {
-      name: `MO(${layerNum})`,
+      name: keycodeName,
       description: `Activate layer ${layerNum} until released`,
       keycode,
-      keycodeNames: [`MO${layerNum}`],
+      keycodeNames: [keycodeName],
       uiCodes: [],
       category: "Layer",
     }
   } else if (IS_LAYER_DEF_KEYCODE(keycode)) {
     const layerNum = SP_LAYER_DEF_GET_LAYER(keycode)
+    const keycodeName = `DF(${layerNum})`
     return {
-      name: `DF(${layerNum})`,
+      name: keycodeName,
       description: `Set default layer to ${layerNum}`,
       keycode,
-      keycodeNames: [`DF${layerNum}`],
+      keycodeNames: [keycodeName],
       uiCodes: [],
       category: "Layer",
     }
   } else if (IS_LAYER_TOGGLE_KEYCODE(keycode)) {
     const layerNum = SP_LAYER_TOGGLE_GET_LAYER(keycode)
+    const keycodeName = `TG(${layerNum})`
     return {
-      name: `TG(${layerNum})`,
+      name: keycodeName,
       description: `Toggle layer ${layerNum}`,
       keycode,
-      keycodeNames: [`TG${layerNum}`],
+      keycodeNames: [keycodeName],
       uiCodes: [],
       category: "Layer",
     }
   } else if (IS_PROFILE_TO_KEYCODE(keycode)) {
     const profileNum = SP_PROFILE_TO_GET_PROFILE(keycode)
+    const keycodeName = `PTO(${profileNum})`
     return {
-      name: `PTO(${profileNum})`,
+      name: keycodeName,
       description: `Activate profile ${profileNum}`,
       keycode,
-      keycodeNames: [`PTO${profileNum}`],
+      keycodeNames: [keycodeName],
       uiCodes: [],
       category: "Profile",
     }
   } else if (IS_DKS_KEYCODE(keycode)) {
     const config = SP_DKS_GET_CONFIG(keycode)
+    const keycodeName = `DKS(${config})`
     return {
-      name: `DKS(${config})`,
+      name: keycodeName,
       description: `Dynamic Keystroke ${config}`,
       keycode,
-      keycodeNames: [`DKS${config}`],
+      keycodeNames: [keycodeName],
       uiCodes: [],
       category: "Dynamic Keystroke",
     }
@@ -201,7 +207,16 @@ export const renderableKeycodes = (keyboardMetadata: KeyboardMetadata) => {
   const keycodes = KEYCODE_METADATA.map((metadata) => metadata.keycode)
 
   for (let i = 0; i < keyboardMetadata.numLayers; i++) {
-    keycodes.push(TO(i), MO(i), DF(i), TG(i))
+    keycodes.push(TO(i))
+  }
+  for (let i = 0; i < keyboardMetadata.numLayers; i++) {
+    keycodes.push(MO(i))
+  }
+  for (let i = 0; i < keyboardMetadata.numLayers; i++) {
+    keycodes.push(DF(i))
+  }
+  for (let i = 0; i < keyboardMetadata.numLayers; i++) {
+    keycodes.push(TG(i))
   }
   for (let i = 0; i < keyboardMetadata.numProfiles; i++) {
     keycodes.push(PTO(i))
