@@ -90,7 +90,7 @@ export function RemapKeycodes({ device }: IRemapKeycodes) {
                 {keycodes.map((keycode, i) => (
                   <TooltipProvider key={i}>
                     <Tooltip>
-                      <div className="h-16 w-16 p-0.5">
+                      <div className="size-16 p-0.5">
                         <TooltipTrigger
                           disabled={index === null}
                           onClick={() =>

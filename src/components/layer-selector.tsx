@@ -30,7 +30,7 @@ export function LayerSelector({ device: { metadata } }: ILayerSelectorProps) {
           <RadioGroupItem
             key={i}
             value={`${i}`}
-            className="radio-item h-8 w-8 text-sm"
+            className="radio-item size-8 text-sm"
           >
             {i}
           </RadioGroupItem>
