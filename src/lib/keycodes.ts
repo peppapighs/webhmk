@@ -128,6 +128,7 @@ export const keycodeToMetadata = (keycode: number): KeycodeMetadata => {
       keycode,
       keycodeNames: [`TO${layerNum}`],
       uiCodes: [],
+      category: "Layer",
     }
   } else if (IS_LAYER_MO_KEYCODE(keycode)) {
     const layerNum = SP_LAYER_MO_GET_LAYER(keycode)
@@ -137,6 +138,7 @@ export const keycodeToMetadata = (keycode: number): KeycodeMetadata => {
       keycode,
       keycodeNames: [`MO${layerNum}`],
       uiCodes: [],
+      category: "Layer",
     }
   } else if (IS_LAYER_DEF_KEYCODE(keycode)) {
     const layerNum = SP_LAYER_DEF_GET_LAYER(keycode)
@@ -146,6 +148,7 @@ export const keycodeToMetadata = (keycode: number): KeycodeMetadata => {
       keycode,
       keycodeNames: [`DF${layerNum}`],
       uiCodes: [],
+      category: "Layer",
     }
   } else if (IS_LAYER_TOGGLE_KEYCODE(keycode)) {
     const layerNum = SP_LAYER_TOGGLE_GET_LAYER(keycode)
@@ -155,6 +158,7 @@ export const keycodeToMetadata = (keycode: number): KeycodeMetadata => {
       keycode,
       keycodeNames: [`TG${layerNum}`],
       uiCodes: [],
+      category: "Layer",
     }
   } else {
     const hex = displayUint16(keycode)
@@ -164,6 +168,7 @@ export const keycodeToMetadata = (keycode: number): KeycodeMetadata => {
       keycode,
       keycodeNames: [],
       uiCodes: [],
+      category: "Unknown",
     }
   }
 }

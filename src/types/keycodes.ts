@@ -407,4 +407,5 @@ export type KeycodeMetadata = {
   keycode: number
   keycodeNames: string[]
   uiCodes: string[]
+  category: string
 }
