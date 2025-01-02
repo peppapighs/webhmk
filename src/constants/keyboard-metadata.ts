@@ -151,8 +151,8 @@ export const KEYBOARD_METADATA = schema.parse([
         Keycode.KC_UP,
         LT(1, Keycode.KC_VOLD), // R4
         Keycode.KC_LCTL,
-        Keycode.KC_LALT,
         Keycode.KC_LGUI,
+        Keycode.KC_LALT,
         Keycode.KC_SPC,
         Keycode.KC_RALT,
         Keycode.KC_LEFT,

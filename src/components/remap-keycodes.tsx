@@ -94,7 +94,7 @@ export function RemapKeycodes({ device }: IRemapKeycodes) {
                         <TooltipTrigger
                           disabled={index === null}
                           onClick={() =>
-                            index &&
+                            index !== null &&
                             setKeymap.mutate({
                               index,
                               keycode: keycode.keycode,

@@ -4,6 +4,7 @@ import { useConfiguratorState } from "@/hooks/use-configurator-state"
 import { useDemoKeyboard } from "@/hooks/use-demo-keyboard"
 import { useLayoutEffect } from "react"
 import { Configurator } from "./configurator"
+import { ConfiguratorLayout } from "./configurator-layout"
 
 export function DemoConfigurator() {
   const device = useDemoKeyboard()
@@ -11,5 +12,9 @@ export function DemoConfigurator() {
 
   useLayoutEffect(reset, [reset])
 
-  return <Configurator device={device} />
+  return (
+    <ConfiguratorLayout>
+      <Configurator device={device} />
+    </ConfiguratorLayout>
+  )
 }

@@ -1,7 +1,4 @@
-"use client"
-
 import { KeyboardDevice } from "@/types/keyboard-device"
-import { useRouter } from "next/navigation"
 import { DeviceInfo } from "./device-info"
 import { ProfileSelector } from "./profile-selector"
 import { Button } from "./ui/button"
@@ -13,13 +10,6 @@ interface ISidebarProps {
 }
 
 export function Sidebar({ device }: ISidebarProps) {
-  const router = useRouter()
-
-  const exitConfigurator = async () => {
-    await device.reset()
-    router.replace("/")
-  }
-
   return (
     <ScrollArea className="h-full">
       <div className="flex flex-col gap-4 p-4">
@@ -33,7 +23,7 @@ export function Sidebar({ device }: ISidebarProps) {
           <CardFooter>
             <Button
               variant="destructive"
-              onClick={exitConfigurator}
+              onClick={() => device.reset()}
               className="w-full"
             >
               Exit Configurator
