@@ -1,4 +1,5 @@
 export type ConfiguratorStateState = {
+  tab: string
   profileNum: number
   remap: {
     layerNum: number
@@ -8,6 +9,7 @@ export type ConfiguratorStateState = {
 
 export type ConfiguratorStateAction = {
   reset(): void
+  setTab(tab: string): void
   setProfileNum(profileNum: number): void
 
   remap: {

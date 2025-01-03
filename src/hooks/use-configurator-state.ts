@@ -5,6 +5,7 @@ import {
 import { create } from "zustand"
 
 const initialState: ConfiguratorStateState = {
+  tab: "remap",
   profileNum: 0,
   remap: {
     layerNum: 0,
@@ -23,6 +24,10 @@ export const useConfiguratorState = create<ConfiguratorState>((set) => ({
         ...initialState.remap,
       },
     }))
+  },
+
+  setTab(tab) {
+    set({ tab })
   },
 
   setProfileNum(profileNum) {

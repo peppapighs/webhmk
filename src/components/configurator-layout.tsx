@@ -1,4 +1,8 @@
+"use client"
+
+import { useConfiguratorState } from "@/hooks/use-configurator-state"
 import Link from "next/link"
+import { useLayoutEffect } from "react"
 import { ThemeSwitcher } from "./theme-switcher"
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs"
 
@@ -11,8 +15,12 @@ export function ConfiguratorLayout({
   hideTabs,
   children,
 }: IConfiguratorLayoutProps) {
+  const { tab, reset, setTab } = useConfiguratorState()
+
+  useLayoutEffect(reset, [reset])
+
   return (
-    <Tabs defaultValue="remap" asChild>
+    <Tabs value={tab} onValueChange={(tab) => setTab(tab)} asChild>
       <div className="flex flex-1 flex-col divide-y">
         <header className="w-full bg-background">
           <div className="mx-auto flex h-14 max-w-[1800px] items-center gap-6 px-6 min-[1800px]:border-x">
