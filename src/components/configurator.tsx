@@ -1,7 +1,7 @@
 import { KeyboardDevice } from "@/types/keyboard-device"
 import { TabsContent } from "@radix-ui/react-tabs"
 import { KeyTester } from "./key-tester"
-import { Remap } from "./remap"
+import { RemapTab } from "./remap/remap-tab"
 import { Sidebar } from "./sidebar"
 
 interface IConfiguratorProps {
@@ -16,7 +16,7 @@ export function Configurator({ device }: IConfiguratorProps) {
       </aside>
       <div className="flex h-[calc(100vh-3.5rem-1px)] w-full flex-col">
         <TabsContent value="remap" asChild>
-          <Remap device={device} />
+          <RemapTab device={device} />
         </TabsContent>
         <TabsContent value="key-tester" asChild>
           <KeyTester />

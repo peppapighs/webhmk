@@ -3,8 +3,8 @@
 import { useConfiguratorState } from "@/hooks/use-configurator-state"
 import { KeyboardDevice } from "@/types/keyboard-device"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { LayerSelector } from "./layer-selector"
-import { Button } from "./ui/button"
+import { Button } from "../ui/button"
+import { RemapLayerSelector } from "./layer-selector"
 
 interface IRemapHeaderProps {
   device: KeyboardDevice
@@ -35,7 +35,7 @@ export function RemapHeader({ device }: IRemapHeaderProps) {
 
   return (
     <header className="flex w-full items-center justify-between gap-6 px-6">
-      <LayerSelector device={device} />
+      <RemapLayerSelector device={device} />
       <Button variant="outline" onClick={() => resetKeymap.mutate()}>
         Reset
       </Button>

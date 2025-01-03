@@ -7,15 +7,15 @@ import { cn } from "@/lib/utils"
 import { KeyboardDevice } from "@/types/keyboard-device"
 import { KeycodeMetadata } from "@/types/keycodes"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { Badge } from "./ui/badge"
-import { buttonVariants } from "./ui/button"
-import { Label } from "./ui/label"
+import { Badge } from "../ui/badge"
+import { buttonVariants } from "../ui/button"
+import { Label } from "../ui/label"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip"
+} from "../ui/tooltip"
 
 interface IRemapKeycodes {
   device: KeyboardDevice

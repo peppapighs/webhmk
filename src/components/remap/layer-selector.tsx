@@ -3,13 +3,15 @@
 import { useConfiguratorState } from "@/hooks/use-configurator-state"
 import { KeyboardDevice } from "@/types/keyboard-device"
 import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group"
-import { Label } from "./ui/label"
+import { Label } from "../ui/label"
 
-interface ILayerSelectorProps {
+interface IRemapLayerSelectorProps {
   device: KeyboardDevice
 }
 
-export function LayerSelector({ device: { metadata } }: ILayerSelectorProps) {
+export function RemapLayerSelector({
+  device: { metadata },
+}: IRemapLayerSelectorProps) {
   const {
     remap: { layerNum, setLayerNum },
   } = useConfiguratorState()

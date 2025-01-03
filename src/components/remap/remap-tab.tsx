@@ -1,14 +1,14 @@
 import { KeyboardDevice } from "@/types/keyboard-device"
-import { RemapHeader } from "./remap-header"
-import { RemapKeyboard } from "./remap-keyboard"
-import { RemapKeycodes } from "./remap-keycodes"
-import { ScrollArea, ScrollBar } from "./ui/scroll-area"
+import { ScrollArea, ScrollBar } from "../ui/scroll-area"
+import { RemapHeader } from "./header"
+import { RemapKeyboard } from "./keyboard"
+import { RemapKeycodes } from "./keycodes"
 
-interface IRemapProps {
+interface IRemapTabProps {
   device: KeyboardDevice
 }
 
-export function Remap({ device }: IRemapProps) {
+export function RemapTab({ device }: IRemapTabProps) {
   return (
     <div className="flex h-full max-h-full flex-1 flex-col divide-y">
       <ScrollArea className="max-h-[75%] w-full">
