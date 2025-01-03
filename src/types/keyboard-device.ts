@@ -14,6 +14,8 @@ type SetKeymapQuery = {
 
 export type KeyboardDeviceAction = {
   reset(): Promise<void>
+  reboot(): Promise<void>
+  recalibrate(): Promise<void>
   getSwitchDebug(): Promise<ClassRequestSwitchDebugResponse>
   getKeymap(): Promise<number[][][]>
   setKeymap(queries: SetKeymapQuery[]): Promise<void>

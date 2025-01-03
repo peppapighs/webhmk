@@ -70,7 +70,7 @@ export function RemapKeycodes({ device }: IRemapKeycodes) {
   })
 
   return (
-    <div className="flex flex-col items-center gap-6 p-6">
+    <div className="flex flex-col items-center gap-6">
       {Object.entries(groupedKeycodes).map(
         ([category, keycodes]) =>
           keycodes.length > 0 && (

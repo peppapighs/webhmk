@@ -23,6 +23,10 @@ export const useDemoKeyboard = create<KeyboardDevice & DemoKeyboardDeviceState>(
       set(initialState)
     },
 
+    async reboot() {},
+
+    async recalibrate() {},
+
     async getSwitchDebug() {
       const numKeys = get().metadata.numKeys
       return {

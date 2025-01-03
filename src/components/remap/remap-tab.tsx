@@ -21,7 +21,9 @@ export function RemapTab({ device }: IRemapTabProps) {
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
       <ScrollArea className="w-full flex-1">
-        <RemapKeycodes device={device} />
+        <div className="mx-auto max-w-7xl p-6">
+          <RemapKeycodes device={device} />
+        </div>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
     </div>

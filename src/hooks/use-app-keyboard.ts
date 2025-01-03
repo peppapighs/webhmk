@@ -139,6 +139,40 @@ export const useAppKeyboard = create<AppKeyboardDevice & KeyboardDeviceAction>(
       set({ status: "disconnected" })
     },
 
+    async reboot() {
+      const device = get()
+      if (device.status === "disconnected") {
+        throw new Error("Device is disconnected")
+      }
+
+      const { status } = await send(
+        device,
+        ClassRequest.CLASS_REQUEST_REBOOT,
+        ClassRequestIndex.CLASS_REQUEST_INDEX_SET,
+      )
+
+      if (status !== "ok") {
+        throw new Error("Failed to reboot")
+      }
+    },
+
+    async recalibrate() {
+      const device = get()
+      if (device.status === "disconnected") {
+        throw new Error("Device is disconnected")
+      }
+
+      const { status } = await send(
+        device,
+        ClassRequest.CLASS_REQUEST_RECALIBRATE,
+        ClassRequestIndex.CLASS_REQUEST_INDEX_SET,
+      )
+
+      if (status !== "ok") {
+        throw new Error("Failed to recalibrate")
+      }
+    },
+
     async getSwitchDebug() {
       const device = get()
       if (device.status === "disconnected") {

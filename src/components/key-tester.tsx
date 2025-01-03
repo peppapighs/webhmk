@@ -64,6 +64,7 @@ export function KeyTesterProvider({
     }
 
     const onKeyUp = (e: KeyboardEvent) => {
+      e.preventDefault()
       const id = randomNumber()
       setPressedKeycodes((prev) =>
         prev.filter((event) => event.code !== getKeycode(e)),

@@ -29,11 +29,11 @@ export function DebugHeader() {
             </TooltipTrigger>
             <TooltipContent className="max-w-56 text-sm font-medium">
               <p>
-                This feature will request keyboard matrix data at high
-                frequency. It may cause the keyboard to slow down or become
-                unresponsive. Make sure it is disabled when not in use. Note
-                that this feature will be disabled automatically when switching
-                to another tab.
+                This feature continuously requests keyboard matrix data at a
+                high frequency, which may cause the keyboard to slow down or
+                become unresponsive. Ensure it is disabled when not in use. Note
+                that the feature will automatically disable itself when you
+                switch to another tab.
               </p>
             </TooltipContent>
           </Tooltip>
