@@ -34,9 +34,9 @@ export function RemapHeader({ device }: IRemapHeaderProps) {
   })
 
   return (
-    <header className="flex w-full items-center justify-between gap-6 px-6">
+    <header className="flex w-full items-center justify-between gap-6 p-3">
       <RemapLayerSelector device={device} />
-      <Button variant="outline" onClick={() => resetKeymap.mutate()}>
+      <Button variant="destructive" onClick={() => resetKeymap.mutate()}>
         Reset
       </Button>
     </header>

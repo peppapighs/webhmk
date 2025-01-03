@@ -17,8 +17,8 @@ export function RemapLayerSelector({
   } = useConfiguratorState()
 
   return (
-    <div className="flex h-14 items-center gap-2">
-      <Label htmlFor="layer" className="text-lg font-bold">
+    <div className="flex items-center gap-2">
+      <Label htmlFor="layer" className="ml-2 text-lg font-bold">
         Layer
       </Label>
       <RadioGroup
