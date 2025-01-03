@@ -1,12 +1,11 @@
 import { cn } from "@/lib/utils"
 import { KeyboardMetadata } from "@/types/keyboard-metadata"
-import { ClassValue } from "clsx"
 import { JSX } from "react"
 
 interface IKeyboardLayoutProps {
   metadata: KeyboardMetadata
   size: number
-  className?: ClassValue
+  className?: string
   elt(i: number): JSX.Element
 }
 
