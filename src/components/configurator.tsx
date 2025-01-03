@@ -1,5 +1,6 @@
 import { KeyboardDevice } from "@/types/keyboard-device"
 import { TabsContent } from "@radix-ui/react-tabs"
+import { DebugTab } from "./debug/debug-tab"
 import { KeyTester } from "./key-tester"
 import { RemapTab } from "./remap/remap-tab"
 import { Sidebar } from "./sidebar"
@@ -20,6 +21,9 @@ export function Configurator({ device }: IConfiguratorProps) {
         </TabsContent>
         <TabsContent value="key-tester" asChild>
           <KeyTester />
+        </TabsContent>
+        <TabsContent value="debug" asChild>
+          <DebugTab device={device} />
         </TabsContent>
       </div>
     </div>

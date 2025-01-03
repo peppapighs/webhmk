@@ -5,6 +5,9 @@ export type ConfiguratorStateState = {
     layerNum: number
     index: number | null
   }
+  debug: {
+    isDebugging: boolean
+  }
 }
 
 export type ConfiguratorStateAction = {
@@ -15,6 +18,10 @@ export type ConfiguratorStateAction = {
   remap: {
     setLayerNum(layerNum: number): void
     setIndex(index: number | null): void
+  }
+
+  debug: {
+    toggleDebugging(): void
   }
 }
 

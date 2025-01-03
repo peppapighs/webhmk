@@ -11,6 +11,9 @@ const initialState: ConfiguratorStateState = {
     layerNum: 0,
     index: null,
   },
+  debug: {
+    isDebugging: false,
+  },
 }
 
 export const useConfiguratorState = create<ConfiguratorState>((set) => ({
@@ -22,6 +25,10 @@ export const useConfiguratorState = create<ConfiguratorState>((set) => ({
       remap: {
         ...state.remap,
         ...initialState.remap,
+      },
+      debug: {
+        ...state.debug,
+        ...initialState.debug,
       },
     }))
   },
@@ -55,6 +62,19 @@ export const useConfiguratorState = create<ConfiguratorState>((set) => ({
         remap: {
           ...state.remap,
           index,
+        },
+      }))
+    },
+  },
+
+  debug: {
+    ...initialState.debug,
+
+    toggleDebugging() {
+      set((state) => ({
+        debug: {
+          ...state.debug,
+          isDebugging: !state.debug.isDebugging,
         },
       }))
     },

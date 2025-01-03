@@ -1,6 +1,7 @@
 "use client"
 
 import { useAppKeyboard } from "@/hooks/use-app-keyboard"
+import { useResetDevice } from "@/hooks/use-reset-device"
 import { useEffect } from "react"
 import { Configurator } from "./configurator"
 import { ConfiguratorLayout } from "./configurator-layout"
@@ -8,11 +9,12 @@ import { Button } from "./ui/button"
 
 export function AppConfigurator() {
   const device = useAppKeyboard()
+  const resetDevice = useResetDevice(device.reset)
 
   useEffect(() => {
     const onDeviceDisconnect = async () => {
       if (device.status === "connected") {
-        await device.reset()
+        resetDevice.mutate()
       }
     }
 
@@ -25,7 +27,7 @@ export function AppConfigurator() {
     } else {
       cleanup()
     }
-  }, [device])
+  }, [device, resetDevice])
 
   return (
     <ConfiguratorLayout hideTabs={device.status === "disconnected"}>

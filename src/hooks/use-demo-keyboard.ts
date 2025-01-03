@@ -23,6 +23,14 @@ export const useDemoKeyboard = create<KeyboardDevice & DemoKeyboardDeviceState>(
       set(initialState)
     },
 
+    async getSwitchDebug() {
+      const numKeys = get().metadata.numKeys
+      return {
+        adcValues: Array(numKeys).fill(0),
+        distances: Array(numKeys).fill(0),
+      }
+    },
+
     async getKeymap() {
       return get().keymap
     },

@@ -17,3 +17,8 @@ export enum ClassRequestIndex {
   CLASS_REQUEST_INDEX_GET = 0,
   CLASS_REQUEST_INDEX_SET,
 }
+
+export type ClassRequestSwitchDebugResponse = {
+  adcValues: number[]
+  distances: number[]
+}

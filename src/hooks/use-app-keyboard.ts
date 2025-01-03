@@ -139,6 +139,34 @@ export const useAppKeyboard = create<AppKeyboardDevice & KeyboardDeviceAction>(
       set({ status: "disconnected" })
     },
 
+    async getSwitchDebug() {
+      const device = get()
+      if (device.status === "disconnected") {
+        throw new Error("Device is disconnected")
+      }
+
+      const { metadata } = device
+      const { status, data } = await receive(
+        device,
+        ClassRequest.CLASS_REQUEST_SWITCH_DEBUG,
+        ClassRequestIndex.CLASS_REQUEST_INDEX_GET,
+        3 * metadata.numKeys,
+      )
+
+      if (status !== "ok" || data === undefined) {
+        throw new Error("Failed to get switch debug")
+      }
+
+      return {
+        adcValues: Array.from({ length: metadata.numKeys }, (_, i) =>
+          data.getUint16(2 * i, true),
+        ),
+        distances: Array.from({ length: metadata.numKeys }, (_, i) =>
+          data.getUint8(2 * metadata.numKeys + i),
+        ),
+      }
+    },
+
     async getKeymap() {
       const device = get()
       if (device.status === "disconnected") {
