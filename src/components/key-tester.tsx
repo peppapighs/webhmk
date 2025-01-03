@@ -1,93 +1,145 @@
-import { useEffect, useRef, useState } from "react"
+"use client"
 
-interface KeyEvent {
-  key: string
-  code: string
-  timestamp: number
+import { cn } from "@/lib/utils"
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
+import { Badge } from "./ui/badge"
+import { ScrollArea } from "./ui/scroll-area"
+
+type KeyTesterState = {
+  pressedKeycodes: string[]
+  releasedKeycodes: string[]
 }
 
-export function KeyTester() {
-  const [pressedKeys, setPressedKeys] = useState<KeyEvent[]>([])
-  const [releasedKeys, setReleasedKeys] = useState<KeyEvent[]>([])
-  const timeouts = useRef<{ [key: string]: NodeJS.Timeout }>({})
-  const TIMEOUT_DURATION = 1000 // exactly 1 second
+const KeyTesterContext = createContext<KeyTesterState>({
+  pressedKeycodes: [],
+  releasedKeycodes: [],
+})
+
+type KeyEvent = {
+  id: number
+  code: string
+}
+
+const KEY_UP_TIMEOUT = 500
+
+const randomNumber = () => {
+  const array = new Uint32Array(1)
+  window.crypto.getRandomValues(array)
+  return array[0]
+}
+
+const getKeycode = (e: KeyboardEvent) => (e.code === "" ? e.key : e.code)
+
+export function KeyTesterProvider({
+  children,
+}: Readonly<{ children?: React.ReactNode }>) {
+  const [pressedKeycodes, setPressedKeycodes] = useState<KeyEvent[]>([])
+  const [releasedKeycodes, setReleasedKeycodes] = useState<KeyEvent[]>([])
+  const timeouts = useRef<Record<number, NodeJS.Timeout>>({})
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const onKeyDown = (e: KeyboardEvent) => {
       e.preventDefault()
-      setPressedKeys((prev) => {
-        if (prev.some((k) => k.code === e.code)) return prev
-        return [...prev, { key: e.key, code: e.code, timestamp: Date.now() }]
-      })
-    }
-
-    const handleKeyUp = (e: KeyboardEvent) => {
-      const timestamp = Date.now()
-      const newKey = {
-        key: e.key,
-        code: e.code,
-        timestamp,
+      const keycode = getKeycode(e)
+      if (keycode === null) {
+        return
       }
-
-      setPressedKeys((prev) => prev.filter((k) => k.code !== e.code))
-      // Add new released key without filtering existing ones
-      setReleasedKeys((prev) => [...prev, newKey])
-
-      // Set timeout using timestamp as identifier
-      timeouts.current[timestamp] = setTimeout(() => {
-        setReleasedKeys((prev) => prev.filter((k) => k.timestamp !== timestamp))
-        delete timeouts.current[timestamp]
-      }, TIMEOUT_DURATION)
+      setPressedKeycodes((prev) =>
+        prev.some((event) => event.code === e.code)
+          ? prev
+          : [
+              ...prev,
+              {
+                id: randomNumber(),
+                code: getKeycode(e),
+              },
+            ],
+      )
     }
 
-    window.addEventListener("keydown", handleKeyDown)
-    window.addEventListener("keyup", handleKeyUp)
+    const onKeyUp = (e: KeyboardEvent) => {
+      const id = randomNumber()
+      setPressedKeycodes((prev) =>
+        prev.filter((event) => event.code !== getKeycode(e)),
+      )
+      setReleasedKeycodes((prev) => [...prev, { id, code: getKeycode(e) }])
 
+      timeouts.current[id] = setTimeout(() => {
+        setReleasedKeycodes((prev) => prev.filter((event) => event.id !== id))
+        delete timeouts.current[id]
+      }, KEY_UP_TIMEOUT)
+    }
+
+    const cleanup = () => {
+      for (const timeout of Object.values(timeouts.current)) {
+        clearTimeout(timeout)
+      }
+      timeouts.current = {}
+    }
+
+    window.addEventListener("keydown", onKeyDown)
+    window.addEventListener("keyup", onKeyUp)
     return () => {
-      Object.values(timeouts.current).forEach(clearTimeout)
-      window.removeEventListener("keydown", handleKeyDown)
-      window.removeEventListener("keyup", handleKeyUp)
+      window.removeEventListener("keydown", onKeyDown)
+      window.removeEventListener("keyup", onKeyUp)
+      cleanup()
     }
   }, [])
 
   return (
-    <div className="p-4">
-      <h2 className="mb-4 text-lg font-semibold">Key Tester</h2>
-      <div className="grid grid-cols-2 gap-4">
-        {/* Pressed Keys Column */}
-        <div className="rounded border p-4">
-          <h3 className="mb-2 font-medium">Pressed Keys</h3>
-          <div className="space-y-2">
-            {pressedKeys.map((event) => (
-              <div
-                key={event.timestamp}
-                className="toggle-item flex size-16 flex-col items-center justify-center overflow-hidden p-1 text-sm"
-              >
-                <span className="font-mono">
-                  {event.key} ({event.code})
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
+    <KeyTesterContext.Provider
+      value={{
+        pressedKeycodes: pressedKeycodes.map((e) => e.code),
+        releasedKeycodes: releasedKeycodes.map((e) => e.code),
+      }}
+    >
+      {children}
+    </KeyTesterContext.Provider>
+  )
+}
 
-        {/* Released Keys Column */}
-        <div className="rounded border p-4">
-          <h3 className="mb-2 font-medium">Released Keys</h3>
-          <div className="space-y-2">
-            {releasedKeys.map((event) => (
-              <div
-                key={event.timestamp}
-                className="toggle-item flex size-16 flex-col items-center justify-center overflow-hidden p-1 text-sm"
-              >
-                <span className="font-mono">
-                  {event.key} ({event.code})
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
+export function KeyTesterDown({
+  className,
+  ...props
+}: React.ComponentProps<typeof ScrollArea>) {
+  const { pressedKeycodes } = useContext(KeyTesterContext)
+
+  return (
+    <ScrollArea
+      className={cn("w-full rounded-lg border", className)}
+      {...props}
+    >
+      <div className="flex flex-wrap gap-2 p-4">
+        {pressedKeycodes.map((code, i) => (
+          <Badge key={i}>{code}</Badge>
+        ))}
       </div>
-    </div>
+    </ScrollArea>
+  )
+}
+
+export function KeyTesterUp({
+  className,
+  ...props
+}: React.ComponentProps<typeof ScrollArea>) {
+  const { releasedKeycodes } = useContext(KeyTesterContext)
+
+  return (
+    <ScrollArea
+      className={cn("w-full rounded-lg border", className)}
+      {...props}
+    >
+      <div className="flex flex-wrap gap-2 p-4">
+        {releasedKeycodes.map((code, i) => (
+          <Badge key={i}>{code}</Badge>
+        ))}
+      </div>
+    </ScrollArea>
   )
 }

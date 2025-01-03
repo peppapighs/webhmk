@@ -68,11 +68,15 @@
 }
 
 @layer utilities {
+  .card {
+    @apply rounded-lg border bg-background shadow;
+  }
+
   .radio-item {
-    @apply rounded-lg border bg-background font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground data-[state=checked]:bg-accent data-[state=checked]:font-semibold data-[state=checked]:text-accent-foreground;
+    @apply font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground data-[state=checked]:bg-accent data-[state=checked]:font-semibold data-[state=checked]:text-accent-foreground;
   }
 
   .toggle-item {
-    @apply rounded-lg border bg-background font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground data-[state=on]:border-accent-foreground data-[state=on]:bg-accent data-[state=on]:font-semibold data-[state=on]:text-accent-foreground;
+    @apply font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground data-[state=on]:border-accent-foreground data-[state=on]:bg-accent data-[state=on]:font-semibold data-[state=on]:text-accent-foreground;
   }
 }

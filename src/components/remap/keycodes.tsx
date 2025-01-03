@@ -75,17 +75,15 @@ export function RemapKeycodes({ device }: IRemapKeycodes) {
         ([category, keycodes]) =>
           keycodes.length > 0 && (
             <div key={category} className="flex flex-col">
-              <div className="flex items-center pl-1">
-                <Label
-                  htmlFor={`category-${category}`}
-                  className={cn(
-                    "text-lg font-bold text-muted-foreground",
-                    index !== null && "text-foreground",
-                  )}
-                >
-                  {category}
-                </Label>
-              </div>
+              <Label
+                htmlFor={`category-${category}`}
+                className={cn(
+                  "ml-1 text-lg font-bold text-muted-foreground",
+                  index !== null && "text-foreground",
+                )}
+              >
+                {category}
+              </Label>
               <div className="mt-2 grid min-w-max grid-cols-12">
                 {keycodes.map((keycode, i) => (
                   <TooltipProvider key={i}>

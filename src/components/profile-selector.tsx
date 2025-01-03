@@ -24,7 +24,7 @@ export function ProfileSelector({
         <RadioGroupItem
           key={i}
           value={`${i}`}
-          className="radio-item h-8 w-full px-2"
+          className="card radio-item h-8 w-full px-2"
         >
           Profile {i}
         </RadioGroupItem>

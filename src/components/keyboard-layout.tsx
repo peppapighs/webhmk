@@ -2,10 +2,9 @@ import { cn } from "@/lib/utils"
 import { KeyboardMetadata } from "@/types/keyboard-metadata"
 import { JSX } from "react"
 
-interface IKeyboardLayoutProps {
+interface IKeyboardLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
   metadata: KeyboardMetadata
   size: number
-  className?: string
   elt(i: number): JSX.Element
 }
 
@@ -14,9 +13,10 @@ export function KeyboardLayout({
   size,
   className,
   elt,
+  ...props
 }: IKeyboardLayoutProps) {
   return (
-    <div className={cn("flex flex-col", className)}>
+    <div className={cn("flex flex-col", className)} {...props}>
       {metadata.layout.map((row, i) => (
         <div key={i} className="flex">
           {row.map((key, j) => (

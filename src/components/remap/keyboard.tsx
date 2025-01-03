@@ -53,7 +53,7 @@ export function RemapKeyboard({
           <div className="absolute inset-0 p-0.5">
             <ToggleGroupItem
               value={`${i}`}
-              className="toggle-item flex size-full flex-col items-center justify-center overflow-hidden p-1 text-sm"
+              className="card toggle-item flex size-full flex-col items-center justify-center overflow-hidden p-1 text-sm"
             >
               {keycodeToMetadata(data[profileNum][layerNum][i]).name}
             </ToggleGroupItem>

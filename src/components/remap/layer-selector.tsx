@@ -32,7 +32,7 @@ export function RemapLayerSelector({
           <RadioGroupItem
             key={i}
             value={`${i}`}
-            className="radio-item size-8 text-sm"
+            className="card radio-item size-8 text-sm"
           >
             {i}
           </RadioGroupItem>
