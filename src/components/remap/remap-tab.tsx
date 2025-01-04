@@ -1,4 +1,5 @@
 import { KeyboardDevice } from "@/types/keyboard-device"
+import { KeycodeProvider } from "../keycode-context"
 import { ScrollArea, ScrollBar } from "../ui/scroll-area"
 import { RemapHeader } from "./header"
 import { RemapKeyboard } from "./keyboard"
@@ -22,7 +23,9 @@ export function RemapTab({ device }: IRemapTabProps) {
       </ScrollArea>
       <ScrollArea className="w-full flex-1">
         <div className="mx-auto max-w-7xl p-6">
-          <RemapKeycodes device={device} />
+          <KeycodeProvider device={device}>
+            <RemapKeycodes device={device} />
+          </KeycodeProvider>
         </div>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
