@@ -18,7 +18,7 @@ export function RemapHeader({ device }: IRemapHeaderProps) {
 
   const queryClient = useQueryClient()
 
-  const resetKeymap = useMutation({
+  const resetKeymapQuery = useMutation({
     mutationFn: () =>
       device.setKeymap(
         device.metadata.defaultKeymap[layerNum].map((keycode, index) => ({
@@ -36,7 +36,7 @@ export function RemapHeader({ device }: IRemapHeaderProps) {
   return (
     <header className="flex w-full items-center justify-between gap-6 p-3">
       <RemapLayerSelector device={device} />
-      <Button variant="destructive" onClick={() => resetKeymap.mutate()}>
+      <Button variant="destructive" onClick={() => resetKeymapQuery.mutate()}>
         Reset
       </Button>
     </header>

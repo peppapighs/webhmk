@@ -16,7 +16,7 @@ interface IDebugTabProps {
 export function DebugTab({ device }: IDebugTabProps) {
   const queryClient = useQueryClient()
 
-  const recalibrateDevice = useMutation({
+  const recalibrateQuery = useMutation({
     mutationFn: device.recalibrate,
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -53,7 +53,7 @@ export function DebugTab({ device }: IDebugTabProps) {
               </div>
               <Button
                 id="recalibrate"
-                onClick={() => recalibrateDevice.mutate()}
+                onClick={() => recalibrateQuery.mutate()}
               >
                 Recalibrate
               </Button>

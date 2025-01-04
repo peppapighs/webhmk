@@ -21,13 +21,15 @@ interface IRemapKeycodes {
   device: KeyboardDevice
 }
 
-export function RemapKeycodes({ device }: IRemapKeycodes) {
+export function RemapKeycodes({
+  device: { metadata, setKeymap },
+}: IRemapKeycodes) {
   const {
     profileNum,
     remap: { layerNum, index, setIndex },
   } = useConfiguratorState()
 
-  const groupedKeycodes = renderableKeycodes(device.metadata)
+  const groupedKeycodes = renderableKeycodes(metadata)
     .map((keycode) => keycodeToMetadata(keycode))
     .reduce(
       (acc, keycode) => {
@@ -54,9 +56,9 @@ export function RemapKeycodes({ device }: IRemapKeycodes) {
     keycode: number
   }
 
-  const setKeymap = useMutation({
+  const setKeymapQuery = useMutation({
     mutationFn: async ({ index, keycode }: SetKeymapQuery) => {
-      await device.setKeymap([
+      await setKeymap([
         { profile: profileNum, layer: layerNum, index, keycode },
       ])
       return index
@@ -64,7 +66,7 @@ export function RemapKeycodes({ device }: IRemapKeycodes) {
     onSuccess: (index) => {
       queryClient.invalidateQueries({ queryKey: ["configurator", "keymap"] })
       if (index !== null) {
-        setIndex(index + 1 === device.metadata.numKeys ? null : index + 1)
+        setIndex(index + 1 === metadata.numKeys ? null : index + 1)
       }
     },
   })
@@ -93,7 +95,7 @@ export function RemapKeycodes({ device }: IRemapKeycodes) {
                           disabled={index === null}
                           onClick={() =>
                             index !== null &&
-                            setKeymap.mutate({
+                            setKeymapQuery.mutate({
                               index,
                               keycode: keycode.keycode,
                             })
