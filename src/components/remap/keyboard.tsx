@@ -49,16 +49,26 @@ export function RemapKeyboard({
       <KeyboardLayout
         metadata={metadata}
         size={4}
-        elt={(i) => (
-          <div className="absolute inset-0 p-0.5">
-            <ToggleGroupItem
-              value={`${i}`}
-              className="card toggle-item flex size-full flex-col items-center justify-center overflow-hidden p-1 text-sm"
-            >
-              {keycodeToMetadata(data[profileNum][layerNum][i]).name}
-            </ToggleGroupItem>
-          </div>
-        )}
+        elt={(i) => {
+          const keycode = keycodeToMetadata(data[profileNum][layerNum][i])
+          return (
+            <div className="absolute inset-0 p-0.5">
+              <ToggleGroupItem
+                value={`${i}`}
+                className="card toggle-item keycode size-full overflow-hidden p-1 text-sm"
+              >
+                {keycode.render ? (
+                  <>
+                    {keycode.render}
+                    <span className="sr-only">{keycode.name}</span>
+                  </>
+                ) : (
+                  keycode.name
+                )}
+              </ToggleGroupItem>
+            </div>
+          )
+        }}
       />
     </ToggleGroup>
   )

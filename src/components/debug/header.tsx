@@ -27,7 +27,7 @@ export function DebugHeader() {
               {isDebugging ? "Stop Debugging" : "Start Debugging"}
               <TriangleAlert />
             </TooltipTrigger>
-            <TooltipContent className="max-w-56 text-sm font-medium">
+            <TooltipContent className="max-w-prose text-sm font-medium">
               <p>
                 This feature continuously requests keyboard matrix data at a
                 high frequency, which may cause the keyboard to slow down or

@@ -100,13 +100,20 @@ export function RemapKeycodes({ device }: IRemapKeycodes) {
                           }
                           className={cn(
                             buttonVariants({ variant: "outline" }),
-                            "size-full overflow-hidden whitespace-normal p-1 text-center",
+                            "keycode size-full overflow-hidden p-1 text-center",
                           )}
                         >
-                          {keycode.name}
+                          {keycode.render ? (
+                            <>
+                              {keycode.render}
+                              <span className="sr-only">{keycode.name}</span>
+                            </>
+                          ) : (
+                            keycode.name
+                          )}
                         </TooltipTrigger>
                       </div>
-                      <TooltipContent className="flex max-w-56 flex-col gap-2">
+                      <TooltipContent className="flex max-w-prose flex-col gap-2">
                         {keycode.description && (
                           <p className="text-sm font-medium">
                             {keycode.description}

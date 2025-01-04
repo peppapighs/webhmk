@@ -72,6 +72,10 @@
     @apply rounded-lg border bg-background shadow;
   }
 
+  .keycode {
+    @apply flex flex-col items-center justify-center whitespace-pre text-center [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
+  }
+
   .radio-item {
     @apply font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground data-[state=checked]:bg-accent data-[state=checked]:font-semibold data-[state=checked]:text-accent-foreground;
   }

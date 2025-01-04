@@ -406,6 +406,7 @@ export enum Keycode {
 export type KeycodeMetadata = {
   name: string
   description?: string
+  render?: React.ReactNode
   keycode: number
   keycodeNames: string[]
   uiCodes: string[]

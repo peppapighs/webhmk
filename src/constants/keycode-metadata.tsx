@@ -1,4 +1,35 @@
 import { Keycode, KeycodeMetadata } from "@/types/keycodes"
+import {
+  AlarmClock,
+  ArrowBigLeft,
+  ArrowBigRight,
+  ArrowDown,
+  ArrowLeft,
+  ArrowRight,
+  ArrowUp,
+  Bookmark,
+  Calculator,
+  FastForward,
+  FolderClosed,
+  Grid3X3,
+  Home,
+  LayoutDashboard,
+  Mail,
+  Moon,
+  Play,
+  Power,
+  RefreshCw,
+  Rewind,
+  Search,
+  SkipBack,
+  SkipForward,
+  Square,
+  Sun,
+  SunDim,
+  Volume1,
+  Volume2,
+  VolumeOff,
+} from "lucide-react"
 
 export const KEYCODE_CATEGORIES = [
   "Special",
@@ -219,6 +250,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "1!",
+    render: "!\n1",
     keycode: Keycode.KC_1,
     keycodeNames: ["KC_1"],
     uiCodes: ["Digit1"],
@@ -226,6 +258,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "2@",
+    render: "@\n2",
     keycode: Keycode.KC_2,
     keycodeNames: ["KC_2"],
     uiCodes: ["Digit2"],
@@ -233,6 +266,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "3#",
+    render: "#\n3",
     keycode: Keycode.KC_3,
     keycodeNames: ["KC_3"],
     uiCodes: ["Digit3"],
@@ -240,6 +274,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "4$",
+    render: "$\n4",
     keycode: Keycode.KC_4,
     keycodeNames: ["KC_4"],
     uiCodes: ["Digit4"],
@@ -247,6 +282,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "5%",
+    render: "%\n5",
     keycode: Keycode.KC_5,
     keycodeNames: ["KC_5"],
     uiCodes: ["Digit5"],
@@ -254,6 +290,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "6^",
+    render: "^\n6",
     keycode: Keycode.KC_6,
     keycodeNames: ["KC_6"],
     uiCodes: ["Digit6"],
@@ -261,6 +298,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "7&",
+    render: "&\n7",
     keycode: Keycode.KC_7,
     keycodeNames: ["KC_7"],
     uiCodes: ["Digit7"],
@@ -268,6 +306,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "8*",
+    render: "*\n8",
     keycode: Keycode.KC_8,
     keycodeNames: ["KC_8"],
     uiCodes: ["Digit8"],
@@ -275,6 +314,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "9(",
+    render: "(\n9",
     keycode: Keycode.KC_9,
     keycodeNames: ["KC_9"],
     uiCodes: ["Digit9"],
@@ -282,6 +322,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "0)",
+    render: ")\n0",
     keycode: Keycode.KC_0,
     keycodeNames: ["KC_0"],
     uiCodes: ["Digit0"],
@@ -325,6 +366,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "-_",
+    render: "_\n-",
     keycode: Keycode.KC_MINUS,
     keycodeNames: ["KC_MINUS", "KC_MINS"],
     uiCodes: ["Minus"],
@@ -332,6 +374,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "=+",
+    render: "+\n=",
     keycode: Keycode.KC_EQUAL,
     keycodeNames: ["KC_EQUAL", "KC_EQL"],
     uiCodes: ["Equal"],
@@ -339,6 +382,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "[{",
+    render: "{\n[",
     keycode: Keycode.KC_LEFT_BRACKET,
     keycodeNames: ["KC_LEFT_BRACKET", "KC_LBRC"],
     uiCodes: ["BracketLeft"],
@@ -346,6 +390,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "]}",
+    render: "}\n]",
     keycode: Keycode.KC_RIGHT_BRACKET,
     keycodeNames: ["KC_RIGHT_BRACKET", "KC_RBRC"],
     uiCodes: ["BracketRight"],
@@ -353,6 +398,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "\\|",
+    render: "|\n\\",
     keycode: Keycode.KC_BACKSLASH,
     keycodeNames: ["KC_BACKSLASH", "KC_BSLS"],
     uiCodes: ["Backslash"],
@@ -360,6 +406,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "ISO #~",
+    render: "ISO\n#",
     keycode: Keycode.KC_NONUS_HASH,
     keycodeNames: ["KC_NONUS_HASH", "KC_NUHS"],
     uiCodes: [
@@ -369,6 +416,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: ";:",
+    render: ":\n;",
     keycode: Keycode.KC_SEMICOLON,
     keycodeNames: ["KC_SEMICOLON", "KC_SCLN"],
     uiCodes: ["Semicolon"],
@@ -376,6 +424,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "'\"",
+    render: "\"\n'",
     keycode: Keycode.KC_QUOTE,
     keycodeNames: ["KC_QUOTE", "KC_QUOT"],
     uiCodes: ["Quote"],
@@ -383,6 +432,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "`~",
+    render: "~\n`",
     keycode: Keycode.KC_GRAVE,
     keycodeNames: ["KC_GRAVE", "KC_GRV"],
     uiCodes: ["Backquote"],
@@ -390,6 +440,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: ",<",
+    render: "<\n,",
     keycode: Keycode.KC_COMMA,
     keycodeNames: ["KC_COMMA", "KC_COMM"],
     uiCodes: ["Comma"],
@@ -397,6 +448,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: ".>",
+    render: ">\n.",
     keycode: Keycode.KC_DOT,
     keycodeNames: ["KC_DOT"],
     uiCodes: ["Period"],
@@ -404,6 +456,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "/?",
+    render: "?\n/",
     keycode: Keycode.KC_SLASH,
     keycodeNames: ["KC_SLASH", "KC_SLSH"],
     uiCodes: ["Slash"],
@@ -573,6 +626,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "→",
     description: "Right Arrow",
+    render: <ArrowRight />,
     keycode: Keycode.KC_RIGHT,
     keycodeNames: ["KC_RIGHT", "KC_RGHT"],
     uiCodes: ["ArrowRight"],
@@ -581,6 +635,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "←",
     description: "Left Arrow",
+    render: <ArrowLeft />,
     keycode: Keycode.KC_LEFT,
     keycodeNames: ["KC_LEFT"],
     uiCodes: ["ArrowLeft"],
@@ -589,6 +644,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "↓",
     description: "Down Arrow",
+    render: <ArrowDown />,
     keycode: Keycode.KC_DOWN,
     keycodeNames: ["KC_DOWN"],
     uiCodes: ["ArrowDown"],
@@ -597,6 +653,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "↑",
     description: "Up Arrow",
+    render: <ArrowUp />,
     keycode: Keycode.KC_UP,
     keycodeNames: ["KC_UP"],
     uiCodes: ["ArrowUp"],
@@ -613,6 +670,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num /",
     description: "Numpad /",
+    render: "Num\n/",
     keycode: Keycode.KC_KP_SLASH,
     keycodeNames: ["KC_KP_SLASH", "KC_PSLS"],
     uiCodes: ["NumpadDivide"],
@@ -621,6 +679,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num *",
     description: "Numpad *",
+    render: "Num\n*",
     keycode: Keycode.KC_KP_ASTERISK,
     keycodeNames: ["KC_KP_ASTERISK", "KC_PAST"],
     uiCodes: ["NumpadMultiply"],
@@ -629,6 +688,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num -",
     description: "Numpad -",
+    render: "Num\n-",
     keycode: Keycode.KC_KP_MINUS,
     keycodeNames: ["KC_KP_MINUS", "KC_PMNS"],
     uiCodes: ["NumpadSubtract"],
@@ -637,6 +697,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num +",
     description: "Numpad +",
+    render: "Num\n+",
     keycode: Keycode.KC_KP_PLUS,
     keycodeNames: ["KC_KP_PLUS", "KC_PPLS"],
     uiCodes: ["NumpadAdd"],
@@ -645,6 +706,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num Enter",
     description: "Numpad Enter",
+    render: "Num\nEnter",
     keycode: Keycode.KC_KP_ENTER,
     keycodeNames: ["KC_KP_ENTER", "KC_PENT"],
     uiCodes: ["NumpadEnter"],
@@ -653,6 +715,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num 1",
     description: "Numpad 1 & End",
+    render: "Num\n1",
     keycode: Keycode.KC_KP_1,
     keycodeNames: ["KC_KP_1", "KC_P1"],
     uiCodes: ["Numpad1"],
@@ -661,6 +724,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num 2",
     description: "Numpad 2 & ↓",
+    render: "Num\n2",
     keycode: Keycode.KC_KP_2,
     keycodeNames: ["KC_KP_2", "KC_P2"],
     uiCodes: ["Numpad2"],
@@ -669,6 +733,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num 3",
     description: "Numpad 3 & PgDn",
+    render: "Num\n3",
     keycode: Keycode.KC_KP_3,
     keycodeNames: ["KC_KP_3", "KC_P3"],
     uiCodes: ["Numpad3"],
@@ -677,6 +742,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num 4",
     description: "Numpad 4 & ←",
+    render: "Num\n4",
     keycode: Keycode.KC_KP_4,
     keycodeNames: ["KC_KP_4", "KC_P4"],
     uiCodes: ["Numpad4"],
@@ -685,6 +751,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num 5",
     description: "Numpad 5",
+    render: "Num\n5",
     keycode: Keycode.KC_KP_5,
     keycodeNames: ["KC_KP_5", "KC_P5"],
     uiCodes: ["Numpad5"],
@@ -693,6 +760,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num 6",
     description: "Numpad 6 & →",
+    render: "Num\n6",
     keycode: Keycode.KC_KP_6,
     keycodeNames: ["KC_KP_6", "KC_P6"],
     uiCodes: ["Numpad6"],
@@ -701,6 +769,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num 7",
     description: "Numpad 7 & Home",
+    render: "Num\n7",
     keycode: Keycode.KC_KP_7,
     keycodeNames: ["KC_KP_7", "KC_P7"],
     uiCodes: ["Numpad7"],
@@ -709,6 +778,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num 8",
     description: "Numpad 8 & ↑",
+    render: "Num\n8",
     keycode: Keycode.KC_KP_8,
     keycodeNames: ["KC_KP_8", "KC_P8"],
     uiCodes: ["Numpad8"],
@@ -717,6 +787,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num 9",
     description: "Numpad 9 & PgUp",
+    render: "Num\n9",
     keycode: Keycode.KC_KP_9,
     keycodeNames: ["KC_KP_9", "KC_P9"],
     uiCodes: ["Numpad9"],
@@ -725,6 +796,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num 0",
     description: "Numpad 0 & Ins",
+    render: "Num\n0",
     keycode: Keycode.KC_KP_0,
     keycodeNames: ["KC_KP_0", "KC_P0"],
     uiCodes: ["Numpad0"],
@@ -733,6 +805,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num .",
     description: "Numpad . & Del",
+    render: "Num\n.",
     keycode: Keycode.KC_KP_DOT,
     keycodeNames: ["KC_KP_DOT", "KC_PDOT"],
     uiCodes: ["NumpadDecimal"],
@@ -740,6 +813,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "ISO \\|",
+    render: "ISO\n\\",
     keycode: Keycode.KC_NONUS_BACKSLASH,
     keycodeNames: ["KC_NONUS_BACKSLASH", "KC_NUBS"],
     uiCodes: ["IntlBackslash"],
@@ -755,6 +829,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Num =",
     description: "Numpad =",
+    render: "Num\n=",
     keycode: Keycode.KC_KP_EQUAL,
     keycodeNames: ["KC_KP_EQUAL", "KC_PEQL"],
     uiCodes: ["NumpadEqual"],
@@ -846,6 +921,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "JP \\_",
+    render: "JP\n\\",
     keycode: Keycode.KC_INTERNATIONAL_1,
     keycodeNames: ["KC_INTERNATIONAL_1", "KC_INT1"],
     uiCodes: ["IntlRo"],
@@ -861,6 +937,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   },
   {
     name: "JP ¥|",
+    render: "JP\n¥",
     keycode: Keycode.KC_INTERNATIONAL_3,
     keycodeNames: ["KC_INTERNATIONAL_3", "KC_INT3"],
     uiCodes: ["IntlYen"],
@@ -899,6 +976,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Sys Power",
     description: "System Power",
+    render: <Power />,
     keycode: Keycode.KC_SYSTEM_POWER,
     keycodeNames: ["KC_SYSTEM_POWER", "KC_PWR"],
     uiCodes: ["Power"],
@@ -907,6 +985,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Sys Sleep",
     description: "System Sleep",
+    render: <Moon />,
     keycode: Keycode.KC_SYSTEM_SLEEP,
     keycodeNames: ["KC_SYSTEM_SLEEP", "KC_SLEP"],
     uiCodes: ["Sleep"],
@@ -915,6 +994,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Sys Wake",
     description: "System Wake",
+    render: <AlarmClock />,
     keycode: Keycode.KC_SYSTEM_WAKE,
     keycodeNames: ["KC_SYSTEM_WAKE", "KC_WAKE"],
     uiCodes: ["WakeUp"],
@@ -923,6 +1003,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Mute",
     description: "Mute Audio",
+    render: <VolumeOff />,
     keycode: Keycode.KC_AUDIO_MUTE,
     keycodeNames: ["KC_AUDIO_MUTE", "KC_MUTE"],
     uiCodes: ["AudioVolumeMute", "VolumeMute"],
@@ -931,6 +1012,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Vol +",
     description: "Volume Up",
+    render: <Volume2 />,
     keycode: Keycode.KC_AUDIO_VOL_UP,
     keycodeNames: ["KC_AUDIO_VOL_UP", "KC_VOLU"],
     uiCodes: ["AudioVolumeUp", "VolumeUp"],
@@ -939,6 +1021,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Vol -",
     description: "Volume Down",
+    render: <Volume1 />,
     keycode: Keycode.KC_AUDIO_VOL_DOWN,
     keycodeNames: ["KC_AUDIO_VOL_DOWN", "KC_VOLD"],
     uiCodes: ["AudioVolumeDown", "VolumeDown"],
@@ -947,6 +1030,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Next",
     description: "Media Next",
+    render: <SkipForward />,
     keycode: Keycode.KC_MEDIA_NEXT_TRACK,
     keycodeNames: ["KC_MEDIA_NEXT_TRACK", "KC_MNXT"],
     uiCodes: ["MediaTrackNext"],
@@ -955,6 +1039,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Prev",
     description: "Media Previous",
+    render: <SkipBack />,
     keycode: Keycode.KC_MEDIA_PREV_TRACK,
     keycodeNames: ["KC_MEDIA_PREV_TRACK", "KC_MPRV"],
     uiCodes: ["MediaTrackPrevious"],
@@ -963,6 +1048,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Stop",
     description: "Media Stop",
+    render: <Square />,
     keycode: Keycode.KC_MEDIA_STOP,
     keycodeNames: ["KC_MEDIA_STOP", "KC_MSTP"],
     uiCodes: ["MediaStop"],
@@ -971,6 +1057,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Play",
     description: "Media Play/Pause",
+    render: <Play />,
     keycode: Keycode.KC_MEDIA_PLAY_PAUSE,
     keycodeNames: ["KC_MEDIA_PLAY_PAUSE", "KC_MPLY"],
     uiCodes: ["MediaPlayPause"],
@@ -995,6 +1082,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Mail",
     description: "Launch Mail",
+    render: <Mail />,
     keycode: Keycode.KC_MAIL,
     keycodeNames: ["KC_MAIL"],
     uiCodes: ["LaunchMail"],
@@ -1003,6 +1091,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Calc",
     description: "Launch Calculator",
+    render: <Calculator />,
     keycode: Keycode.KC_CALCULATOR,
     keycodeNames: ["KC_CALCULATOR", "KC_CALC"],
     uiCodes: [],
@@ -1011,58 +1100,105 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "File",
     description: "Launch File Explorer",
+    render: <FolderClosed />,
     keycode: Keycode.KC_MY_COMPUTER,
     keycodeNames: ["KC_MY_COMPUTER", "KC_MYCM"],
     uiCodes: [],
     category: "Application",
   },
   {
-    name: "Web Find",
+    name: "Browser Search",
+    description: "Browser Search",
+    render: (
+      <>
+        Web
+        <Search />
+      </>
+    ),
     keycode: Keycode.KC_WWW_SEARCH,
     keycodeNames: ["KC_WWW_SEARCH", "KC_WSCH"],
     uiCodes: ["BrowserSearch"],
     category: "Browser",
   },
   {
-    name: "Web Home",
+    name: "Browser Home",
+    description: "Browser Home",
+    render: (
+      <>
+        Web
+        <Home />
+      </>
+    ),
     keycode: Keycode.KC_WWW_HOME,
     keycodeNames: ["KC_WWW_HOME", "KC_WHOM"],
     uiCodes: ["BrowserHome"],
     category: "Browser",
   },
   {
-    name: "Web Back",
+    name: "Browser Back",
+    description: "Browser Back",
+    render: (
+      <>
+        Web
+        <ArrowBigLeft />
+      </>
+    ),
     keycode: Keycode.KC_WWW_BACK,
     keycodeNames: ["KC_WWW_BACK", "KC_WBAK"],
     uiCodes: ["BrowserBack"],
     category: "Browser",
   },
   {
-    name: "Web Fwd",
-    description: "Web Forward",
+    name: "Browser Fwd",
+    description: "Browser Forward",
+    render: (
+      <>
+        Web
+        <ArrowBigRight />
+      </>
+    ),
     keycode: Keycode.KC_WWW_FORWARD,
     keycodeNames: ["KC_WWW_FORWARD", "KC_WFWD"],
     uiCodes: ["BrowserForward"],
     category: "Browser",
   },
   {
-    name: "Web Stop",
+    name: "Browser Stop",
+    description: "Browser Stop",
+    render: (
+      <>
+        Web
+        <Square />
+      </>
+    ),
     keycode: Keycode.KC_WWW_STOP,
     keycodeNames: ["KC_WWW_STOP", "KC_WSTP"],
     uiCodes: ["BrowserStop"],
     category: "Browser",
   },
   {
-    name: "Web Ref",
-    description: "Web Refresh",
+    name: "Browser Ref",
+    description: "Browser Refresh",
+    render: (
+      <>
+        Web
+        <RefreshCw />
+      </>
+    ),
     keycode: Keycode.KC_WWW_REFRESH,
     keycodeNames: ["KC_WWW_REFRESH", "KC_WREF"],
     uiCodes: ["BrowserRefresh"],
     category: "Browser",
   },
   {
-    name: "Web Fav",
-    description: "Web Favorites",
+    name: "Browser Fav",
+    description: "Browser Favorites",
+    render: (
+      <>
+        Web
+        <Bookmark />
+      </>
+    ),
     keycode: Keycode.KC_WWW_FAVORITES,
     keycodeNames: ["KC_WWW_FAVORITES", "KC_WFAV"],
     uiCodes: ["BrowserFavorites"],
@@ -1071,6 +1207,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Fast Fwd",
     description: "Media Fast Forward",
+    render: <FastForward />,
     keycode: Keycode.KC_MEDIA_FAST_FORWARD,
     keycodeNames: ["KC_MEDIA_FAST_FORWARD", "KC_MFFD"],
     uiCodes: [],
@@ -1079,6 +1216,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Rwd",
     description: "Media Rewind",
+    render: <Rewind />,
     keycode: Keycode.KC_MEDIA_REWIND,
     keycodeNames: ["KC_MEDIA_REWIND", "KC_MRWD"],
     uiCodes: [],
@@ -1087,6 +1225,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Scr +",
     description: "Screen Brightness Up",
+    render: <Sun />,
     keycode: Keycode.KC_BRIGHTNESS_UP,
     keycodeNames: ["KC_BRIGHTNESS_UP", "KC_BRIU"],
     uiCodes: [],
@@ -1095,6 +1234,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Scr -",
     description: "Screen Brightness Down",
+    render: <SunDim />,
     keycode: Keycode.KC_BRIGHTNESS_DOWN,
     keycodeNames: ["KC_BRIGHTNESS_DOWN", "KC_BRID"],
     uiCodes: [],
@@ -1103,6 +1243,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Mssn Ctrl",
     description: "Launch Mission Control",
+    render: <LayoutDashboard />,
     keycode: Keycode.KC_MISSION_CONTROL,
     keycodeNames: ["KC_MISSION_CONTROL", "KC_MCTL"],
     uiCodes: [],
@@ -1111,6 +1252,7 @@ export const KEYCODE_METADATA: KeycodeMetadata[] = [
   {
     name: "Lpad",
     description: "Launch Launchpad",
+    render: <Grid3X3 />,
     keycode: Keycode.KC_LAUNCHPAD,
     keycodeNames: ["KC_LAUNCHPAD", "KC_LPAD"],
     uiCodes: [],
