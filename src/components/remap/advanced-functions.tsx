@@ -61,13 +61,13 @@ export function RemapAdvancedFunctions({
           className="w-full"
         >
           <AccordionItem value="modifier-key">
-            <AccordionTrigger className="whitespace-nowrap disabled:opacity-50 disabled:hover:no-underline">
+            <AccordionTrigger className="whitespace-nowrap disabled:pointer-events-none disabled:opacity-50 disabled:hover:no-underline">
               <div className="flex items-center">
                 Modifier Key
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger disabled={index === null} asChild>
-                      <Info className="ml-2 size-4 disabled:opacity-50" />
+                      <Info className="ml-2 size-4" />
                     </TooltipTrigger>
                     <TooltipContent className="max-w-prose font-medium">
                       Send modifier(s) together with the key. Only compatible
@@ -82,13 +82,13 @@ export function RemapAdvancedFunctions({
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="mod-tap">
-            <AccordionTrigger className="whitespace-nowrap disabled:opacity-50 disabled:hover:no-underline">
+            <AccordionTrigger className="whitespace-nowrap disabled:pointer-events-none disabled:opacity-50 disabled:hover:no-underline">
               <div className="flex items-center">
                 Mod-Tap
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger disabled={index === null} asChild>
-                      <Info className="ml-2 size-4 disabled:opacity-50" />
+                      <Info className="ml-2 size-4" />
                     </TooltipTrigger>
                     <TooltipContent className="max-w-prose font-medium">
                       Send the key when tapped, send modifier(s) when held. Only
@@ -103,13 +103,13 @@ export function RemapAdvancedFunctions({
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="layer-tap">
-            <AccordionTrigger className="whitespace-nowrap disabled:opacity-50 disabled:hover:no-underline">
+            <AccordionTrigger className="whitespace-nowrap disabled:pointer-events-none disabled:opacity-50 disabled:hover:no-underline">
               <div className="flex items-center">
                 Layer-Tap
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger disabled={index === null} asChild>
-                      <Info className="ml-2 size-4 disabled:opacity-50" />
+                      <Info className="ml-2 size-4" />
                     </TooltipTrigger>
                     <TooltipContent className="max-w-prose font-medium">
                       Send the key when tapped, activate a layer when held. Only
