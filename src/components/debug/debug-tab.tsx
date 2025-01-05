@@ -20,7 +20,7 @@ export function DebugTab({ device }: IDebugTabProps) {
     mutationFn: device.recalibrate,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["configurator", "switchDebug"],
+        queryKey: [device, "configurator", "switchDebug"],
       })
     },
   })

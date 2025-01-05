@@ -12,9 +12,7 @@ interface IDebugKeyboardProps {
 
 const POLLING_INTERVAL = 1000 / 30
 
-export function DebugKeyboard({
-  device: { metadata, getSwitchDebug },
-}: IDebugKeyboardProps) {
+export function DebugKeyboard({ device }: IDebugKeyboardProps) {
   const {
     debug: { isDebugging },
   } = useConfiguratorState()
@@ -22,8 +20,8 @@ export function DebugKeyboard({
   const queryClient = useQueryClient()
 
   const { status, data } = useQuery({
-    queryKey: ["configurator", "switchDebug"],
-    queryFn: getSwitchDebug,
+    queryKey: [device, "configurator", "switchDebug"],
+    queryFn: device.getSwitchDebug,
     enabled: isDebugging,
   })
 
@@ -45,17 +43,17 @@ export function DebugKeyboard({
     interval.current = setInterval(() => {
       if (isDebugging && status === "success") {
         queryClient.invalidateQueries({
-          queryKey: ["configurator", "switchDebug"],
+          queryKey: [device, "configurator", "switchDebug"],
         })
       }
     }, POLLING_INTERVAL)
 
     return cleanup
-  }, [isDebugging, queryClient, status])
+  }, [device, isDebugging, queryClient, status])
 
   return (
     <KeyboardLayout
-      metadata={metadata}
+      metadata={device.metadata}
       size={4}
       elt={(i) => (
         <div className="absolute inset-0 p-0.5">

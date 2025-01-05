@@ -13,7 +13,7 @@ interface ISidebarProps {
 }
 
 export function Sidebar({ device }: ISidebarProps) {
-  const resetDevice = useResetDevice(device.reset)
+  const resetDevice = useResetDevice(device)
 
   return (
     <ScrollArea className="h-full">

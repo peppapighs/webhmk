@@ -1,11 +1,10 @@
 import { cn } from "@/lib/utils"
 import { KeyboardMetadata } from "@/types/keyboard-metadata"
-import { JSX } from "react"
 
 interface IKeyboardLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
   metadata: KeyboardMetadata
   size: number
-  elt(i: number): JSX.Element
+  elt(i: number): React.ReactNode
 }
 
 export function KeyboardLayout({

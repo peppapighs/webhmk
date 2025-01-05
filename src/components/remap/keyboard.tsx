@@ -13,23 +13,21 @@ interface IRemapKeyboardProps {
   device: KeyboardDevice
 }
 
-export function RemapKeyboard({
-  device: { metadata, getKeymap },
-}: IRemapKeyboardProps) {
+export function RemapKeyboard({ device }: IRemapKeyboardProps) {
   const {
     profileNum,
     remap: { layerNum, index, setIndex },
   } = useConfiguratorState()
 
   const { status, data } = useQuery({
-    queryKey: ["configurator", "keymap"],
-    queryFn: getKeymap,
+    queryKey: [device, "configurator", "keymap"],
+    queryFn: device.getKeymap,
   })
 
   if (status !== "success") {
     return (
       <KeyboardLayout
-        metadata={metadata}
+        metadata={device.metadata}
         size={4}
         elt={() => (
           <div className="absolute inset-0 p-0.5">
@@ -48,7 +46,7 @@ export function RemapKeyboard({
       asChild
     >
       <KeyboardLayout
-        metadata={metadata}
+        metadata={device.metadata}
         size={4}
         elt={(i) => {
           const keycode = keycodeToMetadata(data[profileNum][layerNum][i])

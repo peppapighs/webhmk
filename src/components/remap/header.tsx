@@ -29,7 +29,9 @@ export function RemapHeader({ device }: IRemapHeaderProps) {
         })),
       ),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["configurator", "keymap"] })
+      queryClient.invalidateQueries({
+        queryKey: [device, "configurator", "keymap"],
+      })
     },
   })
 
