@@ -229,4 +229,53 @@ export const KEYBOARD_METADATA = schema.parse([
       [...Array(64).fill(Keycode.KC_TRNS)],
     ],
   },
+  {
+    name: "HE8",
+    vendorId: 0xab50,
+    appProductId: 0xab02,
+
+    numProfiles: 4,
+    numLayers: 4,
+    numKeys: 8,
+    numDksConfig: 16,
+
+    layout: [
+      [
+        { i: 0, w: 1, h: 1, ml: 0, mt: 0 },
+        { i: 1, w: 1, h: 1, ml: 0, mt: 0 },
+        { i: 2, w: 1, h: 1, ml: 0, mt: 0 },
+        { i: 3, w: 1, h: 1, ml: 0, mt: 0 },
+      ],
+      [
+        { i: 4, w: 1, h: 1, ml: 0, mt: 0 },
+        { i: 5, w: 1, h: 1, ml: 0, mt: 0 },
+        { i: 6, w: 1, h: 1, ml: 0, mt: 0 },
+        { i: 7, w: 1, h: 1, ml: 0, mt: 0 },
+      ],
+    ],
+    defaultKeymap: [
+      [
+        Keycode.KC_MPLY,
+        Keycode.KC_UP,
+        Keycode.KC_PSCR,
+        Keycode.KC_VOLU, // R1
+        Keycode.KC_LEFT,
+        Keycode.KC_DOWN,
+        Keycode.KC_RGHT,
+        LT(1, Keycode.KC_VOLD), // R2
+      ],
+      [
+        PTO(0),
+        PTO(1),
+        PTO(2),
+        PTO(3), // R1
+        Keycode.SP_MAGIC_BOOTLOADER,
+        Keycode.SP_MAGIC_REBOOT,
+        Keycode.SP_MAGIC_FACTORY_RESET,
+        Keycode.SP_MAGIC_RECALIBRATE, // R2
+      ],
+      [...Array(8).fill(Keycode.KC_TRNS)],
+      [...Array(8).fill(Keycode.KC_TRNS)],
+    ],
+  },
 ])
