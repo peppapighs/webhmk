@@ -1,8 +1,7 @@
 "use client"
 
-import { useConfiguratorState } from "@/hooks/use-configurator-state"
 import Link from "next/link"
-import { useLayoutEffect } from "react"
+import { useConfiguratorState } from "./configurator-state-provider"
 import { ThemeSwitcher } from "./theme-switcher"
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs"
 
@@ -15,9 +14,7 @@ export function ConfiguratorLayout({
   hideTabs,
   children,
 }: IConfiguratorLayoutProps) {
-  const { tab, reset, setTab } = useConfiguratorState()
-
-  useLayoutEffect(reset, [reset])
+  const { tab, setTab } = useConfiguratorState()
 
   return (
     <Tabs value={tab} onValueChange={(tab) => setTab(tab)} asChild>

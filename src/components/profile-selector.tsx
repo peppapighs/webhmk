@@ -1,16 +1,12 @@
 "use client"
 
-import { useConfiguratorState } from "@/hooks/use-configurator-state"
-import { KeyboardDevice } from "@/types/keyboard-device"
+import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
 import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group"
+import { useConfiguratorState } from "./configurator-state-provider"
 
-interface IProfileSelectorProps {
-  device: KeyboardDevice
-}
+export function ProfileSelector() {
+  const { metadata } = useKeyboardDevice()
 
-export function ProfileSelector({
-  device: { metadata },
-}: IProfileSelectorProps) {
   const { profileNum, setProfileNum } = useConfiguratorState()
 
   return (

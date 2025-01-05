@@ -1,19 +1,16 @@
 "use client"
 
+import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
 import { useResetDevice } from "@/hooks/use-reset-device"
-import { KeyboardDevice } from "@/types/keyboard-device"
 import { DeviceInfo } from "./device-info"
 import { ProfileSelector } from "./profile-selector"
 import { Button } from "./ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import { ScrollArea } from "./ui/scroll-area"
 
-interface ISidebarProps {
-  device: KeyboardDevice
-}
-
-export function Sidebar({ device }: ISidebarProps) {
-  const resetDevice = useResetDevice(device)
+export function Sidebar() {
+  const device = useKeyboardDevice()
+  const resetDeviceQuery = useResetDevice(device)
 
   return (
     <ScrollArea className="h-full">
@@ -23,12 +20,12 @@ export function Sidebar({ device }: ISidebarProps) {
             <CardTitle>Device</CardTitle>
           </CardHeader>
           <CardContent>
-            <DeviceInfo device={device} />
+            <DeviceInfo />
           </CardContent>
           <CardFooter>
             <Button
               variant="destructive"
-              onClick={() => resetDevice.mutate()}
+              onClick={() => resetDeviceQuery.mutate()}
               className="w-full"
             >
               Exit Configurator
@@ -40,7 +37,7 @@ export function Sidebar({ device }: ISidebarProps) {
             <CardTitle>Profile</CardTitle>
           </CardHeader>
           <CardFooter>
-            <ProfileSelector device={device} />
+            <ProfileSelector />
           </CardFooter>
         </Card>
       </div>

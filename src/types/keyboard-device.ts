@@ -5,7 +5,7 @@ export type KeyboardDeviceState = {
   metadata: KeyboardMetadata
 }
 
-type SetKeymapQuery = {
+export type SetKeymapQuery = {
   profile: number
   layer: number
   index: number

@@ -1,15 +1,13 @@
 "use client"
 
-import { useConfiguratorState } from "@/hooks/use-configurator-state"
+import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
 import { useSetKeymap } from "@/hooks/use-set-keymap"
-import { KeyboardDevice } from "@/types/keyboard-device"
+import { useConfiguratorState } from "../configurator-state-provider"
 import { KeycodeSelector } from "../keycode-selector"
 
-interface IRemapKeycodes {
-  device: KeyboardDevice
-}
+export function RemapKeycodes() {
+  const device = useKeyboardDevice()
 
-export function RemapKeycodes({ device }: IRemapKeycodes) {
   const {
     remap: { layerNum, index, setIndex, keycodeFilter },
   } = useConfiguratorState()
@@ -18,7 +16,6 @@ export function RemapKeycodes({ device }: IRemapKeycodes) {
 
   return (
     <KeycodeSelector
-      device={device}
       filter={keycodeFilter?.filter}
       disabled={index === null}
       onKeycodeSelect={(keycode) => setKeymapQuery.mutate({ index, keycode })}

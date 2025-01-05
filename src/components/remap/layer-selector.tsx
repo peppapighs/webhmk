@@ -1,17 +1,13 @@
 "use client"
 
-import { useConfiguratorState } from "@/hooks/use-configurator-state"
-import { KeyboardDevice } from "@/types/keyboard-device"
+import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
 import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group"
+import { useConfiguratorState } from "../configurator-state-provider"
 import { Label } from "../ui/label"
 
-interface IRemapLayerSelectorProps {
-  device: KeyboardDevice
-}
+export function RemapLayerSelector() {
+  const { metadata } = useKeyboardDevice()
 
-export function RemapLayerSelector({
-  device: { metadata },
-}: IRemapLayerSelectorProps) {
   const {
     remap: { layerNum, setLayerNum },
   } = useConfiguratorState()

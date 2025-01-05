@@ -1,3 +1,6 @@
+"use client"
+
+import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
 import { KeyboardDevice } from "@/types/keyboard-device"
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group"
 
@@ -23,16 +26,16 @@ export function LayerSelectorPlaceholder({
 }
 
 interface ILayerSelectorProps {
-  device: KeyboardDevice
   layerNum: number | null
   onLayerNumChange: (layerNum: number | null) => void
 }
 
 export function LayerSelector({
-  device: { metadata },
   layerNum,
   onLayerNumChange,
 }: ILayerSelectorProps) {
+  const { metadata } = useKeyboardDevice()
+
   return (
     <ToggleGroup
       type="single"

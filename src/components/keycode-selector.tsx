@@ -1,9 +1,9 @@
 "use client"
 
 import { KEYCODE_CATEGORIES } from "@/constants/keycode-metadata"
+import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
 import { keycodeToMetadata, renderableKeycodes } from "@/lib/keycodes"
 import { cn } from "@/lib/utils"
-import { KeyboardDevice } from "@/types/keyboard-device"
 import { KeycodeMetadata } from "@/types/keycodes"
 import { useMemo } from "react"
 import { Badge } from "./ui/badge"
@@ -17,20 +17,20 @@ import {
 } from "./ui/tooltip"
 
 interface IKeycodeSelectorProps extends React.HTMLAttributes<HTMLDivElement> {
-  device: KeyboardDevice
   disabled?: boolean
   filter?(keycode: number): boolean
   onKeycodeSelect?(keycode: number): void
 }
 
 export function KeycodeSelector({
-  device: { metadata },
   disabled,
   filter,
   onKeycodeSelect,
   className,
   ...props
 }: IKeycodeSelectorProps) {
+  const { metadata } = useKeyboardDevice()
+
   const groupedKeycodes = useMemo(
     () =>
       renderableKeycodes(metadata)

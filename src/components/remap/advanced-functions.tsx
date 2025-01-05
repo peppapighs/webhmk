@@ -1,9 +1,8 @@
 "use client"
 
-import { useConfiguratorState } from "@/hooks/use-configurator-state"
 import { cn } from "@/lib/utils"
-import { KeyboardDevice } from "@/types/keyboard-device"
 import { Info } from "lucide-react"
+import { useConfiguratorState } from "../configurator-state-provider"
 import {
   Accordion,
   AccordionContent,
@@ -22,13 +21,7 @@ import { RemapLayerTap } from "./layer-tap"
 import { RemapModifierKey } from "./modifier-key"
 import { RemapModifierTap } from "./modifier-tap"
 
-interface IRemapAdvancedFunctionsProps {
-  device: KeyboardDevice
-}
-
-export function RemapAdvancedFunctions({
-  device,
-}: IRemapAdvancedFunctionsProps) {
+export function RemapAdvancedFunctions() {
   const {
     remap: {
       index,
@@ -78,7 +71,7 @@ export function RemapAdvancedFunctions({
               </div>
             </AccordionTrigger>
             <AccordionContent asChild>
-              <RemapModifierKey device={device} />
+              <RemapModifierKey />
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="mod-tap">
@@ -99,7 +92,7 @@ export function RemapAdvancedFunctions({
               </div>
             </AccordionTrigger>
             <AccordionContent asChild>
-              <RemapModifierTap device={device} />
+              <RemapModifierTap />
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="layer-tap">
@@ -120,7 +113,7 @@ export function RemapAdvancedFunctions({
               </div>
             </AccordionTrigger>
             <AccordionContent asChild>
-              <RemapLayerTap device={device} />
+              <RemapLayerTap />
             </AccordionContent>
           </AccordionItem>
         </Accordion>

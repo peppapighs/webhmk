@@ -1,38 +1,45 @@
 "use client"
 
-import { useAppKeyboard } from "@/hooks/use-app-keyboard"
+import { KeyboardDeviceContext } from "@/hooks/use-keyboard-device"
 import { useResetDevice } from "@/hooks/use-reset-device"
+import { KeyboardDevice } from "@/types/keyboard-device"
 import { useEffect } from "react"
+import { useAppKeyboardDevice } from "./app-keyboard-provider"
 import { Configurator } from "./configurator"
 import { ConfiguratorLayout } from "./configurator-layout"
 import { Button } from "./ui/button"
 
-export function AppConfigurator() {
-  const device = useAppKeyboard()
-  const resetDevice = useResetDevice(device.reset)
+interface IConfiguratorMainProps {
+  device: KeyboardDevice
+}
+
+const ConfiguratorMain = ({ device }: IConfiguratorMainProps) => {
+  const resetDeviceQuery = useResetDevice(device)
 
   useEffect(() => {
     const onDeviceDisconnect = async () => {
-      if (device.status === "connected") {
-        resetDevice.mutate()
-      }
+      resetDeviceQuery.mutate()
     }
 
-    const cleanup = () =>
+    navigator.usb.addEventListener("disconnect", onDeviceDisconnect)
+    return () =>
       navigator.usb.removeEventListener("disconnect", onDeviceDisconnect)
+  }, [device, resetDeviceQuery])
 
-    if (device.status === "connected") {
-      navigator.usb.addEventListener("disconnect", onDeviceDisconnect)
-      return cleanup
-    } else {
-      cleanup()
-    }
-  }, [device, resetDevice])
+  return (
+    <KeyboardDeviceContext.Provider value={device}>
+      <Configurator />
+    </KeyboardDeviceContext.Provider>
+  )
+}
+
+export function AppConfigurator() {
+  const device = useAppKeyboardDevice()
 
   return (
     <ConfiguratorLayout hideTabs={device.status === "disconnected"}>
       {device.status === "connected" ? (
-        <Configurator device={device} />
+        <ConfiguratorMain device={device} />
       ) : (
         <div className="flex flex-1 flex-col items-center justify-center p-12">
           <div className="grid grid-flow-row gap-4">

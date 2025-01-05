@@ -1,6 +1,6 @@
 "use client"
 
-import { useConfiguratorState } from "@/hooks/use-configurator-state"
+import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
 import { useKeycode } from "@/hooks/use-keycode"
 import { useSetKeymap } from "@/hooks/use-set-keymap"
 import {
@@ -9,8 +9,8 @@ import {
   SP_MOD_TAP_GET_KEY,
 } from "@/lib/keycodes"
 import { cn } from "@/lib/utils"
-import { KeyboardDevice } from "@/types/keyboard-device"
 import { Keycode } from "@/types/keycodes"
+import { useConfiguratorState } from "../configurator-state-provider"
 import {
   ModifierSelector,
   ModifierSelectorPlaceholder,
@@ -28,11 +28,9 @@ const getModifier = (keycode: number) => {
   return 0
 }
 
-interface IRemapModifierTap {
-  device: KeyboardDevice
-}
+export function RemapModifierTap() {
+  const device = useKeyboardDevice()
 
-export function RemapModifierTap({ device }: IRemapModifierTap) {
   const {
     remap: { layerNum, index, keycodeFilter, setKeycodeFilter },
   } = useConfiguratorState()

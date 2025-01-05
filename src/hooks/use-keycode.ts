@@ -1,6 +1,6 @@
+import { useConfiguratorState } from "@/components/configurator-state-provider"
 import { KeyboardDevice } from "@/types/keyboard-device"
 import { useQuery } from "@tanstack/react-query"
-import { useConfiguratorState } from "./use-configurator-state"
 
 export const useKeycode = (
   device: KeyboardDevice,

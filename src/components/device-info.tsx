@@ -1,11 +1,11 @@
+"use client"
+
+import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
 import { displayUint16 } from "@/lib/display-integer"
-import { KeyboardDevice } from "@/types/keyboard-device"
 
-interface DeviceInfoProps {
-  device: KeyboardDevice
-}
+export function DeviceInfo() {
+  const { metadata } = useKeyboardDevice()
 
-export function DeviceInfo({ device: { metadata } }: DeviceInfoProps) {
   return (
     <ul className="text-sm text-muted-foreground">
       <li className="truncate">

@@ -1,9 +1,9 @@
+import { useConfiguratorState } from "@/components/configurator-state-provider"
 import { KeyboardDevice } from "@/types/keyboard-device"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useConfiguratorState } from "./use-configurator-state"
 
 export const useResetDevice = (device: KeyboardDevice) => {
-  const { reset: configuratorReset } = useConfiguratorState()
+  const { reset } = useConfiguratorState()
 
   const queryClient = useQueryClient()
 
@@ -11,7 +11,7 @@ export const useResetDevice = (device: KeyboardDevice) => {
     mutationFn: () => device.reset(),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [device, "configurator"] })
-      configuratorReset()
+      reset()
     },
   })
 }

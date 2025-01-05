@@ -1,19 +1,17 @@
 "use client"
 
-import { useConfiguratorState } from "@/hooks/use-configurator-state"
+import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
 import { keycodeToMetadata } from "@/lib/keycodes"
 import { cn } from "@/lib/utils"
-import { KeyboardDevice } from "@/types/keyboard-device"
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group"
 import { useQuery } from "@tanstack/react-query"
+import { useConfiguratorState } from "../configurator-state-provider"
 import { KeyboardLayout } from "../keyboard-layout"
 import { Skeleton } from "../ui/skeleton"
 
-interface IRemapKeyboardProps {
-  device: KeyboardDevice
-}
+export function RemapKeyboard() {
+  const device = useKeyboardDevice()
 
-export function RemapKeyboard({ device }: IRemapKeyboardProps) {
   const {
     profileNum,
     remap: { layerNum, index, setIndex },

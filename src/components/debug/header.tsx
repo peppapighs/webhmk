@@ -1,7 +1,7 @@
 "use client"
 
-import { useConfiguratorState } from "@/hooks/use-configurator-state"
 import { TriangleAlert } from "lucide-react"
+import { useConfiguratorState } from "../configurator-state-provider"
 import { buttonVariants } from "../ui/button"
 import {
   Tooltip,

@@ -1,6 +1,6 @@
 "use client"
 
-import { KeyboardDevice } from "@/types/keyboard-device"
+import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { KeyTesterDown, KeyTesterProvider, KeyTesterUp } from "../key-tester"
 import { Button } from "../ui/button"
@@ -9,11 +9,9 @@ import { ScrollArea, ScrollBar } from "../ui/scroll-area"
 import { DebugHeader } from "./header"
 import { DebugKeyboard } from "./keyboard"
 
-interface IDebugTabProps {
-  device: KeyboardDevice
-}
+export function DebugTab() {
+  const device = useKeyboardDevice()
 
-export function DebugTab({ device }: IDebugTabProps) {
   const queryClient = useQueryClient()
 
   const recalibrateQuery = useMutation({
@@ -31,7 +29,7 @@ export function DebugTab({ device }: IDebugTabProps) {
         <div className="flex w-full flex-col">
           <DebugHeader />
           <div className="flex flex-col items-center p-6 pt-0">
-            <DebugKeyboard device={device} />
+            <DebugKeyboard />
           </div>
         </div>
         <ScrollBar orientation="horizontal" />

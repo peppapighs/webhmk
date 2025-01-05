@@ -1,18 +1,16 @@
 "use client"
 
-import { useConfiguratorState } from "@/hooks/use-configurator-state"
-import { KeyboardDevice } from "@/types/keyboard-device"
+import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { useEffect, useRef } from "react"
+import { useConfiguratorState } from "../configurator-state-provider"
 import { KeyboardLayout } from "../keyboard-layout"
-
-interface IDebugKeyboardProps {
-  device: KeyboardDevice
-}
 
 const POLLING_INTERVAL = 1000 / 30
 
-export function DebugKeyboard({ device }: IDebugKeyboardProps) {
+export function DebugKeyboard() {
+  const device = useKeyboardDevice()
+
   const {
     debug: { isDebugging },
   } = useConfiguratorState()

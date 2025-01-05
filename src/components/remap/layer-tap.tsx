@@ -1,6 +1,6 @@
 "use client"
 
-import { useConfiguratorState } from "@/hooks/use-configurator-state"
+import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
 import { useKeycode } from "@/hooks/use-keycode"
 import { useSetKeymap } from "@/hooks/use-set-keymap"
 import {
@@ -11,7 +11,7 @@ import {
   SP_LAYER_TAP_GET_LAYER,
 } from "@/lib/keycodes"
 import { cn } from "@/lib/utils"
-import { KeyboardDevice } from "@/types/keyboard-device"
+import { useConfiguratorState } from "../configurator-state-provider"
 import { LayerSelector, LayerSelectorPlaceholder } from "../layer-selector"
 import { Label } from "../ui/label"
 import { Switch } from "../ui/switch"
@@ -26,11 +26,9 @@ const getLayerNum = (keycode: number) => {
   return null
 }
 
-interface IRemapLayerTap {
-  device: KeyboardDevice
-}
+export function RemapLayerTap() {
+  const device = useKeyboardDevice()
 
-export function RemapLayerTap({ device }: IRemapLayerTap) {
   const {
     remap: { layerNum, index, keycodeFilter, setKeycodeFilter },
   } = useConfiguratorState()
@@ -63,7 +61,6 @@ export function RemapLayerTap({ device }: IRemapLayerTap) {
       </div>
       {keycode !== null && isValidKeycode(keycode) ? (
         <LayerSelector
-          device={device}
           layerNum={getLayerNum(keycode)}
           onLayerNumChange={(layerNum) => {
             console.log(layerNum)
