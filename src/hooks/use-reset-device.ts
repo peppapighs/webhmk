@@ -1,5 +1,3 @@
-"use client"
-
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useConfiguratorState } from "./use-configurator-state"
 

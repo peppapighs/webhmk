@@ -2,6 +2,7 @@
 
 import { useConfiguratorState } from "@/hooks/use-configurator-state"
 import { keycodeToMetadata } from "@/lib/keycodes"
+import { cn } from "@/lib/utils"
 import { KeyboardDevice } from "@/types/keyboard-device"
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group"
 import { useQuery } from "@tanstack/react-query"
@@ -55,15 +56,27 @@ export function RemapKeyboard({
             <div className="absolute inset-0 p-0.5">
               <ToggleGroupItem
                 value={`${i}`}
-                className="card toggle-item keycode size-full overflow-hidden p-1 text-sm"
+                className="card toggle-item keycode group relative size-full overflow-hidden p-1 text-sm"
               >
-                {keycode.render ? (
-                  <>
-                    {keycode.render}
-                    <span className="sr-only">{keycode.name}</span>
-                  </>
-                ) : (
-                  keycode.name
+                <span
+                  className={cn(
+                    keycode.overlay &&
+                      "opacity-0 transition-opacity group-hover:opacity-100",
+                  )}
+                >
+                  {keycode.render ? (
+                    <>
+                      {keycode.render}
+                      <span className="sr-only">{keycode.name}</span>
+                    </>
+                  ) : (
+                    keycode.name
+                  )}
+                </span>
+                {keycode.overlay && (
+                  <div className="keycode absolute inset-0 transition-opacity group-hover:opacity-0">
+                    {keycode.overlay}
+                  </div>
                 )}
               </ToggleGroupItem>
             </div>

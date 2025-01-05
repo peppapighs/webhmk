@@ -407,6 +407,7 @@ export type KeycodeMetadata = {
   name: string
   description?: string
   render?: React.ReactNode
+  overlay?: React.ReactNode
   keycode: number
   keycodeNames: string[]
   uiCodes: string[]

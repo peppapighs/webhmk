@@ -1,9 +1,16 @@
+export type KeycodeFilter = {
+  id: string
+  filter(keycode: number): boolean
+}
+
 export type ConfiguratorStateState = {
   tab: string
   profileNum: number
   remap: {
     layerNum: number
     index: number | null
+    advancedFunction: string
+    keycodeFilter: KeycodeFilter | null
   }
   debug: {
     isDebugging: boolean
@@ -18,6 +25,8 @@ export type ConfiguratorStateAction = {
   remap: {
     setLayerNum(layerNum: number): void
     setIndex(index: number | null): void
+    setAdvancedFunction(advancedFunction: string): void
+    setKeycodeFilter(keycodeFilter: KeycodeFilter | null): void
   }
 
   debug: {

@@ -1,7 +1,11 @@
 "use client"
 
+import { KEYCODE_CATEGORIES } from "@/constants/keycode-metadata"
+import { keycodeToMetadata, renderableKeycodes } from "@/lib/keycodes"
 import { cn } from "@/lib/utils"
-import { useKeycodeContext } from "./keycode-context"
+import { KeyboardDevice } from "@/types/keyboard-device"
+import { KeycodeMetadata } from "@/types/keycodes"
+import { useMemo } from "react"
 import { Badge } from "./ui/badge"
 import { buttonVariants } from "./ui/button"
 import { Label } from "./ui/label"
@@ -13,23 +17,47 @@ import {
 } from "./ui/tooltip"
 
 interface IKeycodeSelectorProps extends React.HTMLAttributes<HTMLDivElement> {
+  device: KeyboardDevice
   disabled?: boolean
-  onKeycodeSelect?: (keycode: number) => void
+  filter?(keycode: number): boolean
+  onKeycodeSelect?(keycode: number): void
 }
 
 export function KeycodeSelector({
+  device: { metadata },
   disabled,
+  filter,
   onKeycodeSelect,
   className,
   ...props
 }: IKeycodeSelectorProps) {
-  const { groupedKeycodes } = useKeycodeContext()
+  const groupedKeycodes = useMemo(
+    () =>
+      renderableKeycodes(metadata)
+        .filter(filter || (() => true))
+        .map((keycode) => keycodeToMetadata(keycode))
+        .reduce(
+          (acc, keycode) => {
+            const category = keycode.category
+            if (!acc[category]) {
+              acc[category] = []
+            }
+            acc[category].push(keycode)
+            return acc
+          },
+          KEYCODE_CATEGORIES.reduce(
+            (acc, category) => {
+              acc[category] = []
+              return acc
+            },
+            {} as Record<string, KeycodeMetadata[]>,
+          ),
+        ),
+    [filter, metadata],
+  )
 
   return (
-    <div
-      className={cn("flex flex-col items-center gap-6", className)}
-      {...props}
-    >
+    <div className={cn("flex flex-col gap-6", className)} {...props}>
       {Object.entries(groupedKeycodes).map(
         ([category, keycodes]) =>
           keycodes.length > 0 && (
@@ -37,8 +65,8 @@ export function KeycodeSelector({
               <Label
                 htmlFor={`category-${category}`}
                 className={cn(
-                  "ml-1 text-lg font-bold text-foreground",
-                  disabled && "text-muted-foreground",
+                  "ml-1 whitespace-nowrap text-lg font-bold",
+                  disabled && "opacity-50",
                 )}
               >
                 {category}
@@ -53,7 +81,7 @@ export function KeycodeSelector({
                           onClick={() => onKeycodeSelect?.(keycode.keycode)}
                           className={cn(
                             buttonVariants({ variant: "outline" }),
-                            "keycode size-full overflow-hidden p-1 text-center",
+                            "keycode size-full p-1",
                           )}
                         >
                           {keycode.render ? (

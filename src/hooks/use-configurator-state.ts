@@ -10,6 +10,8 @@ const initialState: ConfiguratorStateState = {
   remap: {
     layerNum: 0,
     index: null,
+    advancedFunction: "",
+    keycodeFilter: null,
   },
   debug: {
     isDebugging: false,
@@ -62,6 +64,24 @@ export const useConfiguratorState = create<ConfiguratorState>((set) => ({
         remap: {
           ...state.remap,
           index,
+        },
+      }))
+    },
+
+    setAdvancedFunction(advancedFunction) {
+      set((state) => ({
+        remap: {
+          ...state.remap,
+          advancedFunction,
+        },
+      }))
+    },
+
+    setKeycodeFilter(keycodeFilter) {
+      set((state) => ({
+        remap: {
+          ...state.remap,
+          keycodeFilter,
         },
       }))
     },

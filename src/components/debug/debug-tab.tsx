@@ -41,7 +41,10 @@ export function DebugTab({ device }: IDebugTabProps) {
           <div className="flex w-full min-w-96 flex-1 flex-col gap-6 p-6">
             <div className="flex w-full items-center gap-6">
               <div className="flex w-full flex-col">
-                <Label htmlFor="recalibrate" className="text-lg font-bold">
+                <Label
+                  htmlFor="recalibrate"
+                  className="whitespace-nowrap text-lg font-bold"
+                >
                   Recalibrate
                 </Label>
                 <p className="mt-2 max-w-prose text-muted-foreground">

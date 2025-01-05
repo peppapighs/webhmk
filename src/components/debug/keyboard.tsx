@@ -59,7 +59,7 @@ export function DebugKeyboard({
       size={4}
       elt={(i) => (
         <div className="absolute inset-0 p-0.5">
-          <div className="card flex size-full flex-col items-center justify-center overflow-hidden p-1 text-sm font-medium">
+          <div className="card flex size-full flex-col items-center justify-center p-1 text-sm font-medium">
             {isDebugging && data && (
               <>
                 <p>{data.adcValues[i]}</p>

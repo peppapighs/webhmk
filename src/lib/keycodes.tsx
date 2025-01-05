@@ -124,6 +124,20 @@ export const SP_DKS_GET_CONFIG = (keycode: number) => keycode & 0x00ff
 export const keycodeToMetadata = (keycode: number): KeycodeMetadata => {
   if (keycode in KEYCODE_METADATA_MAP) {
     return KEYCODE_METADATA_MAP[keycode]
+  } else if (IS_MODS_KEYCODE(keycode)) {
+    const hidKeycode = SP_MODS_GET_KEY(keycode)
+    return {
+      ...keycodeToMetadata(hidKeycode),
+      keycode,
+      overlay: "MOD\nKEY",
+    }
+  } else if (IS_LAYER_MOD_KEYCODE(keycode)) {
+    const layerNum = SP_LAYER_MOD_GET_LAYER(keycode)
+    return {
+      ...keycodeToMetadata(MO(layerNum)),
+      keycode,
+      overlay: "LAYER\nMOD",
+    }
   } else if (IS_LAYER_TO_KEYCODE(keycode)) {
     const layerNum = SP_LAYER_TO_GET_LAYER(keycode)
     const keycodeName = `TO(${layerNum})`

@@ -69,7 +69,7 @@
 
 @layer utilities {
   .card {
-    @apply rounded-lg border bg-background shadow;
+    @apply overflow-hidden rounded-lg border bg-background shadow;
   }
 
   .keycode {
@@ -77,10 +77,10 @@
   }
 
   .radio-item {
-    @apply font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground data-[state=checked]:bg-accent data-[state=checked]:font-semibold data-[state=checked]:text-accent-foreground;
+    @apply font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[state=checked]:bg-accent data-[state=checked]:font-semibold data-[state=checked]:text-accent-foreground;
   }
 
   .toggle-item {
-    @apply font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground data-[state=on]:border-accent-foreground data-[state=on]:bg-accent data-[state=on]:font-semibold data-[state=on]:text-accent-foreground;
+    @apply font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[state=on]:border-accent-foreground data-[state=on]:bg-accent data-[state=on]:font-semibold data-[state=on]:text-accent-foreground;
   }
 }
