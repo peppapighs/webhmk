@@ -18,6 +18,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip"
+import { RemapLayerTap } from "./layer-tap"
 import { RemapModifierKey } from "./modifier-key"
 import { RemapModifierTap } from "./modifier-tap"
 
@@ -99,6 +100,27 @@ export function RemapAdvancedFunctions({
             </AccordionTrigger>
             <AccordionContent asChild>
               <RemapModifierTap device={device} />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="layer-tap">
+            <AccordionTrigger className="whitespace-nowrap disabled:opacity-50 disabled:hover:no-underline">
+              <div className="flex items-center">
+                Layer-Tap
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger disabled={index === null} asChild>
+                      <Info className="ml-2 size-4 disabled:opacity-50" />
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-prose font-medium">
+                      Send the key when tapped, activate a layer when held. Only
+                      compatible with basic keys.
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent asChild>
+              <RemapLayerTap device={device} />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
