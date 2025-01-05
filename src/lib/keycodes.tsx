@@ -131,6 +131,20 @@ export const keycodeToMetadata = (keycode: number): KeycodeMetadata => {
       keycode,
       overlay: "MOD\nKEY",
     }
+  } else if (IS_MOD_TAP_KEYCODE(keycode)) {
+    const hidKeycode = SP_MOD_TAP_GET_KEY(keycode)
+    return {
+      ...keycodeToMetadata(hidKeycode),
+      keycode,
+      overlay: "MOD\nTAP",
+    }
+  } else if (IS_LAYER_TAP_KEYCODE(keycode)) {
+    const hidKeycode = SP_LAYER_TAP_GET_KEY(keycode)
+    return {
+      ...keycodeToMetadata(hidKeycode),
+      keycode,
+      overlay: "LAYER\nTAP",
+    }
   } else if (IS_LAYER_MOD_KEYCODE(keycode)) {
     const layerNum = SP_LAYER_MOD_GET_LAYER(keycode)
     return {

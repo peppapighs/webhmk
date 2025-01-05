@@ -3,6 +3,7 @@
 import { useConfiguratorState } from "@/hooks/use-configurator-state"
 import { cn } from "@/lib/utils"
 import { KeyboardDevice } from "@/types/keyboard-device"
+import { Info } from "lucide-react"
 import {
   Accordion,
   AccordionContent,
@@ -11,7 +12,14 @@ import {
 } from "../ui/accordion"
 import { Button } from "../ui/button"
 import { Label } from "../ui/label"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip"
 import { RemapModifierKey } from "./modifier-key"
+import { RemapModifierTap } from "./modifier-tap"
 
 interface IRemapAdvancedFunctionsProps {
   device: KeyboardDevice
@@ -53,10 +61,44 @@ export function RemapAdvancedFunctions({
         >
           <AccordionItem value="modifier-key">
             <AccordionTrigger className="whitespace-nowrap disabled:opacity-50 disabled:hover:no-underline">
-              Modifier Key
+              <div className="flex items-center">
+                Modifier Key
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger disabled={index === null} asChild>
+                      <Info className="ml-2 size-4 disabled:opacity-50" />
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-prose font-medium">
+                      Send modifier(s) together with the key. Only compatible
+                      with basic and MO keys.
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
             </AccordionTrigger>
             <AccordionContent asChild>
               <RemapModifierKey device={device} />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="mod-tap">
+            <AccordionTrigger className="whitespace-nowrap disabled:opacity-50 disabled:hover:no-underline">
+              <div className="flex items-center">
+                Mod-Tap
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger disabled={index === null} asChild>
+                      <Info className="ml-2 size-4 disabled:opacity-50" />
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-prose font-medium">
+                      Send the key when tapped, send modifier(s) when held. Only
+                      compatible with basic keys.
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent asChild>
+              <RemapModifierTap device={device} />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
