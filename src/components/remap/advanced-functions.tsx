@@ -79,7 +79,7 @@ export function RemapAdvancedFunctions() {
                     <TooltipTrigger disabled={index === null} asChild>
                       <Info className="ml-2 size-4" />
                     </TooltipTrigger>
-                    <TooltipContent className="max-w-prose font-medium">
+                    <TooltipContent className="max-w-sm font-medium">
                       Send modifier(s) together with the key. Only compatible
                       with basic and MO keys.
                     </TooltipContent>
@@ -100,7 +100,7 @@ export function RemapAdvancedFunctions() {
                     <TooltipTrigger disabled={index === null} asChild>
                       <Info className="ml-2 size-4" />
                     </TooltipTrigger>
-                    <TooltipContent className="max-w-prose font-medium">
+                    <TooltipContent className="max-w-sm font-medium">
                       Send the key when tapped, send modifier(s) when held. The
                       duration to register the hold action can be adjusted in
                       the <span className="font-bold">Performance</span> tab.
@@ -123,7 +123,7 @@ export function RemapAdvancedFunctions() {
                     <TooltipTrigger disabled={index === null} asChild>
                       <Info className="ml-2 size-4" />
                     </TooltipTrigger>
-                    <TooltipContent className="max-w-prose font-medium">
+                    <TooltipContent className="max-w-sm font-medium">
                       Send the key when tapped, activate a layer when held. The
                       duration to register the hold action can be adjusted in
                       the <span className="font-bold">Performance</span> tab.

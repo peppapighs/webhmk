@@ -113,7 +113,7 @@ export function KeycodeSelector({
                           )}
                         </TooltipTrigger>
                       </div>
-                      <TooltipContent className="flex max-w-prose flex-col gap-2">
+                      <TooltipContent className="flex max-w-sm flex-col gap-2">
                         {keycode.description && (
                           <p className="text-sm font-medium">
                             {keycode.description}
