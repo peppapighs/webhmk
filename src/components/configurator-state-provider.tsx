@@ -72,7 +72,8 @@ export function ConfiguratorStateProvider({
     setState(
       produce((draft) => {
         draft.profileNum = profileNum
-        draft.remap.index = null
+        draft.remap = initialState.remap
+        draft.performance = initialState.performance
       }),
     )
   }
