@@ -2,11 +2,17 @@
 
 import { KEYBOARD_METADATA } from "@/constants/keyboard-metadata"
 import { KeyboardDeviceContext } from "@/hooks/use-keyboard-device"
-import { KeyboardDeviceState, SetKeymapQuery } from "@/types/keyboard-device"
+import {
+  KeyboardDeviceState,
+  KeyConfig,
+  SetKeyConfigQuery,
+  SetKeymapQuery,
+} from "@/types/keyboard-device"
 import { produce } from "immer"
 import { ReactNode, useState } from "react"
 
 type DemoKeyboardDeviceState = KeyboardDeviceState & {
+  keyConfig: KeyConfig[][]
   keymap: number[][][]
 }
 
@@ -14,6 +20,16 @@ const DEMO_KEYBOARD = KEYBOARD_METADATA[0]
 
 const initialState: DemoKeyboardDeviceState = {
   metadata: DEMO_KEYBOARD,
+  keyConfig: Array.from({ length: DEMO_KEYBOARD.numProfiles }, () =>
+    Array.from({ length: DEMO_KEYBOARD.numKeys }, () => ({
+      tappingTerm: 200,
+      config: {
+        mode: 0,
+        actuationDistance: 40,
+        bottomOutDistance: 60,
+      },
+    })),
+  ),
   keymap: Array.from({ length: DEMO_KEYBOARD.numProfiles }, () =>
     structuredClone(DEMO_KEYBOARD.defaultKeymap),
   ),
@@ -40,6 +56,20 @@ export function DemoKeyboardProvider({
     }
   }
 
+  const getKeyConfig = async () => {
+    return state.keyConfig
+  }
+
+  const setKeyConfig = async (queries: SetKeyConfigQuery[]) => {
+    setState(
+      produce((draft) => {
+        for (const { profile, index, config } of queries) {
+          draft.keyConfig[profile][index] = config
+        }
+      }),
+    )
+  }
+
   const getKeymap = async () => {
     return state.keymap
   }
@@ -62,6 +92,8 @@ export function DemoKeyboardProvider({
         reboot,
         recalibrate,
         getSwitchDebug,
+        getKeyConfig,
+        setKeyConfig,
         getKeymap,
         setKeymap,
       }}

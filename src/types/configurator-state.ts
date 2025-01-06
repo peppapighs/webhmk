@@ -12,6 +12,9 @@ export type ConfiguratorStateState = {
     advancedFunction: string
     keycodeFilter: KeycodeFilter | null
   }
+  performance: {
+    indices: number[]
+  }
   debug: {
     isDebugging: boolean
   }
@@ -27,6 +30,10 @@ export type ConfiguratorStateAction = {
     setIndex(index: number | null): void
     setAdvancedFunction(advancedFunction: string): void
     setKeycodeFilter(keycodeFilter: KeycodeFilter | null): void
+  }
+
+  performance: {
+    setIndices(indices: number[]): void
   }
 
   debug: {

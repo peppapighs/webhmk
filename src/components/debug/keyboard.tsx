@@ -1,6 +1,7 @@
 "use client"
 
 import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
+import { displayDistance } from "@/lib/display-integer"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { useEffect, useRef } from "react"
 import { useConfiguratorState } from "../configurator-state-provider"
@@ -59,7 +60,7 @@ export function DebugKeyboard() {
             {isDebugging && data && (
               <>
                 <p>{data.adcValues[i]}</p>
-                <p>{(data.distances[i] / 20).toFixed(2)}</p>
+                <p>{displayDistance(data.distances[i])}</p>
               </>
             )}
           </div>

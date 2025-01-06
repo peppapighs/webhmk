@@ -17,6 +17,9 @@ const initialState: ConfiguratorStateState = {
     advancedFunction: "",
     keycodeFilter: null,
   },
+  performance: {
+    indices: [],
+  },
   debug: {
     isDebugging: false,
   },
@@ -33,6 +36,10 @@ const ConfiguratorStateContext = createContext<ConfiguratorState>({
     setIndex: () => {},
     setAdvancedFunction: () => {},
     setKeycodeFilter: () => {},
+  },
+  performance: {
+    ...initialState.performance,
+    setIndices: () => {},
   },
   debug: {
     ...initialState.debug,
@@ -101,6 +108,14 @@ export function ConfiguratorStateProvider({
     )
   }
 
+  const setIndices = (indices: number[]) => {
+    setState(
+      produce((draft) => {
+        draft.performance.indices = indices
+      }),
+    )
+  }
+
   const toggleDebugging = () => {
     setState(
       produce((draft) => {
@@ -123,6 +138,7 @@ export function ConfiguratorStateProvider({
           setAdvancedFunction,
           setKeycodeFilter,
         },
+        performance: { ...state.performance, setIndices },
         debug: { ...state.debug, toggleDebugging },
       }}
     >

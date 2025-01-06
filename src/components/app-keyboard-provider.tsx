@@ -4,6 +4,9 @@ import { KEYBOARD_METADATA } from "@/constants/keyboard-metadata"
 import {
   KeyboardDeviceAction,
   KeyboardDeviceState,
+  KeyConfig,
+  KeyMode,
+  SetKeyConfigQuery,
   SetKeymapQuery,
 } from "@/types/keyboard-device"
 import { ClassRequest, ClassRequestIndex } from "@/types/protocols"
@@ -38,6 +41,10 @@ const AppKeyboardDeviceContext = createContext<AppKeyboardDevice>({
   async getSwitchDebug() {
     return { adcValues: [], distances: [] }
   },
+  async getKeyConfig() {
+    return []
+  },
+  async setKeyConfig() {},
   async getKeymap() {
     return []
   },
@@ -227,6 +234,118 @@ export function AppKeyboardProvider({
     }
   }
 
+  const getKeyConfig = async (): Promise<KeyConfig[][]> => {
+    if (state.status === "disconnected") {
+      throw new Error("Device is disconnected")
+    }
+
+    const { metadata } = state
+    const { status, data } = await receive(
+      state,
+      ClassRequest.CLASS_REQUEST_KEY_CONFIG,
+      ClassRequestIndex.CLASS_REQUEST_INDEX_GET,
+      7 * metadata.numProfiles * metadata.numKeys,
+    )
+
+    if (status !== "ok" || data === undefined) {
+      throw new Error("Failed to get key config")
+    }
+
+    return Array.from({ length: metadata.numProfiles }, (_, i) =>
+      Array.from({ length: metadata.numKeys }, (_, j) => {
+        const offset = 7 * (i * metadata.numKeys + j)
+        const tappingTerm = data.getUint16(offset, true)
+        const mode = data.getUint8(offset + 2)
+
+        switch (mode) {
+          case KeyMode.KEY_MODE_NORMAL:
+            return {
+              tappingTerm,
+              config: {
+                mode: KeyMode.KEY_MODE_NORMAL,
+                actuationDistance: data.getUint8(offset + 3),
+                bottomOutDistance: data.getUint8(offset + 4),
+              },
+            }
+
+          case KeyMode.KEY_MODE_RAPID_TRIGGER:
+            return {
+              tappingTerm,
+              config: {
+                mode: KeyMode.KEY_MODE_RAPID_TRIGGER,
+                actuationDistance: data.getUint8(offset + 3),
+                resetDistance: data.getUint8(offset + 4),
+                rtDownDistance: data.getUint8(offset + 5),
+                rtUpDistance: data.getUint8(offset + 6),
+              },
+            }
+
+          default:
+            throw new Error("Unsupported key mode")
+        }
+      }),
+    )
+  }
+
+  const setKeyConfig = async (queries: SetKeyConfigQuery[]) => {
+    if (state.status === "disconnected") {
+      throw new Error("Device is disconnected")
+    }
+
+    const data = new Uint8Array(
+      queries
+        .map(({ profile, index, config }) => {
+          const payload = [
+            profile,
+            index & 0xff,
+            index >> 8,
+            config.tappingTerm & 0xff,
+            config.tappingTerm >> 8,
+            config.config.mode,
+          ]
+          switch (config.config.mode) {
+            case KeyMode.KEY_MODE_NORMAL:
+              payload.push(
+                config.config.actuationDistance,
+                config.config.bottomOutDistance,
+                0,
+                0,
+              )
+              break
+
+            case KeyMode.KEY_MODE_RAPID_TRIGGER:
+              payload.push(
+                config.config.actuationDistance,
+                config.config.resetDistance,
+                config.config.rtDownDistance,
+                config.config.rtUpDistance,
+              )
+              break
+
+            default:
+              throw new Error("Unsupported key mode")
+          }
+          return payload
+        })
+        .flat(),
+    )
+
+    if (data.length !== 10 * queries.length) {
+      throw new Error("Invalid key config queries")
+    }
+
+    const { status } = await send(
+      state,
+      ClassRequest.CLASS_REQUEST_KEY_CONFIG,
+      ClassRequestIndex.CLASS_REQUEST_INDEX_SET,
+      data.buffer,
+    )
+
+    if (status !== "ok") {
+      throw new Error("Failed to set key config")
+    }
+  }
+
   const getKeymap = async () => {
     if (state.status === "disconnected") {
       throw new Error("Device is disconnected")
@@ -302,6 +421,8 @@ export function AppKeyboardProvider({
         reboot,
         recalibrate,
         getSwitchDebug,
+        getKeyConfig,
+        setKeyConfig,
         getKeymap,
         setKeymap,
       }}
