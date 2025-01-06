@@ -21,6 +21,7 @@ type DemoKeyboardDeviceState = KeyboardDeviceState & {
 const DEMO_KEYBOARD = KEYBOARD_METADATA[0]
 
 const initialState: DemoKeyboardDeviceState = {
+  id: "DEMO_KEYBOARD",
   metadata: DEMO_KEYBOARD,
   swId: SwitchId.SW_GEON_RAW_HE,
   keyConfig: Array.from({ length: DEMO_KEYBOARD.numProfiles }, () =>

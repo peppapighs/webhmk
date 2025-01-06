@@ -5,6 +5,7 @@ import { createContext, useContext } from "react"
 const DEMO_KEYBOARD = KEYBOARD_METADATA[0]
 
 const initialState: KeyboardDeviceState = {
+  id: "UNKNOWN",
   metadata: DEMO_KEYBOARD,
 }
 

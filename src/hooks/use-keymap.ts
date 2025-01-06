@@ -8,7 +8,7 @@ export const useKeymap = () => {
   const { profileNum } = useConfiguratorState()
 
   const { status, data: keymap } = useQuery({
-    queryKey: [device, "configurator", "keymap"],
+    queryKey: [device.id, "configurator", "keymap"],
     queryFn: device.getKeymap,
   })
 

@@ -2,6 +2,7 @@ import { KeyboardMetadata } from "./keyboard-metadata"
 import { ClassRequestSwitchDebugResponse } from "./protocols"
 
 export type KeyboardDeviceState = {
+  id: string
   metadata: KeyboardMetadata
 }
 

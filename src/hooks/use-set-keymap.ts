@@ -31,7 +31,7 @@ export const useSetKeymap = (
     },
     onSuccess: (index) => {
       queryClient.invalidateQueries({
-        queryKey: [device, "configurator", "keymap"],
+        queryKey: [device.id, "configurator", "keymap"],
       })
       if (shouldIncrementIndex) {
         setIndex?.(index + 1 === device.metadata.numKeys ? null : index + 1)

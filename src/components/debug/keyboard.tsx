@@ -19,7 +19,7 @@ export function DebugKeyboard() {
   const queryClient = useQueryClient()
 
   const { status, data } = useQuery({
-    queryKey: [device, "configurator", "switchDebug"],
+    queryKey: [device.id, "configurator", "switchDebug"],
     queryFn: device.getSwitchDebug,
     enabled: isDebugging,
   })
@@ -42,7 +42,7 @@ export function DebugKeyboard() {
     interval.current = setInterval(() => {
       if (isDebugging && status === "success") {
         queryClient.invalidateQueries({
-          queryKey: [device, "configurator", "switchDebug"],
+          queryKey: [device.id, "configurator", "switchDebug"],
         })
       }
     }, POLLING_INTERVAL)

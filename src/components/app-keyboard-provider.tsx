@@ -161,7 +161,13 @@ export function AppKeyboardProvider({
       await usbDevice.claimInterface(interfaceNum)
       await usbDevice.selectAlternateInterface(interfaceNum, 0)
 
-      setState({ status: "connected", usbDevice, interfaceNum, metadata })
+      setState({
+        status: "connected",
+        usbDevice,
+        interfaceNum,
+        id: `USB:${usbDevice.vendorId}:${usbDevice.productId}:${usbDevice.serialNumber}:${Date.now()}`,
+        metadata,
+      })
     } catch (error) {
       console.error(error)
       await usbDevice.close()

@@ -5,7 +5,7 @@ export function useSwitchId() {
   const device = useKeyboardDevice()
 
   const { status, data: switchId } = useQuery({
-    queryKey: [device, "configurator", "switchId"],
+    queryKey: [device.id, "configurator", "switchId"],
     queryFn: device.getSwitchId,
   })
 
@@ -15,7 +15,7 @@ export function useSwitchId() {
     mutationFn: device.setSwitchId,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [device, "configurator", "switchId"],
+        queryKey: [device.id, "configurator", "switchId"],
       })
     },
   })

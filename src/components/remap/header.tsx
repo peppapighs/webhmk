@@ -28,7 +28,7 @@ export function RemapHeader() {
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [device, "configurator", "keymap"],
+        queryKey: [device.id, "configurator", "keymap"],
       })
     },
   })

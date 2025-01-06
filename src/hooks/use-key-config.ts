@@ -14,7 +14,7 @@ export const useKeyConfig = () => {
   const { profileNum } = useConfiguratorState()
 
   const { status, data: keyConfig } = useQuery({
-    queryKey: [device, "configurator", "keyConfig"],
+    queryKey: [device.id, "configurator", "keyConfig"],
     queryFn: device.getKeyConfig,
   })
 
@@ -31,7 +31,7 @@ export const useKeyConfig = () => {
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [device, "configurator", "keyConfig"],
+        queryKey: [device.id, "configurator", "keyConfig"],
       })
     },
   })
