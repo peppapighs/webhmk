@@ -57,17 +57,21 @@ export function KeycodeSelector({
   )
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div
+      className={cn(
+        "flex flex-col gap-6",
+        disabled && "pointer-events-none opacity-50",
+        className,
+      )}
+      {...props}
+    >
       {Object.entries(groupedKeycodes).map(
         ([category, keycodes]) =>
           keycodes.length > 0 && (
             <div key={category} className="flex flex-col">
               <Label
                 htmlFor={`category-${category}`}
-                className={cn(
-                  "ml-1 whitespace-nowrap text-lg font-bold",
-                  disabled && "opacity-50",
-                )}
+                className="ml-1 whitespace-nowrap text-lg font-bold"
               >
                 {category}
               </Label>

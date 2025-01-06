@@ -10,7 +10,6 @@ import {
   SP_LAYER_TAP_GET_KEY,
   SP_LAYER_TAP_GET_LAYER,
 } from "@/lib/keycodes"
-import { cn } from "@/lib/utils"
 import { useConfiguratorState } from "../configurator-state-provider"
 import { LayerSelector, LayerSelectorPlaceholder } from "../layer-selector"
 import { Label } from "../ui/label"
@@ -52,12 +51,7 @@ export function RemapLayerTap() {
           }
           disabled={index === null}
         />
-        <Label
-          htmlFor="layer-tap-filter"
-          className={cn(index === null && "opacity-50")}
-        >
-          Filter only compatible keys
-        </Label>
+        <Label htmlFor="layer-tap-filter">Filter only compatible keys</Label>
       </div>
       {keycode !== null && isValidKeycode(keycode) ? (
         <LayerSelector

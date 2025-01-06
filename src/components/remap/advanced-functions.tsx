@@ -33,14 +33,16 @@ export function RemapAdvancedFunctions() {
   } = useConfiguratorState()
 
   return (
-    <div className="flex min-w-96 flex-col gap-4 p-6">
+    <div
+      className={cn(
+        "flex min-w-96 flex-col gap-4 p-6",
+        index === null && "pointer-events-none opacity-50",
+      )}
+    >
       <div className="flex flex-col">
         <Label
           htmlFor="advanced-functions"
-          className={cn(
-            "whitespace-nowrap text-lg font-bold",
-            index === null && "opacity-50",
-          )}
+          className="whitespace-nowrap text-lg font-bold"
         >
           Advanced Functions
         </Label>
@@ -54,7 +56,7 @@ export function RemapAdvancedFunctions() {
           className="w-full"
         >
           <AccordionItem value="modifier-key">
-            <AccordionTrigger className="whitespace-nowrap disabled:pointer-events-none disabled:opacity-50 disabled:hover:no-underline">
+            <AccordionTrigger className="whitespace-nowrap disabled:hover:no-underline">
               <div className="flex items-center">
                 Modifier Key
                 <TooltipProvider>
@@ -75,7 +77,7 @@ export function RemapAdvancedFunctions() {
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="mod-tap">
-            <AccordionTrigger className="whitespace-nowrap disabled:pointer-events-none disabled:opacity-50 disabled:hover:no-underline">
+            <AccordionTrigger className="whitespace-nowrap disabled:hover:no-underline">
               <div className="flex items-center">
                 Mod-Tap
                 <TooltipProvider>
@@ -96,7 +98,7 @@ export function RemapAdvancedFunctions() {
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="layer-tap">
-            <AccordionTrigger className="whitespace-nowrap disabled:pointer-events-none disabled:opacity-50 disabled:hover:no-underline">
+            <AccordionTrigger className="whitespace-nowrap disabled:hover:no-underline">
               <div className="flex items-center">
                 Layer-Tap
                 <TooltipProvider>

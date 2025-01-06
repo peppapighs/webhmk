@@ -7,7 +7,6 @@ import {
   IS_MOD_TAP_KEYCODE,
   SP_MOD_TAP_GET_KEY,
 } from "@/lib/keycodes"
-import { cn } from "@/lib/utils"
 import { Keycode } from "@/types/keycodes"
 import { useConfiguratorState } from "../configurator-state-provider"
 import {
@@ -51,12 +50,7 @@ export function RemapModifierTap() {
           }
           disabled={index === null}
         />
-        <Label
-          htmlFor="modifier-tap-filter"
-          className={cn(index === null && "opacity-50")}
-        >
-          Filter only compatible keys
-        </Label>
+        <Label htmlFor="modifier-tap-filter">Filter only compatible keys</Label>
       </div>
       {keycode !== null && isValidKeycode(keycode) ? (
         <ModifierSelector

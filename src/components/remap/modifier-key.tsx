@@ -12,7 +12,6 @@ import {
   SP_LAYER_MOD_GET_LAYER,
   SP_MODS_GET_KEY,
 } from "@/lib/keycodes"
-import { cn } from "@/lib/utils"
 import { Keycode } from "@/types/keycodes"
 import { useConfiguratorState } from "../configurator-state-provider"
 import {
@@ -62,12 +61,7 @@ export function RemapModifierKey() {
           }
           disabled={index === null}
         />
-        <Label
-          htmlFor="modifier-key-filter"
-          className={cn(index === null && "opacity-50")}
-        >
-          Filter only compatible keys
-        </Label>
+        <Label htmlFor="modifier-key-filter">Filter only compatible keys</Label>
       </div>
       {keycode !== null && isValidKeycode(keycode) ? (
         <ModifierSelector
