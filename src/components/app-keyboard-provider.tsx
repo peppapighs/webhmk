@@ -8,6 +8,7 @@ import {
   KeyMode,
   SetKeyConfigQuery,
   SetKeymapQuery,
+  SwitchId,
 } from "@/types/keyboard-device"
 import { ClassRequest, ClassRequestIndex } from "@/types/protocols"
 import { createContext, ReactNode, useContext, useState } from "react"
@@ -41,6 +42,10 @@ const AppKeyboardDeviceContext = createContext<AppKeyboardDevice>({
   async getSwitchDebug() {
     return { adcValues: [], distances: [] }
   },
+  async getSwitchId() {
+    return 0
+  },
+  async setSwitchId() {},
   async getKeyConfig() {
     return []
   },
@@ -234,6 +239,42 @@ export function AppKeyboardProvider({
     }
   }
 
+  const getSwitchId = async () => {
+    if (state.status === "disconnected") {
+      throw new Error("Device is disconnected")
+    }
+
+    const { status, data } = await receive(
+      state,
+      ClassRequest.CLASS_REQUEST_SW_ID,
+      ClassRequestIndex.CLASS_REQUEST_INDEX_GET,
+      1,
+    )
+
+    if (status !== "ok" || data === undefined) {
+      throw new Error("Failed to get switch ID")
+    }
+
+    return data.getUint8(0)
+  }
+
+  const setSwitchId = async (swId: SwitchId) => {
+    if (state.status === "disconnected") {
+      throw new Error("Device is disconnected")
+    }
+
+    const { status } = await send(
+      state,
+      ClassRequest.CLASS_REQUEST_SW_ID,
+      ClassRequestIndex.CLASS_REQUEST_INDEX_SET,
+      new Uint8Array([swId]).buffer,
+    )
+
+    if (status !== "ok") {
+      throw new Error("Failed to set switch ID")
+    }
+  }
+
   const getKeyConfig = async (): Promise<KeyConfig[][]> => {
     if (state.status === "disconnected") {
       throw new Error("Device is disconnected")
@@ -421,6 +462,8 @@ export function AppKeyboardProvider({
         reboot,
         recalibrate,
         getSwitchDebug,
+        getSwitchId,
+        setSwitchId,
         getKeyConfig,
         setKeyConfig,
         getKeymap,

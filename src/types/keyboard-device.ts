@@ -5,6 +5,12 @@ export type KeyboardDeviceState = {
   metadata: KeyboardMetadata
 }
 
+export enum SwitchId {
+  SW_GEON_RAW_HE = 0,
+  SW_GATERON_MAGNETIC_JADE,
+  SW_GEON_RAPTOR_HE,
+}
+
 export enum KeyMode {
   KEY_MODE_NORMAL = 0,
   KEY_MODE_RAPID_TRIGGER,
@@ -47,6 +53,8 @@ export type KeyboardDeviceAction = {
   reboot(): Promise<void>
   recalibrate(): Promise<void>
   getSwitchDebug(): Promise<ClassRequestSwitchDebugResponse>
+  getSwitchId(): Promise<SwitchId>
+  setSwitchId(swId: SwitchId): Promise<void>
   getKeyConfig(): Promise<KeyConfig[][]>
   setKeyConfig(queries: SetKeyConfigQuery[]): Promise<void>
   getKeymap(): Promise<number[][][]>

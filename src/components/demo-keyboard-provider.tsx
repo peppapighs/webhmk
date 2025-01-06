@@ -7,11 +7,13 @@ import {
   KeyConfig,
   SetKeyConfigQuery,
   SetKeymapQuery,
+  SwitchId,
 } from "@/types/keyboard-device"
 import { produce } from "immer"
 import { ReactNode, useState } from "react"
 
 type DemoKeyboardDeviceState = KeyboardDeviceState & {
+  swId: SwitchId
   keyConfig: KeyConfig[][]
   keymap: number[][][]
 }
@@ -20,6 +22,7 @@ const DEMO_KEYBOARD = KEYBOARD_METADATA[0]
 
 const initialState: DemoKeyboardDeviceState = {
   metadata: DEMO_KEYBOARD,
+  swId: SwitchId.SW_GEON_RAW_HE,
   keyConfig: Array.from({ length: DEMO_KEYBOARD.numProfiles }, () =>
     Array.from({ length: DEMO_KEYBOARD.numKeys }, () => ({
       tappingTerm: 200,
@@ -54,6 +57,18 @@ export function DemoKeyboardProvider({
       adcValues: Array(numKeys).fill(0),
       distances: Array(numKeys).fill(0),
     }
+  }
+
+  const getSwitchId = async () => {
+    return state.swId
+  }
+
+  const setSwitchId = async (swId: SwitchId) => {
+    setState(
+      produce((draft) => {
+        draft.swId = swId
+      }),
+    )
   }
 
   const getKeyConfig = async () => {
@@ -92,6 +107,8 @@ export function DemoKeyboardProvider({
         reboot,
         recalibrate,
         getSwitchDebug,
+        getSwitchId,
+        setSwitchId,
         getKeyConfig,
         setKeyConfig,
         getKeymap,

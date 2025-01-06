@@ -16,6 +16,10 @@ export const KeyboardDeviceContext = createContext<KeyboardDevice>({
   async getSwitchDebug() {
     return { adcValues: [], distances: [] }
   },
+  async getSwitchId() {
+    return 0
+  },
+  async setSwitchId() {},
   async getKeyConfig() {
     return []
   },
