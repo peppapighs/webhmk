@@ -86,8 +86,10 @@ export function RemapAdvancedFunctions() {
                       <Info className="ml-2 size-4" />
                     </TooltipTrigger>
                     <TooltipContent className="max-w-prose font-medium">
-                      Send the key when tapped, send modifier(s) when held. Only
-                      compatible with basic keys.
+                      Send the key when tapped, send modifier(s) when held. The
+                      duration to register the hold action can be adjusted in
+                      the <span className="font-bold">Performance</span> tab.
+                      Only compatible with basic keys.
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
@@ -107,8 +109,10 @@ export function RemapAdvancedFunctions() {
                       <Info className="ml-2 size-4" />
                     </TooltipTrigger>
                     <TooltipContent className="max-w-prose font-medium">
-                      Send the key when tapped, activate a layer when held. Only
-                      compatible with basic keys.
+                      Send the key when tapped, activate a layer when held. The
+                      duration to register the hold action can be adjusted in
+                      the <span className="font-bold">Performance</span> tab.
+                      Only compatible with basic keys.
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>

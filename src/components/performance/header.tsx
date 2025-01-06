@@ -1,8 +1,8 @@
 "use client"
 
 import { DEFAULT_KEY_CONFIG } from "@/constants/key-config"
+import { useKeyConfig } from "@/hooks/use-key-config"
 import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
-import { useSetKeyConfig } from "@/hooks/use-set-key-config"
 import { useConfiguratorState } from "../configurator-state-provider"
 import { Button } from "../ui/button"
 
@@ -10,10 +10,10 @@ export function PerformanceHeader() {
   const { metadata } = useKeyboardDevice()
 
   const {
-    performance: { indices, setIndices },
+    performance: { indices, setIndices, showKeymap, setShowKeymap },
   } = useConfiguratorState()
 
-  const setKeyConfigQuery = useSetKeyConfig()
+  const { setKeyConfigQuery } = useKeyConfig()
 
   return (
     <header className="flex w-full items-center justify-between gap-6 p-3">
@@ -42,6 +42,9 @@ export function PerformanceHeader() {
           onClick={() => setIndices([])}
         >
           Deselect All
+        </Button>
+        <Button variant="outline" onClick={() => setShowKeymap(!showKeymap)}>
+          {showKeymap ? "Hide Keymap" : "Show Keymap"}
         </Button>
       </div>
       <Button

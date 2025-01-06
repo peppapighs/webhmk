@@ -14,6 +14,7 @@ export type ConfiguratorStateState = {
   }
   performance: {
     indices: number[]
+    showKeymap: boolean
   }
   debug: {
     isDebugging: boolean
@@ -34,6 +35,7 @@ export type ConfiguratorStateAction = {
 
   performance: {
     setIndices(indices: number[]): void
+    setShowKeymap(showKeymap: boolean): void
   }
 
   debug: {

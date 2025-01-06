@@ -19,6 +19,7 @@ const initialState: ConfiguratorStateState = {
   },
   performance: {
     indices: [],
+    showKeymap: false,
   },
   debug: {
     isDebugging: false,
@@ -40,6 +41,7 @@ const ConfiguratorStateContext = createContext<ConfiguratorState>({
   performance: {
     ...initialState.performance,
     setIndices: () => {},
+    setShowKeymap: () => {},
   },
   debug: {
     ...initialState.debug,
@@ -116,6 +118,14 @@ export function ConfiguratorStateProvider({
     )
   }
 
+  const setShowKeymap = (showKeymap: boolean) => {
+    setState(
+      produce((draft) => {
+        draft.performance.showKeymap = showKeymap
+      }),
+    )
+  }
+
   const toggleDebugging = () => {
     setState(
       produce((draft) => {
@@ -138,7 +148,7 @@ export function ConfiguratorStateProvider({
           setAdvancedFunction,
           setKeycodeFilter,
         },
-        performance: { ...state.performance, setIndices },
+        performance: { ...state.performance, setIndices, setShowKeymap },
         debug: { ...state.debug, toggleDebugging },
       }}
     >

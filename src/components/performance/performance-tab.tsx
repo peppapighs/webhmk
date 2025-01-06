@@ -1,4 +1,5 @@
 import { ScrollArea, ScrollBar } from "../ui/scroll-area"
+import { PerformanceConfig } from "./config"
 import { PerformanceHeader } from "./header"
 import { PerformanceKeyboard } from "./keyboard"
 
@@ -15,6 +16,7 @@ export function PerformanceTab() {
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
       <ScrollArea className="w-full flex-1">
+        <PerformanceConfig />
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
     </div>

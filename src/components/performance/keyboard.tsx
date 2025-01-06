@@ -1,12 +1,15 @@
 "use client"
 
+import { useKeyConfig } from "@/hooks/use-key-config"
 import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
+import { useKeymap } from "@/hooks/use-keymap"
 import { displayDistance } from "@/lib/display-integer"
+import { cn } from "@/lib/utils"
 import { KeyConfig, KeyMode } from "@/types/keyboard-device"
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group"
-import { useQuery } from "@tanstack/react-query"
 import { useConfiguratorState } from "../configurator-state-provider"
 import { KeyboardLayout } from "../keyboard-layout"
+import { Keycode } from "../keycode"
 import { Skeleton } from "../ui/skeleton"
 
 interface IPerformanceKeyConfigProps {
@@ -23,7 +26,10 @@ const PerformanceKeyConfig = ({
     case KeyMode.KEY_MODE_RAPID_TRIGGER:
       return (
         <>
-          <p>{displayDistance(config.actuationDistance)}</p>
+          <p>
+            {displayDistance(config.actuationDistance)}
+            {config.resetDistance === 0 && "C"}
+          </p>
           <p>{displayDistance(config.rtDownDistance)}</p>
           <p>{displayDistance(config.rtUpDistance)}</p>
         </>
@@ -39,15 +45,13 @@ export function PerformanceKeyboard() {
 
   const {
     profileNum,
-    performance: { indices, setIndices },
+    performance: { indices, setIndices, showKeymap },
   } = useConfiguratorState()
 
-  const { status: keyConfigStatus, data: keyConfig } = useQuery({
-    queryKey: [device, "configurator", "keyConfig"],
-    queryFn: device.getKeyConfig,
-  })
+  const { status: keyConfigStatus, keyConfig } = useKeyConfig()
+  const { status: keymapStatus, keymap } = useKeymap()
 
-  if (keyConfigStatus !== "success") {
+  if (keyConfigStatus !== "success" || keymapStatus !== "success") {
     return (
       <KeyboardLayout
         metadata={device.metadata}
@@ -76,9 +80,16 @@ export function PerformanceKeyboard() {
             <div className="absolute inset-0 p-0.5">
               <ToggleGroupItem
                 value={`${i}`}
-                className="card toggle-item keycode size-full p-1 text-xs"
+                className={cn(
+                  "card toggle-item keycode size-full p-1",
+                  showKeymap ? "group text-sm" : "text-xs",
+                )}
               >
-                <PerformanceKeyConfig keyConfig={keyConfig[profileNum][i]} />
+                {showKeymap ? (
+                  <Keycode keycode={keymap[0][i]} />
+                ) : (
+                  <PerformanceKeyConfig keyConfig={keyConfig[profileNum][i]} />
+                )}
               </ToggleGroupItem>
             </div>
           )

@@ -1,26 +1,21 @@
 "use client"
 
 import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
-import { keycodeToMetadata } from "@/lib/keycodes"
-import { cn } from "@/lib/utils"
+import { useKeymap } from "@/hooks/use-keymap"
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group"
-import { useQuery } from "@tanstack/react-query"
 import { useConfiguratorState } from "../configurator-state-provider"
 import { KeyboardLayout } from "../keyboard-layout"
+import { Keycode } from "../keycode"
 import { Skeleton } from "../ui/skeleton"
 
 export function RemapKeyboard() {
   const device = useKeyboardDevice()
 
   const {
-    profileNum,
     remap: { layerNum, index, setIndex },
   } = useConfiguratorState()
 
-  const { status, data } = useQuery({
-    queryKey: [device, "configurator", "keymap"],
-    queryFn: device.getKeymap,
-  })
+  const { status, keymap } = useKeymap()
 
   if (status !== "success") {
     return (
@@ -46,38 +41,16 @@ export function RemapKeyboard() {
       <KeyboardLayout
         metadata={device.metadata}
         size={4}
-        elt={(i) => {
-          const keycode = keycodeToMetadata(data[profileNum][layerNum][i])
-          return (
-            <div className="absolute inset-0 p-0.5">
-              <ToggleGroupItem
-                value={`${i}`}
-                className="card toggle-item keycode group relative size-full p-1 text-sm"
-              >
-                <span
-                  className={cn(
-                    keycode.overlay &&
-                      "opacity-0 transition-opacity group-hover:opacity-100",
-                  )}
-                >
-                  {keycode.render ? (
-                    <>
-                      {keycode.render}
-                      <span className="sr-only">{keycode.name}</span>
-                    </>
-                  ) : (
-                    keycode.name
-                  )}
-                </span>
-                {keycode.overlay && (
-                  <div className="keycode absolute inset-0 transition-opacity group-hover:opacity-0">
-                    {keycode.overlay}
-                  </div>
-                )}
-              </ToggleGroupItem>
-            </div>
-          )
-        }}
+        elt={(i) => (
+          <div className="absolute inset-0 p-0.5">
+            <ToggleGroupItem
+              value={`${i}`}
+              className="card toggle-item keycode group size-full p-1 text-sm"
+            >
+              <Keycode keycode={keymap[layerNum][i]} />
+            </ToggleGroupItem>
+          </div>
+        )}
       />
     </ToggleGroup>
   )

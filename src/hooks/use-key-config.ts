@@ -1,6 +1,6 @@
 import { useConfiguratorState } from "@/components/configurator-state-provider"
 import { KeyConfig } from "@/types/keyboard-device"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useKeyboardDevice } from "./use-keyboard-device"
 
 type SetKeyConfigQuery = {
@@ -8,27 +8,44 @@ type SetKeyConfigQuery = {
   config: KeyConfig
 }
 
-export const useSetKeyConfig = () => {
+export const useKeyConfig = () => {
   const device = useKeyboardDevice()
 
   const { profileNum } = useConfiguratorState()
 
+  const { status, data: keyConfig } = useQuery({
+    queryKey: [device, "configurator", "keyConfig"],
+    queryFn: device.getKeyConfig,
+  })
+
   const queryClient = useQueryClient()
 
-  return useMutation({
-    mutationFn: async (queries: SetKeyConfigQuery[]) => {
-      await device.setKeyConfig(
+  const setKeyConfigQuery = useMutation({
+    mutationFn: (queries: SetKeyConfigQuery[]) =>
+      device.setKeyConfig(
         queries.map(({ index, config }) => ({
           profile: profileNum,
           index,
           config,
         })),
-      )
-    },
+      ),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [device, "configurator", "keyConfig"],
       })
     },
   })
+
+  if (status !== "success") {
+    return {
+      status,
+      setKeyConfigQuery,
+    }
+  }
+
+  return {
+    status,
+    keyConfig,
+    setKeyConfigQuery,
+  }
 }
