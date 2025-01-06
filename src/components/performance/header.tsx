@@ -1,6 +1,8 @@
 "use client"
 
+import { DEFAULT_KEY_CONFIG } from "@/constants/key-config"
 import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
+import { useSetKeyConfig } from "@/hooks/use-set-key-config"
 import { useConfiguratorState } from "../configurator-state-provider"
 import { Button } from "../ui/button"
 
@@ -10,6 +12,8 @@ export function PerformanceHeader() {
   const {
     performance: { indices, setIndices },
   } = useConfiguratorState()
+
+  const setKeyConfigQuery = useSetKeyConfig()
 
   return (
     <header className="flex w-full items-center justify-between gap-6 p-3">
@@ -40,7 +44,18 @@ export function PerformanceHeader() {
           Deselect All
         </Button>
       </div>
-      <Button variant="destructive" disabled={indices.length === 0}>
+      <Button
+        variant="destructive"
+        disabled={indices.length === 0}
+        onClick={() =>
+          setKeyConfigQuery.mutate(
+            indices.map((index) => ({
+              index,
+              config: DEFAULT_KEY_CONFIG,
+            })),
+          )
+        }
+      >
         Reset
       </Button>
     </header>
