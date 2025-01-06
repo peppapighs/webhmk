@@ -50,17 +50,8 @@ export function PerformanceConfig() {
       return
     }
 
-    const filteredConfigs = indices.map((index) => keyConfig[profileNum][index])
-    const normalConfig = filteredConfigs.find(
-      ({ config: { mode } }) => mode === KeyMode.KEY_MODE_NORMAL,
-    )
-    if (normalConfig !== undefined) {
-      setBaseConfig(normalConfig)
-      setUserConfig(normalConfig)
-    } else {
-      setBaseConfig(keyConfig[profileNum][indices[0]])
-      setUserConfig(keyConfig[profileNum][indices[0]])
-    }
+    setBaseConfig(keyConfig[profileNum][indices[0]])
+    setUserConfig(keyConfig[profileNum][indices[0]])
   }, [disabled, indices, keyConfig, profileNum])
 
   return (
