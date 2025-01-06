@@ -10,7 +10,7 @@ export const useResetDevice = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: () => device.reset(),
+    mutationFn: device.reset,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [device, "configurator"] })
       reset()
