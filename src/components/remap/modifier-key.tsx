@@ -1,6 +1,5 @@
 "use client"
 
-import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
 import { useKeycode } from "@/hooks/use-keycode"
 import { useSetKeymap } from "@/hooks/use-set-keymap"
 import {
@@ -39,14 +38,12 @@ const getModifier = (keycode: number) => {
 }
 
 export function RemapModifierKey() {
-  const device = useKeyboardDevice()
-
   const {
     remap: { layerNum, index, keycodeFilter, setKeycodeFilter },
   } = useConfiguratorState()
 
-  const keycode = useKeycode(device, layerNum, index)
-  const setKeymapQuery = useSetKeymap(device, layerNum)
+  const keycode = useKeycode(layerNum, index)
+  const setKeymapQuery = useSetKeymap(layerNum)
 
   return (
     <div className="flex flex-col gap-4 px-2">

@@ -1,6 +1,5 @@
 "use client"
 
-import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
 import { useResetDevice } from "@/hooks/use-reset-device"
 import { DeviceInfo } from "./device-info"
 import { ProfileSelector } from "./profile-selector"
@@ -9,8 +8,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import { ScrollArea } from "./ui/scroll-area"
 
 export function Sidebar() {
-  const device = useKeyboardDevice()
-  const resetDeviceQuery = useResetDevice(device)
+  const resetDeviceQuery = useResetDevice()
 
   return (
     <ScrollArea className="h-full">

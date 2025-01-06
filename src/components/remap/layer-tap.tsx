@@ -33,8 +33,8 @@ export function RemapLayerTap() {
     remap: { layerNum, index, keycodeFilter, setKeycodeFilter },
   } = useConfiguratorState()
 
-  const keycode = useKeycode(device, layerNum, index)
-  const setKeymapQuery = useSetKeymap(device, layerNum)
+  const keycode = useKeycode(layerNum, index)
+  const setKeymapQuery = useSetKeymap(layerNum)
 
   return (
     <div className="flex flex-col gap-4 px-2">

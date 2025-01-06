@@ -1,6 +1,6 @@
 import { useConfiguratorState } from "@/components/configurator-state-provider"
-import { KeyboardDevice } from "@/types/keyboard-device"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useKeyboardDevice } from "./use-keyboard-device"
 
 type SetKeymapQuery = {
   index: number | null
@@ -8,11 +8,12 @@ type SetKeymapQuery = {
 }
 
 export const useSetKeymap = (
-  device: KeyboardDevice,
   layerNum: number,
   shouldIncrementIndex = false,
   setIndex?: (index: number | null) => void,
 ) => {
+  const device = useKeyboardDevice()
+
   const { profileNum } = useConfiguratorState()
 
   const queryClient = useQueryClient()

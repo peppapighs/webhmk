@@ -1,8 +1,10 @@
 import { useConfiguratorState } from "@/components/configurator-state-provider"
-import { KeyboardDevice } from "@/types/keyboard-device"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useKeyboardDevice } from "./use-keyboard-device"
 
-export const useResetDevice = (device: KeyboardDevice) => {
+export const useResetDevice = () => {
+  const device = useKeyboardDevice()
+
   const { reset } = useConfiguratorState()
 
   const queryClient = useQueryClient()

@@ -14,7 +14,7 @@ interface IConfiguratorMainProps {
 }
 
 const ConfiguratorMain = ({ device }: IConfiguratorMainProps) => {
-  const resetDeviceQuery = useResetDevice(device)
+  const resetDeviceQuery = useResetDevice()
 
   useEffect(() => {
     const onDeviceDisconnect = async () => {
@@ -24,7 +24,7 @@ const ConfiguratorMain = ({ device }: IConfiguratorMainProps) => {
     navigator.usb.addEventListener("disconnect", onDeviceDisconnect)
     return () =>
       navigator.usb.removeEventListener("disconnect", onDeviceDisconnect)
-  }, [device, resetDeviceQuery])
+  }, [resetDeviceQuery])
 
   return (
     <KeyboardDeviceContext.Provider value={device}>

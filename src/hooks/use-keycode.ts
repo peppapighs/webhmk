@@ -1,12 +1,10 @@
 import { useConfiguratorState } from "@/components/configurator-state-provider"
-import { KeyboardDevice } from "@/types/keyboard-device"
 import { useQuery } from "@tanstack/react-query"
+import { useKeyboardDevice } from "./use-keyboard-device"
 
-export const useKeycode = (
-  device: KeyboardDevice,
-  layerNum: number,
-  index: number | null,
-) => {
+export const useKeycode = (layerNum: number, index: number | null) => {
+  const device = useKeyboardDevice()
+
   const { profileNum } = useConfiguratorState()
 
   const { status, data: keymap } = useQuery({
