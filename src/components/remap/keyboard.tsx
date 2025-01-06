@@ -52,7 +52,7 @@ export function RemapKeyboard() {
             <div className="absolute inset-0 p-0.5">
               <ToggleGroupItem
                 value={`${i}`}
-                className="card toggle-item keycode group relative size-full overflow-hidden p-1 text-sm"
+                className="card toggle-item keycode group relative size-full p-1 text-sm"
               >
                 <span
                   className={cn(

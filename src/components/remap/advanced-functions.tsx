@@ -124,7 +124,7 @@ export function RemapAdvancedFunctions() {
           disabled={index === null || keycodeFilter === null}
           onClick={() => setKeycodeFilter(null)}
         >
-          Reset filter
+          Reset Filter
         </Button>
       </div>
     </div>
