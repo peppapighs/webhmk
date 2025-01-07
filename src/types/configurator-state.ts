@@ -31,6 +31,10 @@ export type ConfiguratorStateState = {
     indices: number[]
     showKeymap: boolean
   }
+  dynamicKeystroke: {
+    layerNum: number
+    index: number | null
+  }
   debug: {
     isDebugging: boolean
   }
@@ -51,6 +55,11 @@ export type ConfiguratorStateAction = {
   performance: {
     setIndices(indices: number[]): void
     setShowKeymap(showKeymap: boolean): void
+  }
+
+  dynamicKeystroke: {
+    setLayerNum(layerNum: number): void
+    setIndex(index: number | null): void
   }
 
   debug: {

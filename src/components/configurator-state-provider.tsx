@@ -36,6 +36,10 @@ const initialState: ConfiguratorStateState = {
     indices: [],
     showKeymap: false,
   },
+  dynamicKeystroke: {
+    layerNum: 0,
+    index: null,
+  },
   debug: {
     isDebugging: false,
   },
@@ -57,6 +61,11 @@ const ConfiguratorStateContext = createContext<ConfiguratorState>({
     ...initialState.performance,
     setIndices: () => {},
     setShowKeymap: () => {},
+  },
+  dynamicKeystroke: {
+    ...initialState.dynamicKeystroke,
+    setLayerNum: () => {},
+    setIndex: () => {},
   },
   debug: {
     ...initialState.debug,
@@ -89,11 +98,12 @@ export function ConfiguratorStateProvider({
         draft.profileNum = profileNum
         draft.remap = initialState.remap
         draft.performance = initialState.performance
+        draft.dynamicKeystroke = initialState.dynamicKeystroke
       }),
     )
   }
 
-  const setLayerNum = (layerNum: number) => {
+  const remapSetLayerNum = (layerNum: number) => {
     setState(
       produce((draft) => {
         draft.remap.layerNum = layerNum
@@ -102,7 +112,7 @@ export function ConfiguratorStateProvider({
     )
   }
 
-  const setIndex = (index: number | null) => {
+  const remapSetIndex = (index: number | null) => {
     setState(
       produce((draft) => {
         draft.remap.index = index
@@ -142,6 +152,23 @@ export function ConfiguratorStateProvider({
     )
   }
 
+  const dynamicKeystrokeSetLayerNum = (layerNum: number) => {
+    setState(
+      produce((draft) => {
+        draft.dynamicKeystroke.layerNum = layerNum
+        draft.dynamicKeystroke.index = null
+      }),
+    )
+  }
+
+  const dynamicKeystrokeSetIndex = (index: number | null) => {
+    setState(
+      produce((draft) => {
+        draft.dynamicKeystroke.index = index
+      }),
+    )
+  }
+
   const toggleDebugging = () => {
     setState(
       produce((draft) => {
@@ -159,12 +186,17 @@ export function ConfiguratorStateProvider({
         setProfileNum,
         remap: {
           ...state.remap,
-          setLayerNum,
-          setIndex,
+          setLayerNum: remapSetLayerNum,
+          setIndex: remapSetIndex,
           setAdvancedFunction,
           setKeycodeFilter,
         },
         performance: { ...state.performance, setIndices, setShowKeymap },
+        dynamicKeystroke: {
+          ...state.dynamicKeystroke,
+          setLayerNum: dynamicKeystrokeSetLayerNum,
+          setIndex: dynamicKeystrokeSetIndex,
+        },
         debug: { ...state.debug, toggleDebugging },
       }}
     >

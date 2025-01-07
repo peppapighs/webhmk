@@ -20,6 +20,7 @@ import { TabsContent } from "@radix-ui/react-tabs"
 import { useEffect } from "react"
 import { useAppKeyboardDevice } from "./app-keyboard-provider"
 import { DebugTab } from "./debug/debug-tab"
+import { DynamicKeystrokeTab } from "./dynamic-keystroke/dynamic-keystroke-tab"
 import { PerformanceTab } from "./performance/performance-tab"
 import { RemapTab } from "./remap/remap-tab"
 import { SettingsTab } from "./settings/settings-tab"
@@ -54,6 +55,9 @@ export function Configurator() {
         </TabsContent>
         <TabsContent value="performance" asChild>
           <PerformanceTab />
+        </TabsContent>
+        <TabsContent value="dynamic-keystroke" asChild>
+          <DynamicKeystrokeTab />
         </TabsContent>
         <TabsContent value="debug" asChild>
           <DebugTab />

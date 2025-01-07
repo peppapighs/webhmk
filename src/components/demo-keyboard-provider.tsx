@@ -15,6 +15,8 @@
 
 "use client"
 
+import { DEFAULT_DYNAMIC_KEYSTROKE_CONFIG } from "@/constants/dynamic-keystroke-config"
+import { DEFAULT_KEY_CONFIG } from "@/constants/key-config"
 import { KEYBOARD_METADATA } from "@/constants/keyboard-metadata"
 import { KeyboardDeviceContext } from "@/hooks/use-keyboard-device"
 import {
@@ -27,7 +29,6 @@ import {
   SwitchId,
   TapHoldId,
 } from "@/types/keyboard-device"
-import { Keycode } from "@/types/keycodes"
 import { produce } from "immer"
 import { ReactNode, useState } from "react"
 
@@ -47,28 +48,17 @@ const initialState: DemoKeyboardDeviceState = {
   swId: SwitchId.SW_GEON_RAW_HE,
   tapHoldId: TapHoldId.TAP_HOLD_DEFAULT,
   keyConfig: Array.from({ length: DEMO_KEYBOARD.numProfiles }, () =>
-    Array.from({ length: DEMO_KEYBOARD.numKeys }, () => ({
-      tappingTerm: 200,
-      config: {
-        mode: 0,
-        actuationDistance: 40,
-        bottomOutDistance: 60,
-      },
-    })),
+    Array.from({ length: DEMO_KEYBOARD.numKeys }, () =>
+      structuredClone(DEFAULT_KEY_CONFIG),
+    ),
   ),
   keymap: Array.from({ length: DEMO_KEYBOARD.numProfiles }, () =>
     structuredClone(DEMO_KEYBOARD.defaultKeymap),
   ),
   dksConfig: Array.from({ length: DEMO_KEYBOARD.numDksConfig }, () =>
-    Array.from({ length: DEMO_KEYBOARD.numDksConfig }, () => ({
-      keycode: Array(4).fill(Keycode.KC_NO),
-      mask: Array.from({ length: 4 }, () => ({
-        config0: 0,
-        config1: 0,
-        config2: 0,
-        config3: 0,
-      })),
-    })),
+    Array.from({ length: DEMO_KEYBOARD.numDksConfig }, () =>
+      structuredClone(DEFAULT_DYNAMIC_KEYSTROKE_CONFIG),
+    ),
   ),
 }
 

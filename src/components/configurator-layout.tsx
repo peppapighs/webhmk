@@ -44,7 +44,9 @@ export function ConfiguratorLayout({
                 <TabsList>
                   <TabsTrigger value="remap">Remap</TabsTrigger>
                   <TabsTrigger value="performance">Performance</TabsTrigger>
-                  <TabsTrigger value="advanced">Advanced</TabsTrigger>
+                  <TabsTrigger value="dynamic-keystroke">
+                    Dynamic Keystroke
+                  </TabsTrigger>
                   <TabsTrigger value="debug">Debug</TabsTrigger>
                   <TabsTrigger value="settings">Settings</TabsTrigger>
                 </TabsList>
