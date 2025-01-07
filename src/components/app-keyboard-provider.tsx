@@ -21,9 +21,11 @@ import {
   KeyboardDeviceState,
   KeyConfig,
   KeyMode,
+  SetDynamicKeystrokeQuery,
   SetKeyConfigQuery,
   SetKeymapQuery,
   SwitchId,
+  TapHoldId,
 } from "@/types/keyboard-device"
 import { ClassRequest, ClassRequestIndex } from "@/types/protocols"
 import { createContext, ReactNode, useContext, useState } from "react"
@@ -52,7 +54,12 @@ const AppKeyboardDeviceContext = createContext<AppKeyboardDevice>({
   ...initialState,
   async connect() {},
   async reset() {},
+  async firmwareVersion() {
+    return 0
+  },
+  async bootloader() {},
   async reboot() {},
+  async factoryReset() {},
   async recalibrate() {},
   async getSwitchDebug() {
     return { adcValues: [], distances: [] }
@@ -61,6 +68,10 @@ const AppKeyboardDeviceContext = createContext<AppKeyboardDevice>({
     return 0
   },
   async setSwitchId() {},
+  async getTapHold() {
+    return 0
+  },
+  async setTapHold() {},
   async getKeyConfig() {
     return []
   },
@@ -69,6 +80,10 @@ const AppKeyboardDeviceContext = createContext<AppKeyboardDevice>({
     return []
   },
   async setKeymap() {},
+  async getDynamicKeystrokeConfig() {
+    return []
+  },
+  async setDynamicKeystrokeConfig() {},
 })
 
 export const useAppKeyboardDevice = () => useContext(AppKeyboardDeviceContext)
@@ -201,6 +216,41 @@ export function AppKeyboardProvider({
     setState({ status: "disconnected" })
   }
 
+  const firmwareVersion = async () => {
+    if (state.status === "disconnected") {
+      throw new Error("Device is disconnected")
+    }
+
+    const { status, data } = await receive(
+      state,
+      ClassRequest.CLASS_REQUEST_FIRMWARE_VERSION,
+      ClassRequestIndex.CLASS_REQUEST_INDEX_GET,
+      2,
+    )
+
+    if (status !== "ok" || data === undefined) {
+      throw new Error("Failed to get firmware version")
+    }
+
+    return data.getUint16(0, true)
+  }
+
+  const bootloader = async () => {
+    if (state.status === "disconnected") {
+      throw new Error("Device is disconnected")
+    }
+
+    const { status } = await send(
+      state,
+      ClassRequest.CLASS_REQUEST_BOOTLOADER,
+      ClassRequestIndex.CLASS_REQUEST_INDEX_SET,
+    )
+
+    if (status !== "ok") {
+      throw new Error("Failed to enter bootloader")
+    }
+  }
+
   const reboot = async () => {
     if (state.status === "disconnected") {
       throw new Error("Device is disconnected")
@@ -214,6 +264,22 @@ export function AppKeyboardProvider({
 
     if (status !== "ok") {
       throw new Error("Failed to reboot")
+    }
+  }
+
+  const factoryReset = async () => {
+    if (state.status === "disconnected") {
+      throw new Error("Device is disconnected")
+    }
+
+    const { status } = await send(
+      state,
+      ClassRequest.CLASS_REQUEST_FACTORY_RESET,
+      ClassRequestIndex.CLASS_REQUEST_INDEX_SET,
+    )
+
+    if (status !== "ok") {
+      throw new Error("Failed to factory reset")
     }
   }
 
@@ -293,6 +359,42 @@ export function AppKeyboardProvider({
 
     if (status !== "ok") {
       throw new Error("Failed to set switch ID")
+    }
+  }
+
+  const getTapHold = async () => {
+    if (state.status === "disconnected") {
+      throw new Error("Device is disconnected")
+    }
+
+    const { status, data } = await receive(
+      state,
+      ClassRequest.CLASS_REQUEST_TAP_HOLD,
+      ClassRequestIndex.CLASS_REQUEST_INDEX_GET,
+      1,
+    )
+
+    if (status !== "ok" || data === undefined) {
+      throw new Error("Failed to get tap hold")
+    }
+
+    return data.getUint8(0)
+  }
+
+  const setTapHold = async (tapHoldId: TapHoldId) => {
+    if (state.status === "disconnected") {
+      throw new Error("Device is disconnected")
+    }
+
+    const { status } = await send(
+      state,
+      ClassRequest.CLASS_REQUEST_TAP_HOLD,
+      ClassRequestIndex.CLASS_REQUEST_INDEX_SET,
+      new Uint8Array([tapHoldId]).buffer,
+    )
+
+    if (status !== "ok") {
+      throw new Error("Failed to set tap hold")
     }
   }
 
@@ -474,21 +576,109 @@ export function AppKeyboardProvider({
     }
   }
 
+  const getDynamicKeystrokeConfig = async () => {
+    if (state.status === "disconnected") {
+      throw new Error("Device is disconnected")
+    }
+
+    const { metadata } = state
+    const { status, data } = await receive(
+      state,
+      ClassRequest.CLASS_REQUEST_DKS_CONFIG,
+      ClassRequestIndex.CLASS_REQUEST_INDEX_GET,
+      8 * metadata.numProfiles * metadata.numDksConfig,
+    )
+
+    if (status !== "ok" || data === undefined) {
+      throw new Error("Failed to get dynamic keystroke config")
+    }
+
+    return Array.from({ length: metadata.numProfiles }, (_, i) =>
+      Array.from({ length: metadata.numDksConfig }, (_, j) => {
+        const offset = 2 * (i * metadata.numDksConfig + j)
+        return {
+          keycode: Array.from({ length: 4 }, (_, k) =>
+            data.getUint8(offset + k),
+          ),
+          mask: Array.from({ length: 4 }, (_, k) => {
+            const allMask = data.getUint8(offset + 4 + k)
+            return {
+              config0: (allMask >> 0) & 0x07,
+              config1: (allMask >> 3) & 0x03,
+              config2: (allMask >> 5) & 0x03,
+              config3: (allMask >> 7) & 0x01,
+            }
+          }),
+        }
+      }),
+    )
+  }
+
+  const setDynamicKeystrokeConfig = async (
+    queries: SetDynamicKeystrokeQuery[],
+  ) => {
+    if (state.status === "disconnected") {
+      throw new Error("Device is disconnected")
+    }
+
+    const data = new Uint8Array(
+      queries
+        .map((query) => {
+          const payload = [query.profile, query.index]
+          for (const keycode of query.config.keycode) {
+            payload.push(keycode)
+          }
+          for (const mask of query.config.mask) {
+            payload.push(
+              (mask.config0 & 0x07) |
+                ((mask.config1 & 0x03) << 3) |
+                ((mask.config2 & 0x03) << 5) |
+                ((mask.config3 & 0x01) << 7),
+            )
+          }
+          return payload
+        })
+        .flat(),
+    )
+
+    if (data.length !== 10 * queries.length) {
+      throw new Error("Invalid dynamic keystroke config queries")
+    }
+
+    const { status } = await send(
+      state,
+      ClassRequest.CLASS_REQUEST_DKS_CONFIG,
+      ClassRequestIndex.CLASS_REQUEST_INDEX_SET,
+      data.buffer,
+    )
+
+    if (status !== "ok") {
+      throw new Error("Failed to set dynamic keystroke config")
+    }
+  }
+
   return (
     <AppKeyboardDeviceContext.Provider
       value={{
         ...state,
         connect,
         reset,
+        firmwareVersion,
+        bootloader,
         reboot,
+        factoryReset,
         recalibrate,
         getSwitchDebug,
         getSwitchId,
         setSwitchId,
+        getTapHold,
+        setTapHold,
         getKeyConfig,
         setKeyConfig,
         getKeymap,
         setKeymap,
+        getDynamicKeystrokeConfig,
+        setDynamicKeystrokeConfig,
       }}
     >
       {children}

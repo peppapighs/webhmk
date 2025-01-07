@@ -27,7 +27,12 @@ const initialState: KeyboardDeviceState = {
 export const KeyboardDeviceContext = createContext<KeyboardDevice>({
   ...initialState,
   async reset() {},
+  async firmwareVersion() {
+    return 0
+  },
+  async bootloader() {},
   async reboot() {},
+  async factoryReset() {},
   async recalibrate() {},
   async getSwitchDebug() {
     return { adcValues: [], distances: [] }
@@ -36,6 +41,10 @@ export const KeyboardDeviceContext = createContext<KeyboardDevice>({
     return 0
   },
   async setSwitchId() {},
+  async getTapHold() {
+    return 0
+  },
+  async setTapHold() {},
   async getKeyConfig() {
     return []
   },
@@ -44,6 +53,10 @@ export const KeyboardDeviceContext = createContext<KeyboardDevice>({
     return []
   },
   async setKeymap() {},
+  async getDynamicKeystrokeConfig() {
+    return []
+  },
+  async setDynamicKeystrokeConfig() {},
 })
 
 export const useKeyboardDevice = () => useContext(KeyboardDeviceContext)

@@ -27,6 +27,11 @@ export enum SwitchId {
   SW_GEON_RAPTOR_HE,
 }
 
+export enum TapHoldId {
+  TAP_HOLD_DEFAULT = 0,
+  TAP_HOLD_HOLD_ON_OTHER_KEY_PRESS,
+}
+
 export enum KeyMode {
   KEY_MODE_NORMAL = 0,
   KEY_MODE_RAPID_TRIGGER,
@@ -51,6 +56,18 @@ export type KeyConfig = {
   config: KeyModeNormalConfig | KeyModeRapidTriggerConfig
 }
 
+export type DynamicKeystrokeMask = {
+  config0: number
+  config1: number
+  config2: number
+  config3: number
+}
+
+export type DynamicKeystrokeConfig = {
+  keycode: number[]
+  mask: DynamicKeystrokeMask[]
+}
+
 export type SetKeyConfigQuery = {
   profile: number
   index: number
@@ -64,17 +81,30 @@ export type SetKeymapQuery = {
   keycode: number
 }
 
+export type SetDynamicKeystrokeQuery = {
+  profile: number
+  index: number
+  config: DynamicKeystrokeConfig
+}
+
 export type KeyboardDeviceAction = {
   reset(): Promise<void>
+  firmwareVersion(): Promise<number>
+  bootloader(): Promise<void>
   reboot(): Promise<void>
+  factoryReset(): Promise<void>
   recalibrate(): Promise<void>
   getSwitchDebug(): Promise<ClassRequestSwitchDebugResponse>
   getSwitchId(): Promise<SwitchId>
   setSwitchId(swId: SwitchId): Promise<void>
+  getTapHold(): Promise<TapHoldId>
+  setTapHold(tapHoldId: TapHoldId): Promise<void>
   getKeyConfig(): Promise<KeyConfig[][]>
   setKeyConfig(queries: SetKeyConfigQuery[]): Promise<void>
   getKeymap(): Promise<number[][][]>
   setKeymap(queries: SetKeymapQuery[]): Promise<void>
+  getDynamicKeystrokeConfig(): Promise<DynamicKeystrokeConfig[][]>
+  setDynamicKeystrokeConfig(queries: SetDynamicKeystrokeQuery[]): Promise<void>
 }
 
 export type KeyboardDevice = KeyboardDeviceState & KeyboardDeviceAction
