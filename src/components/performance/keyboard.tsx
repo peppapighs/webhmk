@@ -45,8 +45,14 @@ const PerformanceKeyConfig = ({
             {displayDistance(config.actuationDistance)}
             {config.resetDistance === 0 && "C"}
           </p>
-          <p>{displayDistance(config.rtDownDistance)}</p>
-          <p>{displayDistance(config.rtUpDistance)}</p>
+          <p>
+            {displayDistance(config.rtDownDistance)}
+            {config.resetDistance === 0 && "C"}
+          </p>
+          <p>
+            {displayDistance(config.rtUpDistance)}
+            {config.resetDistance === 0 && "C"}
+          </p>
         </>
       )
 
@@ -90,25 +96,23 @@ export function PerformanceKeyboard() {
       <KeyboardLayout
         metadata={device.metadata}
         size={4}
-        elt={(i) => {
-          return (
-            <div className="absolute inset-0 p-0.5">
-              <ToggleGroupItem
-                value={`${i}`}
-                className={cn(
-                  "card toggle-item keycode size-full p-1",
-                  showKeymap ? "group text-sm" : "text-xs",
-                )}
-              >
-                {showKeymap ? (
-                  <Keycode keycode={keymap[0][i]} />
-                ) : (
-                  <PerformanceKeyConfig keyConfig={keyConfig[profileNum][i]} />
-                )}
-              </ToggleGroupItem>
-            </div>
-          )
-        }}
+        elt={(i) => (
+          <div className="absolute inset-0 p-0.5">
+            <ToggleGroupItem
+              value={`${i}`}
+              className={cn(
+                "card toggle-item keycode size-full p-1",
+                showKeymap ? "group text-sm" : "text-xs",
+              )}
+            >
+              {showKeymap ? (
+                <Keycode keycode={keymap[0][i]} />
+              ) : (
+                <PerformanceKeyConfig keyConfig={keyConfig[profileNum][i]} />
+              )}
+            </ToggleGroupItem>
+          </div>
+        )}
       />
     </ToggleGroup>
   )

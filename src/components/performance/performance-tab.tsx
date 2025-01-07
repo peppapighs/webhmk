@@ -16,6 +16,7 @@
 import { ScrollArea, ScrollBar } from "../ui/scroll-area"
 import { PerformanceConfig } from "./config"
 import { PerformanceHeader } from "./header"
+import { PerformanceKeyConfigContextProvider } from "./key-config-provider"
 import { PerformanceKeyboard } from "./keyboard"
 
 export function PerformanceTab() {
@@ -31,7 +32,9 @@ export function PerformanceTab() {
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
       <ScrollArea className="w-full flex-1">
-        <PerformanceConfig />
+        <PerformanceKeyConfigContextProvider>
+          <PerformanceConfig />
+        </PerformanceKeyConfigContextProvider>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
     </div>

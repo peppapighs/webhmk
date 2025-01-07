@@ -25,7 +25,6 @@ export function Keycode({ keycode: keycodeNumber }: IKeycodeProps) {
 
   return (
     <>
-      {" "}
       <span
         className={cn(
           keycode.overlay &&
