@@ -104,7 +104,9 @@ export function RemapAdvancedFunctions() {
                       Send the key when tapped, send modifier(s) when held. The
                       duration to register the hold action can be adjusted in
                       the <span className="font-bold">Performance</span> tab.
-                      Only compatible with basic keys.
+                      The hold behavior can be adjusted in the{" "}
+                      <span className="font-bold">Settings</span> tab. Only
+                      compatible with basic keys.
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
@@ -127,7 +129,9 @@ export function RemapAdvancedFunctions() {
                       Send the key when tapped, activate a layer when held. The
                       duration to register the hold action can be adjusted in
                       the <span className="font-bold">Performance</span> tab.
-                      Only compatible with basic keys.
+                      The hold behavior can be adjusted in the{" "}
+                      <span className="font-bold">Settings</span> tab. Only
+                      compatible with basic keys.
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>

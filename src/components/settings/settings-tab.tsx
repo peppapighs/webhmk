@@ -16,8 +16,10 @@
 "use client"
 
 import { SWITCH_METADATA } from "@/constants/switches"
+import { TAP_HOLD_METADATA } from "@/constants/tap-hold"
 import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
 import { useSwitchId } from "@/hooks/use-switch-id"
+import { useTapHold } from "@/hooks/use-tap-hold"
 import { displayDistance } from "@/lib/display-integer"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import {
@@ -52,6 +54,7 @@ export function SettingsTab() {
   const device = useKeyboardDevice()
 
   const { status: switchIdStatus, switchId, setSwitchIdQuery } = useSwitchId()
+  const { status: tapHoldStatus, tapHold, setTapHoldQuery } = useTapHold()
 
   const queryClient = useQueryClient()
 
@@ -80,24 +83,6 @@ export function SettingsTab() {
         <div className="flex flex-col gap-6">
           <Card>
             <CardHeader>
-              <CardTitle>Device Actions</CardTitle>
-              <CardDescription>
-                Perform a software reset or enter bootloader mode, if bootloader
-                is enabled in the firmware. Bootloader mode allows you to flash
-                new firmware to the device through the DFU interface.
-              </CardDescription>
-            </CardHeader>
-            <CardFooter className="flex items-center gap-4">
-              <Button onClick={() => rebootQuery.mutate()}>
-                Software Reset
-              </Button>
-              <Button onClick={() => bootloaderQuery.mutate()}>
-                Enter Bootloader
-              </Button>
-            </CardFooter>
-          </Card>
-          <Card>
-            <CardHeader>
               <CardTitle>Switch Selection</CardTitle>
               <CardDescription>
                 Select the magnetic switches that are installed in your
@@ -112,7 +97,7 @@ export function SettingsTab() {
                   setSwitchIdQuery.mutate(Number(value))
                 }
               >
-                <SelectTrigger className="w-72 disabled:pointer-events-none disabled:opacity-50">
+                <SelectTrigger className="w-72">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -123,6 +108,54 @@ export function SettingsTab() {
                   ))}
                 </SelectContent>
               </Select>
+            </CardFooter>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Tap-Hold Behavior</CardTitle>
+              <CardDescription>
+                Select how the hold action of a Tap-Hold key behaves.
+                &ldquo;Default&rdquo; will register the hold action after the
+                tapping term expires. &ldquo;Hold On Other Key Press&rdquo; will
+                register the hold action after the tapping term expires or when
+                another key is pressed.
+              </CardDescription>
+            </CardHeader>
+            <CardFooter className="flex items-center gap-4">
+              <Select
+                disabled={tapHoldStatus !== "success"}
+                value={`${tapHoldStatus === "success" ? tapHold : ""}`}
+                onValueChange={(value) => setTapHoldQuery.mutate(Number(value))}
+              >
+                <SelectTrigger className="w-72">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {TAP_HOLD_METADATA.map(({ id, name }) => (
+                    <SelectItem key={id} value={`${id}`}>
+                      {name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </CardFooter>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Device Actions</CardTitle>
+              <CardDescription>
+                Perform a software reset or enter bootloader mode, if bootloader
+                is enabled in the firmware. Bootloader mode allows you to flash
+                new firmware to the device through the DFU interface.
+              </CardDescription>
+            </CardHeader>
+            <CardFooter className="flex items-center gap-4">
+              <Button onClick={() => rebootQuery.mutate()}>
+                Software Reset
+              </Button>
+              <Button onClick={() => bootloaderQuery.mutate()}>
+                Enter Bootloader
+              </Button>
             </CardFooter>
           </Card>
           <Card>
