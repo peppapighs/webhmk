@@ -1,7 +1,7 @@
 "use client"
 
 import { DEFAULT_KEY_CONFIG } from "@/constants/key-config"
-import { SWITCH_DISTANCE } from "@/constants/switches"
+import { SWITCH_DISTANCE_MAP } from "@/constants/switches"
 import { useKeyConfig } from "@/hooks/use-key-config"
 import { useSwitchId } from "@/hooks/use-switch-id"
 import { KeyConfig } from "@/types/keyboard-device"
@@ -81,7 +81,7 @@ export function PerformanceKeyConfigContextProvider({
       value={{
         disabled,
         switchDistance:
-          switchIdStatus === "success" ? SWITCH_DISTANCE[switchId] : 0,
+          switchIdStatus === "success" ? SWITCH_DISTANCE_MAP[switchId] : 0,
         userConfig,
         setUserConfig,
         commitUserConfig,

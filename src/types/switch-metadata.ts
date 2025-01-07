@@ -13,31 +13,10 @@
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { SwitchId } from "@/types/keyboard-device"
-import { SwitchMetadata } from "@/types/switch-metadata"
+import { SwitchId } from "./keyboard-device"
 
-export const SWITCH_METADATA: SwitchMetadata[] = [
-  {
-    id: SwitchId.SW_GEON_RAW_HE,
-    name: "GEON Raw HE",
-    distance: 68,
-  },
-  {
-    id: SwitchId.SW_GATERON_MAGNETIC_JADE,
-    name: "Gateron Magnetic Jade",
-    distance: 70,
-  },
-  {
-    id: SwitchId.SW_GEON_RAPTOR_HE,
-    name: "GEON Raptor HE",
-    distance: 80,
-  },
-]
-
-export const SWITCH_DISTANCE_MAP = SWITCH_METADATA.reduce(
-  (acc, { id, distance }) => {
-    acc[id] = distance
-    return acc
-  },
-  {} as Record<SwitchId, number>,
-)
+export type SwitchMetadata = {
+  id: SwitchId
+  name: string
+  distance: number
+}

@@ -22,6 +22,7 @@ import { useAppKeyboardDevice } from "./app-keyboard-provider"
 import { DebugTab } from "./debug/debug-tab"
 import { PerformanceTab } from "./performance/performance-tab"
 import { RemapTab } from "./remap/remap-tab"
+import { SettingsTab } from "./settings/settings-tab"
 import { Sidebar } from "./sidebar"
 
 export function Configurator() {
@@ -56,6 +57,9 @@ export function Configurator() {
         </TabsContent>
         <TabsContent value="debug" asChild>
           <DebugTab />
+        </TabsContent>
+        <TabsContent value="settings" asChild>
+          <SettingsTab />
         </TabsContent>
       </div>
     </div>
