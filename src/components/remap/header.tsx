@@ -18,15 +18,15 @@
 import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useConfiguratorState } from "../configurator-state-provider"
+import { LayerSelector } from "../layer-selector"
 import { Button } from "../ui/button"
-import { RemapLayerSelector } from "./layer-selector"
 
 export function RemapHeader() {
   const device = useKeyboardDevice()
 
   const {
     profileNum,
-    remap: { layerNum },
+    remap: { layerNum, setLayerNum },
   } = useConfiguratorState()
 
   const queryClient = useQueryClient()
@@ -50,7 +50,7 @@ export function RemapHeader() {
 
   return (
     <header className="flex w-full items-center justify-between gap-6 p-3">
-      <RemapLayerSelector />
+      <LayerSelector layerNum={layerNum} setLayerNum={setLayerNum} />
       <Button variant="destructive" onClick={() => resetKeymapQuery.mutate()}>
         Reset
       </Button>

@@ -16,59 +16,39 @@
 "use client"
 
 import { useKeyboardDevice } from "@/hooks/use-keyboard-device"
-import { KeyboardDevice } from "@/types/keyboard-device"
-import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group"
-
-interface ILayerSelectorPlaceholderProps {
-  device: KeyboardDevice
-}
-
-export function LayerSelectorPlaceholder({
-  device: { metadata },
-}: ILayerSelectorPlaceholderProps) {
-  return (
-    <div className="grid grid-cols-[repeat(8,minmax(0,min-content))] gap-2">
-      {[...Array(metadata.numLayers)].map((_, i) => (
-        <div
-          key={i}
-          className="card flex size-8 flex-col items-center justify-center text-center text-sm opacity-50"
-        >
-          {i}
-        </div>
-      ))}
-    </div>
-  )
-}
+import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group"
+import { Label } from "./ui/label"
 
 interface ILayerSelectorProps {
-  layerNum: number | null
-  onLayerNumChange: (layerNum: number | null) => void
+  layerNum: number
+  setLayerNum(value: number): void
 }
 
-export function LayerSelector({
-  layerNum,
-  onLayerNumChange,
-}: ILayerSelectorProps) {
+export function LayerSelector({ layerNum, setLayerNum }: ILayerSelectorProps) {
   const { metadata } = useKeyboardDevice()
 
   return (
-    <ToggleGroup
-      type="single"
-      value={layerNum === null ? "" : `${layerNum}`}
-      onValueChange={(value) =>
-        onLayerNumChange(value === "" ? null : Number(value))
-      }
-      className="grid grid-cols-[repeat(8,minmax(0,min-content))] gap-2"
-    >
-      {[...Array(metadata.numLayers)].map((_, i) => (
-        <ToggleGroupItem
-          key={i}
-          value={`${i}`}
-          className="card toggle-item size-8 text-sm"
-        >
-          {i}
-        </ToggleGroupItem>
-      ))}
-    </ToggleGroup>
+    <div className="flex items-center gap-2">
+      <Label htmlFor="layer" className="ml-2 text-lg font-bold">
+        Layer
+      </Label>
+      <RadioGroup
+        defaultValue="0"
+        id="layer"
+        value={`${layerNum}`}
+        onValueChange={(value) => setLayerNum(Number(value))}
+        className="grid grid-flow-col items-center gap-2"
+      >
+        {[...Array(metadata.numLayers)].map((_, i) => (
+          <RadioGroupItem
+            key={i}
+            value={`${i}`}
+            className="card radio-item size-8 text-sm"
+          >
+            {i}
+          </RadioGroupItem>
+        ))}
+      </RadioGroup>
+    </div>
   )
 }

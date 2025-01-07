@@ -26,7 +26,10 @@ import {
   SP_LAYER_TAP_GET_LAYER,
 } from "@/lib/keycodes"
 import { useConfiguratorState } from "../configurator-state-provider"
-import { LayerSelector, LayerSelectorPlaceholder } from "../layer-selector"
+import {
+  LayerTapSelector,
+  LayerTapSelectorPlaceholder,
+} from "../layer-tap-selector"
 import { Label } from "../ui/label"
 import { Switch } from "../ui/switch"
 
@@ -69,7 +72,7 @@ export function RemapLayerTap() {
         <Label htmlFor="layer-tap-filter">Filter only compatible keys</Label>
       </div>
       {keycode !== null && isValidKeycode(keycode) ? (
-        <LayerSelector
+        <LayerTapSelector
           layerNum={getLayerNum(keycode)}
           onLayerNumChange={(layerNum) => {
             console.log(layerNum)
@@ -84,7 +87,7 @@ export function RemapLayerTap() {
           }}
         />
       ) : (
-        <LayerSelectorPlaceholder device={device} />
+        <LayerTapSelectorPlaceholder device={device} />
       )}
     </div>
   )
