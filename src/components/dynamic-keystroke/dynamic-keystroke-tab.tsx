@@ -14,6 +14,7 @@
  */
 
 import { ScrollArea, ScrollBar } from "../ui/scroll-area"
+import { DynamicKeystrokeConfig } from "./config"
 import { DynamicKeystrokeHeader } from "./header"
 import { DynamicKeystrokeKeyboard } from "./keyboard"
 
@@ -30,6 +31,7 @@ export function DynamicKeystrokeTab() {
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
       <ScrollArea className="w-full flex-1">
+        <DynamicKeystrokeConfig />
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
     </div>

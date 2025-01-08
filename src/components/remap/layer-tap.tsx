@@ -75,7 +75,6 @@ export function RemapLayerTap() {
         <LayerTapSelector
           layerNum={getLayerNum(keycode)}
           onLayerNumChange={(layerNum) => {
-            console.log(layerNum)
             const hidKeycode = IS_LAYER_TAP_KEYCODE(keycode)
               ? SP_LAYER_TAP_GET_KEY(keycode)
               : keycode

@@ -39,6 +39,7 @@ const initialState: ConfiguratorStateState = {
   dynamicKeystroke: {
     layerNum: 0,
     index: null,
+    dksKey: null,
   },
   debug: {
     isDebugging: false,
@@ -66,6 +67,7 @@ const ConfiguratorStateContext = createContext<ConfiguratorState>({
     ...initialState.dynamicKeystroke,
     setLayerNum: () => {},
     setIndex: () => {},
+    setDksKey: () => {},
   },
   debug: {
     ...initialState.debug,
@@ -157,6 +159,7 @@ export function ConfiguratorStateProvider({
       produce((draft) => {
         draft.dynamicKeystroke.layerNum = layerNum
         draft.dynamicKeystroke.index = null
+        draft.dynamicKeystroke.dksKey = null
       }),
     )
   }
@@ -165,6 +168,15 @@ export function ConfiguratorStateProvider({
     setState(
       produce((draft) => {
         draft.dynamicKeystroke.index = index
+        draft.dynamicKeystroke.dksKey = null
+      }),
+    )
+  }
+
+  const setDksKey = (dksKey: number | null) => {
+    setState(
+      produce((draft) => {
+        draft.dynamicKeystroke.dksKey = dksKey
       }),
     )
   }
@@ -196,6 +208,7 @@ export function ConfiguratorStateProvider({
           ...state.dynamicKeystroke,
           setLayerNum: dynamicKeystrokeSetLayerNum,
           setIndex: dynamicKeystrokeSetIndex,
+          setDksKey,
         },
         debug: { ...state.debug, toggleDebugging },
       }}

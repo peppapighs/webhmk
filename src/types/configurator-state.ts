@@ -34,6 +34,7 @@ export type ConfiguratorStateState = {
   dynamicKeystroke: {
     layerNum: number
     index: number | null
+    dksKey: number | null
   }
   debug: {
     isDebugging: boolean
@@ -60,6 +61,7 @@ export type ConfiguratorStateAction = {
   dynamicKeystroke: {
     setLayerNum(layerNum: number): void
     setIndex(index: number | null): void
+    setDksKey(dksKey: number | null): void
   }
 
   debug: {

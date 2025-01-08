@@ -52,7 +52,7 @@ export function RemapHeader() {
     <header className="flex w-full items-center justify-between gap-6 p-3">
       <LayerSelector layerNum={layerNum} setLayerNum={setLayerNum} />
       <Button variant="destructive" onClick={() => resetKeymapQuery.mutate()}>
-        Reset
+        Reset This Layer
       </Button>
     </header>
   )
