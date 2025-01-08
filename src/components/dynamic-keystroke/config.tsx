@@ -149,7 +149,7 @@ export function DynamicKeystrokeConfig() {
                 <div className="size-16 p-0.5">
                   <ToggleGroupItem
                     value={`${i}`}
-                    className="card keycode toggle-item size-full"
+                    className="card keycode toggle-item size-full text-sm"
                   >
                     <Keycode keycode={disabled ? 0 : dksConfig.keycode[i]} />
                   </ToggleGroupItem>
